@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Alarm;
@@ -56,6 +57,7 @@ public class AlarmActivity extends AppCompatActivity
 
 	public void setMyAlarm(View v)
 	{
+		cancelAlarm( v );
 		Spinner mspin = ( Spinner ) findViewById(R.id.spinner1);
 		Spinner mspin2 = ( Spinner ) findViewById(R.id.spinner2);
 		EditText text = ( EditText ) findViewById(R.id.numQuestions);
@@ -68,16 +70,20 @@ public class AlarmActivity extends AppCompatActivity
 			return;
 		}
 		int num = Integer.parseInt( numText );
-		Log.d( "Hour" , hour + "");
-		Log.d( "Min" , min + "");
+		boolean isOn = ((Switch ) findViewById(R.id.switch1)).isChecked();
+		Log.d("Hour", hour + "");
+		Log.d("Min", min + "");
 		Log.d("To Ask" , num + "");
-		db.updateAlarm( db.alarms.get(0).withHour( hour ).withMinute( min ).withOn(1).withCorrect( num ) );
-		addAlarm( hour, min );
-		mspin.setSelection(0);
-		mspin2.setSelection(1);
-		text.setText("");
+		db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+		if (isOn)
+		{
+			addAlarm(hour, min);
+		}
+		//mspin.setSelection(0);
+		//mspin2.setSelection(1);
+		//text.setText("");
 		Intent intent = new Intent( this, MainActivity.class);
-		startActivity( intent );
+		startActivity(intent);
 	}
 
 	public void addAlarm( int hour, int minute )
@@ -86,7 +92,7 @@ public class AlarmActivity extends AppCompatActivity
 		AlarmManager am = (AlarmManager ) this.getSystemService(Context.ALARM_SERVICE);
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.set(Calendar.HOUR_OF_DAY, hour );
-		cal.set(Calendar.MINUTE , minute );
+		cal.set(Calendar.MINUTE, minute);
 		cal.set(Calendar.SECOND, 0);
 		//cal.add(Calendar.SECOND, 20);
 		//cal.add(Calendar.HOUR_OF_DAY, hour);
@@ -95,19 +101,46 @@ public class AlarmActivity extends AppCompatActivity
 		Intent intent = new Intent(this, AlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		Log.d("Time: " , cal.getTimeInMillis() +"" );
+		Log.d("Time: ", cal.getTimeInMillis() + "");
 		Log.d("Current: ", new GregorianCalendar().getTimeInMillis() + "");
 		am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 	}
 
+	private void cancelThisAlarm( int hour, int minute, int id )
+	{
+		Intent intent = new Intent(this, AlarmReceiver.class);
+		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		sender.cancel();
+	}
+
+	private void cancelThisAlarm( int hour, int minute )
+	{
+		cancelThisAlarm(hour, minute, 0);
+	}
+
+	private void cancelAlarm(View v )
+	{
+		//update the alarm in the database to off
+		//cancel the alarm in the database currently
+		if ( db != null )
+		{
+			Alarm alarm = db.alarms.get( 0 );
+			cancelThisAlarm( alarm.hour, alarm.minute );
+			alarm.withOn(0);
+			db.updateAlarm( alarm );
+		}
+	}
+
 	private void updateList(Alarm alarm )
 	{
+		Switch sw1 = (Switch ) findViewById(R.id.switch1);
 		Spinner mspin = ( Spinner ) findViewById(R.id.spinner1);
 		Spinner mspin2 = ( Spinner ) findViewById(R.id.spinner2);
 		EditText text = ( EditText ) findViewById(R.id.numQuestions);
 		mspin.setSelection( alarm.hour );
 		mspin2.setSelection( alarm.minute );
 		text.setText( alarm.correct + "" );
+		sw1.setChecked( alarm.isOn == 1 );
 	}
 
 	private class LongOperation extends AsyncTask<Void, Void, Void>
