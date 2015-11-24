@@ -129,18 +129,28 @@ public class DataHelper extends SQLiteOpenHelper
 		//db.close();
 	}
 
-	public void updateAlarm(Alarm alarm )
+	public void removeQuestion( Question question )
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		removeAnswers(db, question.id);
+		db.execSQL(question.deleteStatement());
+	}
+
+	public void updateAlarm( Alarm alarm )
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{ String.valueOf(alarm.id) });
 	}
 
-	private void removeAnswers( long question )
+	private void removeAnswers( SQLiteDatabase db, long question )
 	{
 		String sql = "DELETE FROM " + Answer.NAME + " WHERE question=" + question;
-		SQLiteDatabase db = this.getWritableDatabase();
 		db.execSQL(sql);
-		//db.close();
+	}
+
+	private void removeAnswers( long question )
+	{
+		removeAnswers( this.getWritableDatabase(), question );
 	}
 
 	public void setToQuestion( long qID )

@@ -13,6 +13,11 @@ public class Question
 	public String question;
 	public ArrayList<Answer> answers;
 
+	public static final int QUESTION_FINE = 9;
+	public static final int QUESTION_EMPTY = 10;
+	public static final int NOT_ENOUGH_ANSWERS = 11;
+	public static final int NOT_ENOUGH_CORRECT = 12;
+
 	public Question( long id, String question, ArrayList<Answer> answers )
 	{
 		this.id = id;
@@ -71,7 +76,7 @@ public class Question
 		toReturn.append( NAME );
 		toReturn.append( "( " );
 		toReturn.append( "id INTEGER PRIMARY KEY");
-		toReturn.append( ",question TEXT ");
+		toReturn.append(",question TEXT ");
 		toReturn.append( ")" );
 		return toReturn.toString();
 	}
@@ -123,5 +128,22 @@ public class Question
 		quest.withAnswer(new Answer("my streetcar", 0));
 		toReturn.add(quest);
 		return toReturn;
+	}
+
+	public int isValidQuestion()
+	{
+		if ( question == null || question.equals( "" ))
+			return QUESTION_EMPTY;
+		if ( answers == null || answers.size() < 2 )
+			return NOT_ENOUGH_ANSWERS;
+		if ( Answer.numberCorrect(answers) < 1 )
+			return NOT_ENOUGH_CORRECT;
+
+		return QUESTION_FINE;
+	}
+
+	public String deleteStatement()
+	{
+		return "DELETE FROM " + this.NAME + " WHERE id=" + this.id;
 	}
 }

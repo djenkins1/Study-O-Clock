@@ -44,6 +44,18 @@ public class AddQuestionActivity extends AppCompatActivity
 		}
 	}
 
+	public void removeQuestion(View v )
+	{
+		if ( qID != -1 && db != null)
+		{
+			Log.d("Question removal", qID + "");
+			db.removeQuestion(db.getCurrentQuestion());
+			Toast.makeText(getApplicationContext(), "Question removed!", Toast.LENGTH_LONG).show();
+			Intent intent = new Intent( this , MainActivity.class );
+			startActivity(intent);
+		}
+	}
+
 	public void addQuestion(View v)
 	{
 		//get the text in each of the edit text fields then clear them
@@ -84,12 +96,32 @@ public class AddQuestionActivity extends AppCompatActivity
 				question.withAnswer( new Answer( text, ( value ? 1 : 0 ) ) );
 			}
 
-			texts.get( i ).setText("");
-			boxes.get( i - 1 ).setChecked(false);
+			//texts.get( i ).setText("");
+			//boxes.get( i - 1 ).setChecked(false);
+		}
+
+		int error = question.isValidQuestion();
+		switch( error )
+		{
+			case Question.QUESTION_FINE:
+				break;
+			case Question.QUESTION_EMPTY:
+				Toast.makeText(getApplicationContext(), "Question field cannot be empty!", Toast.LENGTH_LONG).show();
+				return;
+			case Question.NOT_ENOUGH_ANSWERS:
+				Toast.makeText(getApplicationContext(), "Must have at least 2 answers!", Toast.LENGTH_LONG).show();
+				return;
+			case Question.NOT_ENOUGH_CORRECT:
+				Toast.makeText(getApplicationContext(), "Must have at least 1 correct answer!", Toast.LENGTH_LONG).show();
+				return;
+			default:
+				Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+				return;
 		}
 
 		if ( db == null)
 		{
+			Toast.makeText(getApplicationContext(), "Question added!", Toast.LENGTH_LONG).show();
 			DataHelper db = new DataHelper(this);
 			db.addQuestion(question);
 			Intent intent = new Intent( this , MainActivity.class );
@@ -97,6 +129,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		}
 		else
 		{
+			Toast.makeText(getApplicationContext(), "Question updated!", Toast.LENGTH_LONG).show();
 			db.updateQuestion( question );
 			Intent intent = new Intent( this , AllQuestionsActivity.class );
 			db.closeMe();
@@ -125,7 +158,7 @@ public class AddQuestionActivity extends AppCompatActivity
 
 	private void updateList( Question question )
 	{
-		ArrayList<EditText> texts = new ArrayList<EditText >();
+		ArrayList<EditText> texts = new ArrayList<>();
 		texts.add( (EditText)findViewById(R.id.question) );
 		texts.add( (EditText)findViewById(R.id.button1) );
 		texts.add( (EditText)findViewById(R.id.button2) );

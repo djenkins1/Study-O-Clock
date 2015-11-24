@@ -153,7 +153,7 @@ public class QuestionActivity extends AppCompatActivity
 		//long[] incorrect = { 0, 300, 50, 0 };
 		//vibrator.vibrate( ( isCorrect ? correctPattern : incorrect ), -1); //-1 is important
 		db.incrementQuestion();
-		totalNeeded += ( isCorrect ? -1 : 0 );
+		totalNeeded += ( isCorrect ? -1 : 1 );
 		if ( totalNeeded == 0 && isAlarm )
 		{
 			vib.cancel();
@@ -168,7 +168,6 @@ public class QuestionActivity extends AppCompatActivity
 	{
 		public ClickHandler( Button button, boolean correct )
 		{
-			//button.setBackgroundResource(android.R.drawable.btn_default);
 			final boolean isCorrect = correct;
 			button.setOnClickListener(new View.OnClickListener()
 			{

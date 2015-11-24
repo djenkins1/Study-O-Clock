@@ -84,4 +84,21 @@ public class Answer
 		}
 		return toReturn;
 	}
+
+	public static int numberCorrect( ArrayList<Answer> answers )
+	{
+		if ( answers == null )
+		{
+			return 0;
+		}
+
+		int toReturn = 0;
+		for ( Answer answer : answers )
+		{
+			if ( answer.isCorrect != 0 )
+				toReturn = toReturn + 1;
+		}
+
+		return toReturn;
+	}
 }

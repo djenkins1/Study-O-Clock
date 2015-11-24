@@ -87,13 +87,29 @@
             android:text="" />
     </LinearLayout>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Question"
-        android:id="@+id/addQuestBtn"
-        android:onClick="addQuestion"
-        android:background="@android:drawable/btn_default"
-        />
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:weightSum="2">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:layout_weight="1"
+            android:id="@+id/addQuestBtn"
+            android:onClick="addQuestion"
+            android:background="@android:drawable/btn_default"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove"
+            android:layout_weight="1"
+            android:id="@+id/delQuestBtn"
+            android:onClick="removeQuestion"
+            android:background="@android:drawable/btn_default"
+            />
+    </LinearLayout>
+
+
 
 </LinearLayout>
