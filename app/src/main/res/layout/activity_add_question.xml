@@ -93,6 +93,7 @@
         android:text="Add Question"
         android:id="@+id/addQuestBtn"
         android:onClick="addQuestion"
+        android:background="@android:drawable/btn_default"
         />
 
 </LinearLayout>

@@ -60,5 +60,6 @@
         android:onClick="setMyAlarm"
         android:text="Set Alarm"
         android:id="@+id/setAlarmBtn"
+        android:background="@android:drawable/btn_default"
     />
 </LinearLayout>

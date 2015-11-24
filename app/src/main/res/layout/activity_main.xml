@@ -27,6 +27,7 @@
         android:text="Add Question"
         android:id="@+id/addQuestionBtn"
         android:onClick="onClickAddQ"
+        android:background="@android:drawable/btn_default"
         />
 
     <Button
@@ -35,6 +36,7 @@
         android:text="View Questions"
         android:onClick="allQuestionsClick"
         android:id="@+id/viewQuestionBtn"
+        android:background="@android:drawable/btn_default"
         />
 
     <Button
@@ -43,6 +45,7 @@
         android:text="Set Alarm"
         android:onClick="onClickAddAlarm"
         android:id="@+id/setAlarmBtn"
+        android:background="@android:drawable/btn_default"
         />
     <Button
         android:layout_width="fill_parent"
@@ -50,5 +53,6 @@
         android:text="Start Studying"
         android:id="@+id/seeQuestionBtn"
         android:onClick="onClickShowQ"
+        android:background="@android:drawable/btn_default"
         />
 </LinearLayout>
