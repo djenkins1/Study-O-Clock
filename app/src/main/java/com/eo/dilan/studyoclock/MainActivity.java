@@ -8,9 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 //==============================================================
-//PHASE 1:
-//	(OPTIONAL)More visual cues for answering question correctly
-//	---------
 //	(DONE)Probably should get rid of vibration cue for right/wrong answer if isAlarm
 //	(DONE)get the question's info in AddQuestion if question was passed in bundle
 //	(DONE)randomize question order and answer order
@@ -26,32 +23,6 @@ import android.view.View;
 //		(DONE)also should have a default alarm set in database for current time when created
 //	(DONE)need to keep ringing until enough correct answers
 //		(DONE)for now ingore wrong answers, they don't do anything
-//==============================================================
-//PHASE 2:
-//	Don't allow application to exit if alarm going off
-//	shouldn't ask a question again if it has been answered correctly in this session of isAlarm
-//	^---OR:	Keep a counter of questions left and add 1 to that counter when a question is answered wrong
-//	cleaner looking alarm setting activity, up/down buttons for hour and minute as well as am/pm field
-//	when creating first alarm set default alarm time to current time plus 5 minutes?
-//	back to main menu button on every activity
-//	should not be able to create an empty question
-//		and should have at least one correct answer and cannot be only answer(can still have 2/3/4 correct answers)
-//	should be able to remove a question
-//	alarm should roll to next day if set to on and the alarm time has already happened today
-//	should be able to cancel an alarm( i.e set alarm off )
-//	when new alarm is created old alarm should be cancelled
-//==============================================================
-//	Paid features means that only premium users can use them
-//==============================================================
-//Phase 3:
-//	(PAID?)Group questions by course/subject
-//	(PAID?)Allow for alarms to ask questions by course/subject
-//	(PAID?)Share questions through database on server
-//	(PAID?)Allow for multiple alarms
-//		both stored in database and distinguishing between alarms when broadcast is received
-//	(PAID?)View all alarms activity instead of set alarm on menu
-//	(PAID?)question info page showing how many times a question has been answered and how many times it was wrong
-//		Keep track of right/wrongly answered questions in database on phone
 //==============================================================
 
 public class MainActivity extends AppCompatActivity
