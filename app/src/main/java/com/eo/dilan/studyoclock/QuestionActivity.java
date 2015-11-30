@@ -84,6 +84,8 @@ public class QuestionActivity extends AppCompatActivity
 			buttons.get( i ).setText( "" );
 			buttons.get( i ).setVisibility(View.GONE);
 		}
+
+		showNeeded();
 	}
 
 	@Override
@@ -164,6 +166,17 @@ public class QuestionActivity extends AppCompatActivity
 		updateQuestion(db.getCurrentQuestion() );
 	}
 
+	private void showNeeded()
+	{
+		TextView v = (TextView)findViewById(R.id.remains);
+		if ( !isAlarm || totalNeeded <= 0 )
+		{
+			v.setText( "" );
+			return;
+		}
+		v.setText( totalNeeded + ":" );
+	}
+
 	private class ClickHandler
 	{
 		public ClickHandler( Button button, boolean correct )
@@ -191,6 +204,7 @@ public class QuestionActivity extends AppCompatActivity
 		protected void onPostExecute(Void param)
 		{
 			totalNeeded = db.alarms.get(0).correct;
+			showNeeded( );
 			db.alarms.get(0).setForTomorrow( me , 0 );
 			updateQuestion(db.getCurrentQuestion());
 		}
