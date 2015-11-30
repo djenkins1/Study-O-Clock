@@ -36,6 +36,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		setContentView(R.layout.activity_add_question);
 		Intent intent = getIntent();
 		qID = -1;
+		findViewById(R.id.delQuestBtn).setEnabled(false);
 		if ( intent != null && intent.getExtras() != null && intent.getExtras().getLong("question", -1) != -1 )
 		{
 			qID = intent.getExtras().getLong("question", -1);
@@ -189,7 +190,8 @@ public class AddQuestionActivity extends AppCompatActivity
 		}
 
 		Button button = (Button) findViewById(R.id.addQuestBtn);
-		button.setText("Update Question");
+		button.setText("Edit Question");
+		findViewById(R.id.delQuestBtn).setEnabled(true);
 		populated = true;
 	}
 }

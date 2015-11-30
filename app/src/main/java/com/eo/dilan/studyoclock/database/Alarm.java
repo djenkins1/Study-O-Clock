@@ -1,8 +1,11 @@
 package com.eo.dilan.studyoclock.database;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.eo.dilan.studyoclock.AlarmReceiver;
 
 import java.util.ArrayList;
 
@@ -23,7 +26,7 @@ public class Alarm
 
 	public Alarm( int hour, int minute, int correct )
 	{
-		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID( -1 );
+		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID(-1);
 	}
 
 	public Alarm withHour( int hour )
@@ -110,5 +113,10 @@ public class Alarm
 	public static Alarm debugAlarm()
 	{
 		return new Alarm();
+	}
+
+	public void setForTomorrow( Activity from, int id  )
+	{
+		AlarmReceiver.addAlarm(from, this.hour, this.minute , id);
 	}
 }

@@ -57,7 +57,7 @@ public class AlarmActivity extends AppCompatActivity
 
 	public void setMyAlarm(View v)
 	{
-		cancelAlarm( v );
+		cancelAlarm(v);
 		Spinner mspin = ( Spinner ) findViewById(R.id.spinner1);
 		Spinner mspin2 = ( Spinner ) findViewById(R.id.spinner2);
 		EditText text = ( EditText ) findViewById(R.id.numQuestions);
@@ -73,11 +73,11 @@ public class AlarmActivity extends AppCompatActivity
 		boolean isOn = ((Switch ) findViewById(R.id.switch1)).isChecked();
 		Log.d("Hour", hour + "");
 		Log.d("Min", min + "");
-		Log.d("To Ask" , num + "");
+		Log.d("To Ask", num + "");
 		db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
 		if (isOn)
 		{
-			addAlarm(hour, min);
+			AlarmReceiver.addAlarm(this, hour, min);
 		}
 		//mspin.setSelection(0);
 		//mspin2.setSelection(1);
@@ -85,39 +85,7 @@ public class AlarmActivity extends AppCompatActivity
 		Intent intent = new Intent( this, MainActivity.class);
 		startActivity(intent);
 	}
-
-	public void addAlarm( int hour, int minute )
-	{
-		Log.d("Entered: ", "addAlarm");
-		AlarmManager am = (AlarmManager ) this.getSystemService(Context.ALARM_SERVICE);
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.set(Calendar.HOUR_OF_DAY, hour );
-		cal.set(Calendar.MINUTE, minute);
-		cal.set(Calendar.SECOND, 0);
-		//cal.add(Calendar.SECOND, 20);
-		//cal.add(Calendar.HOUR_OF_DAY, hour);
-		//cal.add(Calendar.MINUTE, minute);
-
-		Intent intent = new Intent(this, AlarmReceiver.class);
-		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		Log.d("Time: ", cal.getTimeInMillis() + "");
-		Log.d("Current: ", new GregorianCalendar().getTimeInMillis() + "");
-		am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
-	}
-
-	private void cancelThisAlarm( int hour, int minute, int id )
-	{
-		Intent intent = new Intent(this, AlarmReceiver.class);
-		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		sender.cancel();
-	}
-
-	private void cancelThisAlarm( int hour, int minute )
-	{
-		cancelThisAlarm(hour, minute, 0);
-	}
-
+	
 	private void cancelAlarm(View v )
 	{
 		//update the alarm in the database to off
@@ -125,7 +93,7 @@ public class AlarmActivity extends AppCompatActivity
 		if ( db != null )
 		{
 			Alarm alarm = db.alarms.get( 0 );
-			cancelThisAlarm( alarm.hour, alarm.minute );
+			AlarmReceiver.cancelThisAlarm( me, alarm.hour, alarm.minute);
 			alarm.withOn(0);
 			db.updateAlarm( alarm );
 		}

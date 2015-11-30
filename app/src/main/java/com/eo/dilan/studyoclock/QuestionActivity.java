@@ -191,6 +191,7 @@ public class QuestionActivity extends AppCompatActivity
 		protected void onPostExecute(Void param)
 		{
 			totalNeeded = db.alarms.get(0).correct;
+			db.alarms.get(0).setForTomorrow( me , 0 );
 			updateQuestion(db.getCurrentQuestion());
 		}
 
