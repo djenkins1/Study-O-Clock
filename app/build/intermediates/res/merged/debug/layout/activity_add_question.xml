@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              tools:context="com.eo.dilan.studyoclock.AddQuestionActivity"
+              android:screenOrientation="landscape"
+              android:orientation="vertical"
+    >
+    <EditText
+        android:hint="Your question here"
+        android:background="@android:color/holo_blue_light"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:id="@+id/question"
+        android:gravity="center"
+        />
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+    <EditText
+        android:layout_width="wrap_content"
+        android:ems="22"
+        android:layout_height="wrap_content"
+        android:hint="Answer 1"
+        android:id="@+id/button1"
+        android:textSize="15sp"
+
+        />
+        <CheckBox
+            android:id="@+id/chk1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="wrap_content"
+            android:ems="22"
+            android:layout_height="wrap_content"
+            android:hint="Answer 2"
+            android:id="@+id/button2"
+            android:textSize="15sp"
+
+            />
+        <CheckBox
+            android:id="@+id/chk2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="wrap_content"
+            android:ems="22"
+            android:layout_height="wrap_content"
+            android:hint="Answer 3"
+            android:id="@+id/button3"
+            android:textSize="15sp"
+
+            />
+        <CheckBox
+            android:id="@+id/chk3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="wrap_content"
+            android:ems="22"
+            android:layout_height="wrap_content"
+            android:hint="Answer 4"
+            android:id="@+id/button4"
+            android:textSize="15sp"
+
+            />
+        <CheckBox
+            android:id="@+id/chk4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:weightSum="2">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:layout_weight="1"
+            android:id="@+id/addQuestBtn"
+            android:onClick="addQuestion"
+            android:background="@android:drawable/btn_default"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove"
+            android:layout_weight="1"
+            android:id="@+id/delQuestBtn"
+            android:onClick="removeQuestion"
+            android:background="@android:drawable/btn_default"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Alarm;
@@ -34,35 +35,16 @@ public class AlarmActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_alarm);
-		Spinner mspin=(Spinner ) findViewById(R.id.spinner1);
-		Spinner mspin2=(Spinner) findViewById(R.id.spinner2);
-		String[] items = new String[24];
-		populateItems(items);
-		ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, items);
-		mspin.setAdapter(adapter);
-		String[] items2 = new String[60];
-		populateItems(items2);
-		ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, items2);
-		mspin2.setAdapter(adapter2);
 		new LongOperation().execute();
-	}
-
-	private void populateItems( String[] array )
-	{
-		for ( int i = 0; i < array.length; i++)
-		{
-			array[i] = ( i < 10 ? "0" + i : i + "" );
-		}
 	}
 
 	public void setMyAlarm(View v)
 	{
 		cancelAlarm(v);
-		Spinner mspin = ( Spinner ) findViewById(R.id.spinner1);
-		Spinner mspin2 = ( Spinner ) findViewById(R.id.spinner2);
+		TimePicker tpick = (TimePicker)findViewById(R.id.timePicker1);
 		EditText text = ( EditText ) findViewById(R.id.numQuestions);
-		int hour = Integer.parseInt(mspin.getSelectedItem().toString());
-		int min = Integer.parseInt(mspin2.getSelectedItem().toString());
+		int hour = tpick.getCurrentHour();
+		int min = tpick.getCurrentMinute();
 		String numText = text.getText().toString();
 		if ( numText.equals("") )
 		{
@@ -102,11 +84,10 @@ public class AlarmActivity extends AppCompatActivity
 	private void updateList(Alarm alarm )
 	{
 		Switch sw1 = (Switch ) findViewById(R.id.switch1);
-		Spinner mspin = ( Spinner ) findViewById(R.id.spinner1);
-		Spinner mspin2 = ( Spinner ) findViewById(R.id.spinner2);
+		TimePicker tpick = (TimePicker)findViewById(R.id.timePicker1);
 		EditText text = ( EditText ) findViewById(R.id.numQuestions);
-		mspin.setSelection( alarm.hour );
-		mspin2.setSelection( alarm.minute );
+		tpick.setCurrentHour(alarm.hour);
+		tpick.setCurrentMinute(alarm.minute);
 		text.setText( alarm.correct + "" );
 		sw1.setChecked( alarm.isOn == 1 );
 	}
