@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.eo.dilan.studyoclock.AlarmReceiver;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Alarm
 {
@@ -112,7 +114,8 @@ public class Alarm
 
 	public static Alarm debugAlarm()
 	{
-		return new Alarm();
+		GregorianCalendar now = new GregorianCalendar();
+		return new Alarm().withHour( now.get(Calendar.HOUR) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 1 ).withOn( 0 );
 	}
 
 	public void setForTomorrow( Activity from, int id  )
