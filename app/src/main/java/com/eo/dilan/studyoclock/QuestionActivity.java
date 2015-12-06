@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -101,15 +103,27 @@ public class QuestionActivity extends AppCompatActivity
 	}
 
 	@Override
-	public void onPause() {
+	public void onPause()
+	{
 		super.onPause();
 		//vibrator.cancel();  // cancel for example here
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 		super.onDestroy();
 		vibrator.cancel();   // or cancel here
+		if ( isAlarm && totalNeeded > 0 )
+		{
+			AlarmService.isAlarm = true;
+			return;
+		}
+		else if ( isAlarm )
+		{
+			Log.d("Reached here", "alarm off");
+		}
+		AlarmService.isAlarm = false;
 	}
 
 	private void animateMyView(final View view, final boolean isCorrect )
@@ -171,6 +185,7 @@ public class QuestionActivity extends AppCompatActivity
 		if ( totalNeeded == 0 && isAlarm )
 		{
 			vib.cancel();
+			AlarmService.isAlarm = false;
 			Intent intent = new Intent( me, MainActivity.class );
 			me.startActivity( intent );
 			return;
@@ -183,9 +198,11 @@ public class QuestionActivity extends AppCompatActivity
 		TextView v = (TextView)findViewById(R.id.remains);
 		if ( !isAlarm || totalNeeded <= 0 )
 		{
+			AlarmService.isAlarm = false;
 			v.setText( "" );
 			return;
 		}
+		AlarmService.isAlarm = true;
 		v.setText( totalNeeded + ":" );
 	}
 

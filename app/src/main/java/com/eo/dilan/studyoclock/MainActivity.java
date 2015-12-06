@@ -7,24 +7,6 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-//==============================================================
-//	(DONE)Probably should get rid of vibration cue for right/wrong answer if isAlarm
-//	(DONE)get the question's info in AddQuestion if question was passed in bundle
-//	(DONE)randomize question order and answer order
-//	(DONE)need another activity for adding questions
-//	(DONE)need to be able to see if question is answered correctly
-//	(DONE)need to have database setup for questions
-//	(DONEneed to be able to go off at alarm time
-//	(DONE)need to be able to move into question asking phase on alarm going off and app open
-//	(DONEshow all questions activity, with click on edit?
-//	(DONE)need to be able to store alarm time/question amount, only one row at a time
-//	(DONE)need alarm setting activity that shows current alarm and number of correct questions needed
-//		(DONE)have way to set alarm from empty, just need to fill in from database
-//		(DONE)also should have a default alarm set in database for current time when created
-//	(DONE)need to keep ringing until enough correct answers
-//		(DONE)for now ingore wrong answers, they don't do anything
-//==============================================================
-
 public class MainActivity extends AppCompatActivity
 {
 	Vibrator vibrator;
@@ -32,6 +14,8 @@ public class MainActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		Intent serv = new Intent( getApplicationContext() , AlarmService.class );
+		getApplicationContext().startService( serv );
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main);
 		vibrator = (Vibrator ) getSystemService( this.VIBRATOR_SERVICE);
