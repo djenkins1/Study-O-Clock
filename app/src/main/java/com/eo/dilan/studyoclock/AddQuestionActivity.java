@@ -45,6 +45,12 @@ public class AddQuestionActivity extends AppCompatActivity
 		}
 	}
 
+	@Override
+	public void onBackPressed()
+	{
+		super.onBackPressed();
+	}
+
 	public void removeQuestion(View v )
 	{
 		if ( qID != -1 && db != null)

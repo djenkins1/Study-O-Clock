@@ -32,7 +32,15 @@ public class AllQuestionsActivity extends AppCompatActivity
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_all_questions);
 		new LongOperation().execute();
+	}
 
+	@Override
+	public void onBackPressed()
+	{
+		super.onBackPressed();
+		Intent intent = new Intent( this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 
 	private class StableArrayAdapter extends ArrayAdapter<String>
