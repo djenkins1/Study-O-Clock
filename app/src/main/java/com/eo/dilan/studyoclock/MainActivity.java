@@ -40,6 +40,12 @@ public class MainActivity extends AppCompatActivity
 		startActivity( intent );
 	}
 
+	@Override
+	public void onBackPressed()
+	{
+		return;
+	}
+
 	public void onClickAddQ(View v)
 	{
 		Intent intent = new Intent( this , AddQuestionActivity.class );

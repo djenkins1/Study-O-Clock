@@ -3,9 +3,8 @@ package com.eo.dilan.studyoclock;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Answer;
 import com.eo.dilan.studyoclock.database.DataHelper;
+import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		if ( intent != null && intent.getExtras() != null && intent.getExtras().getLong("question", -1) != -1 )
 		{
 			qID = intent.getExtras().getLong("question", -1);
-			Log.d("Question entered", qID + "");
+			Logger.print(this.getApplicationContext(), "Question entered", qID + "");
 			new LongOperation().execute();
 		}
 	}
@@ -55,7 +55,7 @@ public class AddQuestionActivity extends AppCompatActivity
 	{
 		if ( qID != -1 && db != null)
 		{
-			Log.d("Question removal", qID + "");
+			Logger.print(this.getApplicationContext(), "Question removal", qID + "");
 			db.removeQuestion(db.getCurrentQuestion());
 			Toast.makeText(getApplicationContext(), "Question removed!", Toast.LENGTH_LONG).show();
 			Intent intent = new Intent( this , MainActivity.class );

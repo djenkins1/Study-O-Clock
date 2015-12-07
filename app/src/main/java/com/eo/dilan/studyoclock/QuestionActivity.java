@@ -3,27 +3,22 @@ package com.eo.dilan.studyoclock;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.eo.dilan.studyoclock.database.*;
+import com.eo.dilan.studyoclock.database.Answer;
+import com.eo.dilan.studyoclock.database.DataHelper;
+import com.eo.dilan.studyoclock.database.Logger;
+import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -121,7 +116,7 @@ public class QuestionActivity extends AppCompatActivity
 		}
 		else if ( isAlarm )
 		{
-			Log.d("Reached here", "alarm off");
+			Logger.print(this.getApplicationContext(), "Reached here", "alarm off");
 		}
 		AlarmService.isAlarm = false;
 	}

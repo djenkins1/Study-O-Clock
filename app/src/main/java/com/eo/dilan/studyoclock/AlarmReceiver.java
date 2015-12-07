@@ -3,12 +3,12 @@ package com.eo.dilan.studyoclock;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
-import android.util.Log;
+
+import com.eo.dilan.studyoclock.database.Logger;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -47,7 +47,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 
 	public static void addAlarm( Activity me, int hour, int minute, int id )
 	{
-		Log.d("Entered: ", "addAlarm");
+		Logger.print(me.getApplicationContext(), "Entered: ", "addAlarm");
 		AlarmManager am = (AlarmManager ) me.getSystemService(Context.ALARM_SERVICE);
 		GregorianCalendar later = new GregorianCalendar();
 		GregorianCalendar now = new GregorianCalendar();
@@ -56,7 +56,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		later.set(Calendar.SECOND, 0);
 		if ( later.compareTo( now ) != 1 )
 		{
-			Log.d("Set Alarm" , "Setting alarm to tomorrow");
+			Logger.print(me.getApplicationContext(), "Set Alarm", "Setting alarm to tomorrow");
 			later.add(Calendar.DATE , 1);
 		}
 		//later.add(Calendar.SECOND, 20);
@@ -66,8 +66,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		Intent intent = new Intent(me, AlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(me, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		Log.d("Time: ", later.getTimeInMillis() + "");
-		Log.d("Current: ", new GregorianCalendar().getTimeInMillis() + "");
+		Logger.print(me.getApplicationContext(), "Time: ", later.getTimeInMillis() + "");
+		Logger.print(me.getApplicationContext(), "Current: ", new GregorianCalendar().getTimeInMillis() + "");
 		am.set(AlarmManager.RTC_WAKEUP, later.getTimeInMillis(), sender);
 	}
 }

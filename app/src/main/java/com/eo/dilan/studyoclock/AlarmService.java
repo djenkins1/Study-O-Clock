@@ -6,9 +6,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
-import com.eo.dilan.studyoclock.MainActivity;
+import com.eo.dilan.studyoclock.database.Logger;
 
 public class AlarmService extends Service
 {
@@ -34,7 +33,7 @@ public class AlarmService extends Service
 		{
 			return;
 		}
-		Log.d("Inside remove", "yes ");
+		Logger.print(this.getApplicationContext(), "Inside remove", "yes ");
 		Context con = getApplicationContext();
 		Intent mStartActivity = new Intent( con, MainActivity.class);
 		mStartActivity.putExtra( "alarm" , "yes");

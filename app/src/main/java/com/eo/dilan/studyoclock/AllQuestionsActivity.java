@@ -4,15 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eo.dilan.studyoclock.database.DataHelper;
+import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class AllQuestionsActivity extends AppCompatActivity
 			public void onItemClick(AdapterView< ? > parent, final View view, int position, long id)
 			{
 				//final String item = ( String ) parent.getItemAtPosition(position);
-				Log.d("Question Clicked", questions.get(position).question );
+				Logger.print(me.getApplicationContext(),"Question Clicked", questions.get(position).question );
 				long quest = questions.get(position).id;
 				Intent appIntent = new Intent(me, AddQuestionActivity.class);
 				Bundle mBundle = new Bundle();

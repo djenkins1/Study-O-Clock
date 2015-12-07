@@ -1,27 +1,19 @@
 package com.eo.dilan.studyoclock;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Alarm;
 import com.eo.dilan.studyoclock.database.DataHelper;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import com.eo.dilan.studyoclock.database.Logger;
 
 public class AlarmActivity extends AppCompatActivity
 {
@@ -53,9 +45,9 @@ public class AlarmActivity extends AppCompatActivity
 		}
 		int num = Integer.parseInt( numText );
 		boolean isOn = ((Switch ) findViewById(R.id.switch1)).isChecked();
-		Log.d("Hour", hour + "");
-		Log.d("Min", min + "");
-		Log.d("To Ask", num + "");
+		Logger.print(this.getApplicationContext(),"Hour", hour + "");
+		Logger.print(this.getApplicationContext(), "Min", min + "");
+		Logger.print(this.getApplicationContext(), "To Ask", num + "");
 		db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
 		if (isOn)
 		{

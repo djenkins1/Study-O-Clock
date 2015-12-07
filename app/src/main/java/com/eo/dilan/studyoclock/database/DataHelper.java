@@ -3,7 +3,6 @@ package com.eo.dilan.studyoclock.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,7 +85,6 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void addQuestion( SQLiteDatabase db, Question question )
 	{
-		Log.d("Question: ", question.question);
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
 		addAnswers(db, question);
 	}
@@ -94,7 +92,6 @@ public class DataHelper extends SQLiteOpenHelper
 	public void addQuestion( Question question )
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
-		Log.d("Question: ", question.question);
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
 		addAnswers(db, question);
 		//db.close();
@@ -115,7 +112,6 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void addAnswer( SQLiteDatabase db,Answer answer)
 	{
-		Log.d("Answer: ", answer.answer);
 		answer.withID(db.insert(Answer.NAME, null, answer.insertValues()));
 	}
 
@@ -167,8 +163,8 @@ public class DataHelper extends SQLiteOpenHelper
 
 		if ( atQuestion == -1 )
 		{
-			Log.d("BAD QUESTION" , qID + "");
-			Log.d( "Null" , allQuestions.get( - 1 ).question );
+			//Log.d("BAD QUESTION" , qID + "");
+			//Log.d( "Null" , allQuestions.get( - 1 ).question );
 		}
 	}
 
