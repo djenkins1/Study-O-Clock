@@ -5,6 +5,8 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,12 +30,18 @@ public class AddQuestionActivity extends AppCompatActivity
 
 	private boolean populated = false;
 
+	private ArrayList<EditText> edits;
+
+	private ArrayList<CheckBox> checks;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_add_question);
+		readViews();
+		addClickToTexts();
 		Intent intent = getIntent();
 		qID = -1;
 		findViewById(R.id.delQuestBtn).setEnabled(false);
@@ -43,6 +51,22 @@ public class AddQuestionActivity extends AppCompatActivity
 			Logger.print(this.getApplicationContext(), "Question entered", qID + "");
 			new LongOperation().execute();
 		}
+	}
+
+	private void readViews()
+	{
+		edits = new ArrayList<>();
+		edits.add( (EditText)findViewById(R.id.question) );
+		edits.add( (EditText)findViewById(R.id.button1) );
+		edits.add( (EditText)findViewById(R.id.button2) );
+		edits.add( (EditText)findViewById(R.id.button3) );
+		edits.add(( EditText ) findViewById(R.id.button4));
+
+		checks = new ArrayList<>();
+		checks.add(( CheckBox ) findViewById(R.id.chk1));
+		checks.add(( CheckBox ) findViewById(R.id.chk2));
+		checks.add( (CheckBox)findViewById(R.id.chk3) );
+		checks.add(( CheckBox ) findViewById(R.id.chk4));
 	}
 
 	@Override
@@ -63,23 +87,53 @@ public class AddQuestionActivity extends AppCompatActivity
 		}
 	}
 
+	private void addClickToTexts()
+	{
+		//make so that empty answers cannot be checked
+		//make so that when answer is edited checkbox gets checked to false
+		for ( int i = 1; i < edits.size(); i++ )
+		{
+			final CheckBox check = checks.get( i - 1 );
+			final EditText edit = edits.get( i );
+			check.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					if ( edit.getText().toString().trim().equals( "" ) )
+					{
+						check.setChecked( false );
+					}
+				}
+			});
+
+			edit.addTextChangedListener( new TextWatcher()
+			{
+				public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+				{
+
+				}
+
+				public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+				{
+
+				}
+
+				public void afterTextChanged(Editable editable)
+				{
+					check.setChecked( false );
+				}
+			});
+		}
+	}
+
 	public void addQuestion(View v)
 	{
 		//get the text in each of the edit text fields then clear them
-		ArrayList<EditText> texts = new ArrayList<EditText >();
-		texts.add( (EditText)findViewById(R.id.question) );
-		texts.add( (EditText)findViewById(R.id.button1) );
-		texts.add( (EditText)findViewById(R.id.button2) );
-		texts.add( (EditText)findViewById(R.id.button3) );
-		texts.add( (EditText)findViewById(R.id.button4) );
+		ArrayList<EditText> texts = edits;
+		ArrayList<CheckBox > boxes = checks;
 
-		ArrayList<CheckBox > boxes = new ArrayList<>();
-		boxes.add( (CheckBox)findViewById(R.id.chk1) );
-		boxes.add( (CheckBox)findViewById(R.id.chk2) );
-		boxes.add( (CheckBox)findViewById(R.id.chk3) );
-		boxes.add(( CheckBox ) findViewById(R.id.chk4));
-
-		String qText = texts.get( 0 ).getText().toString();
+		String qText = texts.get( 0 ).getText().toString().trim();
 		Question question = null;
 		if ( populated && qID != -1 )
 		{
@@ -97,7 +151,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		for ( int i = 1; i < texts.size(); i++ )
 		{
 			boolean value = boxes.get( i - 1 ).isChecked();
-			String text = texts.get( i ).getText().toString();
+			String text = texts.get( i ).getText().toString().trim();
 			if ( !text.equals( "" ) )
 			{
 				question.withAnswer( new Answer( text, ( value ? 1 : 0 ) ) );
