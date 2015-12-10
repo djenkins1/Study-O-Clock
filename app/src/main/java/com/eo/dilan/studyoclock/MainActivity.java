@@ -46,12 +46,6 @@ public class MainActivity extends AppCompatActivity
 		return;
 	}
 
-	public void onClickAddQ(View v)
-	{
-		Intent intent = new Intent( this , AddQuestionActivity.class );
-		startActivity( intent );
-	}
-
 	public void onClickAddAlarm(View v)
 	{
 		Intent intent = new Intent( this , AlarmActivity.class );

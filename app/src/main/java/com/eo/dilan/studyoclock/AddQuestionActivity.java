@@ -185,7 +185,7 @@ public class AddQuestionActivity extends AppCompatActivity
 			Toast.makeText(getApplicationContext(), "Question added!", Toast.LENGTH_LONG).show();
 			DataHelper db = new DataHelper(this);
 			db.addQuestion(question);
-			Intent intent = new Intent( this , MainActivity.class );
+			Intent intent = new Intent( this , AllQuestionsActivity.class );
 			startActivity(intent);
 		}
 		else

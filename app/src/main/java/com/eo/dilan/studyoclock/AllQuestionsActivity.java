@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.eo.dilan.studyoclock.database.DataHelper;
@@ -46,7 +48,7 @@ public class AllQuestionsActivity extends AppCompatActivity
 	private class StableArrayAdapter extends ArrayAdapter<String>
 	{
 
-		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+		HashMap<String, Integer> mIdMap = new HashMap<>();
 
 		public StableArrayAdapter(Context context, int textViewResourceId, List<String> objects)
 		{
@@ -81,8 +83,13 @@ public class AllQuestionsActivity extends AppCompatActivity
 		{
 			list.add( questions.get( i ).question );
 		}
-		final StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.list_viewer, list);
+		final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter( this, list, questions );
+		//final StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.list_viewer, list);
+		FrameLayout footerLayout = (FrameLayout ) getLayoutInflater().inflate(R.layout.footer_res,null);
+		listview.addFooterView(footerLayout);
 		listview.setAdapter(adapter);
+
+		//btnPostYourEnquiry = (Button ) footerLayout.findViewById(R.id.btnGetMoreResults);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
@@ -119,4 +126,9 @@ public class AllQuestionsActivity extends AppCompatActivity
 		}
 	}
 
+	public void onClickAddQ(View v)
+	{
+		Intent intent = new Intent( this , AddQuestionActivity.class );
+		startActivity( intent );
+	}
 }
