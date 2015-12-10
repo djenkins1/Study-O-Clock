@@ -11,7 +11,7 @@ public class DataHelper extends SQLiteOpenHelper
 {
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 5;
 
 	// Database Name
 	private static final String DATABASE_NAME = "study";
@@ -29,7 +29,15 @@ public class DataHelper extends SQLiteOpenHelper
 		alarms = Alarm.getAlarms(db);
 		Collections.shuffle( allQuestions );
 		//db.close();
+	}
 
+	public void saveAllQuestions()
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		for ( Question question : allQuestions )
+		{
+			updateQuestionNotAnswers( db, question );
+		}
 	}
 
 	public void onCreate(SQLiteDatabase db)
@@ -123,6 +131,12 @@ public class DataHelper extends SQLiteOpenHelper
 		db.update(Question.NAME, question.insertValues(), "id = ?", new String[]{ String.valueOf(question.id) });
 		addAnswers(db, question);
 		//db.close();
+	}
+
+	public void updateQuestionNotAnswers( SQLiteDatabase db, Question question )
+	{
+
+		db.update(Question.NAME, question.insertValues(), "id = ?", new String[]{ String.valueOf(question.id) });
 	}
 
 	public void removeQuestion( Question question )

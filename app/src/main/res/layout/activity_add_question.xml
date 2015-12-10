@@ -11,7 +11,7 @@
     >
     <EditText
         android:hint="Your question here"
-        android:background="@android:color/holo_blue_light"
+        android:background="@android:color/holo_blue_dark"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="24sp"
@@ -19,10 +19,12 @@
         android:gravity="center"
         />
     <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content">
+                  android:layout_height="wrap_content"
+                  android:weightSum="10"
+        >
     <EditText
         android:layout_width="wrap_content"
-        android:ems="22"
+        android:layout_weight="9"
         android:layout_height="wrap_content"
         android:hint="Answer 1"
         android:id="@+id/button1"
@@ -33,13 +35,16 @@
             android:id="@+id/chk1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="" />
     </LinearLayout>
     <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content">
+                  android:layout_height="wrap_content"
+                  android:weightSum="10"
+        >
         <EditText
             android:layout_width="wrap_content"
-            android:ems="22"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
             android:hint="Answer 2"
             android:id="@+id/button2"
@@ -50,13 +55,16 @@
             android:id="@+id/chk2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="" />
     </LinearLayout>
     <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content">
+                  android:layout_height="wrap_content"
+                  android:weightSum="10"
+        >
         <EditText
             android:layout_width="wrap_content"
-            android:ems="22"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
             android:hint="Answer 3"
             android:id="@+id/button3"
@@ -67,13 +75,16 @@
             android:id="@+id/chk3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="" />
     </LinearLayout>
     <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content">
+                  android:layout_height="wrap_content"
+                  android:weightSum="10"
+        >
         <EditText
             android:layout_width="wrap_content"
-            android:ems="22"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
             android:hint="Answer 4"
             android:id="@+id/button4"
@@ -84,9 +95,9 @@
             android:id="@+id/chk4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="" />
     </LinearLayout>
-
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:weightSum="2">

@@ -1,6 +1,7 @@
 package com.eo.dilan.studyoclock.database;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -12,6 +13,8 @@ public class Question
 	public long id;
 	public String question;
 	public ArrayList<Answer> answers;
+	public int correct;
+	public int wrong;
 
 	public static final int QUESTION_FINE = 9;
 	public static final int QUESTION_EMPTY = 10;
@@ -22,14 +25,39 @@ public class Question
 	{
 		this.id = id;
 		this.question = question;
-		this.answers = new ArrayList<Answer>();
+		this.answers = new ArrayList<>();
 		this.withAnswers( answers );
+	}
+
+	public Question withCorrect( int i)
+	{
+		this.correct = i;
+		return this;
+	}
+
+	public Question withWrong( int i)
+	{
+		this.wrong = i;
+		return this;
+	}
+
+	public Question incrementAmount( Context c, boolean isCorrect )
+	{
+		if ( isCorrect )
+		{
+			this.correct++;
+			Logger.print( c, "Incremented correct", "question " + this.id + " now has " + this.correct );
+			return this;
+		}
+
+		this.wrong++;
+		Logger.print( c, "Incremented wrong", "question " + this.id + " now has " + this.wrong );
+		return this;
 	}
 
 	public Question( String question )
 	{
-		this.question = question;
-		this.answers = new ArrayList<Answer>();
+		this(0, question, null);
 	}
 
 	public Question withAnswer( Answer answer )
@@ -40,6 +68,11 @@ public class Question
 
 	public Question withAnswers( ArrayList<Answer> answers )
 	{
+		if ( answers == null )
+		{
+			return this;
+		}
+
 		for ( Answer answer : answers )
 		{
 			this.withAnswer( answer );
@@ -77,6 +110,8 @@ public class Question
 		toReturn.append( "( " );
 		toReturn.append( "id INTEGER PRIMARY KEY");
 		toReturn.append(",question TEXT ");
+		toReturn.append(",correct INTEGER");
+		toReturn.append(",wrong INTEGER");
 		toReturn.append( ")" );
 		return toReturn.toString();
 	}
@@ -85,6 +120,8 @@ public class Question
 	{
 		ContentValues values = new ContentValues();
 		values.put("question", this.question);
+		values.put( "correct" , this.correct );
+		values.put( "wrong", this.wrong);
 		return values;
 	}
 
@@ -95,7 +132,7 @@ public class Question
 
 	public static ArrayList<Question> getAllQuestions(SQLiteDatabase db)
 	{
-		ArrayList<Question> toReturn = new ArrayList<Question>();
+		ArrayList<Question> toReturn = new ArrayList<>();
 		Cursor cursor = db.rawQuery( sqlSelectAll(), null);
 		// looping through all rows and adding to list
 		if (cursor != null && cursor.moveToFirst())
@@ -107,7 +144,9 @@ public class Question
 				Question question = new Question( cursor.getString( 1 ) );
 				question.withID( Long.parseLong( cursor.getString( 0 )));
 				question.withAnswers(Answer.getAnswers(db, question.id));
-				toReturn.add( question );
+				question.withCorrect(Integer.parseInt(cursor.getString(2)));
+				question.withWrong(Integer.parseInt(cursor.getString(3)));
+				toReturn.add(question);
 			}
 			while ( cursor.moveToNext() );
 		}

@@ -101,6 +101,10 @@ public class QuestionActivity extends AppCompatActivity
 	public void onPause()
 	{
 		super.onPause();
+		if ( db != null )
+		{
+			db.saveAllQuestions();
+		}
 		//vibrator.cancel();  // cancel for example here
 	}
 
@@ -109,6 +113,11 @@ public class QuestionActivity extends AppCompatActivity
 	{
 		super.onDestroy();
 		vibrator.cancel();   // or cancel here
+		if ( db != null )
+		{
+			db.saveAllQuestions();
+		}
+
 		if ( isAlarm && totalNeeded > 0 )
 		{
 			AlarmService.isAlarm = true;
@@ -175,6 +184,7 @@ public class QuestionActivity extends AppCompatActivity
 		//long[] correctPattern = {0, 100, 50, 100};
 		//long[] incorrect = { 0, 300, 50, 0 };
 		//vibrator.vibrate( ( isCorrect ? correctPattern : incorrect ), -1); //-1 is important
+		db.getCurrentQuestion().incrementAmount( this.getApplicationContext(), isCorrect );
 		db.incrementQuestion();
 		totalNeeded += ( isCorrect ? -1 : 1 );
 		if ( totalNeeded == 0 && isAlarm )
