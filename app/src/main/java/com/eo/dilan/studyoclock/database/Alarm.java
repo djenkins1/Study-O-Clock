@@ -1,7 +1,7 @@
 package com.eo.dilan.studyoclock.database;
 
-import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -118,7 +118,7 @@ public class Alarm
 		return new Alarm().withHour( now.get(Calendar.HOUR) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 1 ).withOn( 0 );
 	}
 
-	public void setForTomorrow( Activity from, int id  )
+	public void setForTomorrow( Context from, int id  )
 	{
 		AlarmReceiver.addAlarm(from, this.hour, this.minute , id);
 	}

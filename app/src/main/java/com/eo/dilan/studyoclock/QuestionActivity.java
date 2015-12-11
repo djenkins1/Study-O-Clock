@@ -239,7 +239,7 @@ public class QuestionActivity extends AppCompatActivity
 		{
 			totalNeeded = db.alarms.get(0).correct;
 			showNeeded( );
-			db.alarms.get(0).setForTomorrow( me , 0 );
+			db.alarms.get(0).setForTomorrow( me.getApplicationContext() , 0 );
 			updateQuestion(db.getCurrentQuestion());
 		}
 

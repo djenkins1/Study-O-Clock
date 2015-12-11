@@ -40,12 +40,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		cancelThisAlarm(me, hour, minute, 0);
 	}
 
-	public static void addAlarm( Activity me, int hour, int minute )
+	public static void addAlarm( Context me, int hour, int minute )
 	{
 		addAlarm( me, hour, minute, 0);
 	}
 
-	public static void addAlarm( Activity me, int hour, int minute, int id )
+	public static void addAlarm( Context me, int hour, int minute, int id )
 	{
 		Logger.print(me.getApplicationContext(), "Entered: ", "addAlarm");
 		AlarmManager am = (AlarmManager ) me.getSystemService(Context.ALARM_SERVICE);
@@ -64,7 +64,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		//later.add(Calendar.MINUTE, minute);
 
 		Intent intent = new Intent(me, AlarmReceiver.class);
-		PendingIntent sender = PendingIntent.getBroadcast(me, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent sender = PendingIntent.getBroadcast(me, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Logger.print(me.getApplicationContext(), "Time: ", later.getTimeInMillis() + "");
 		Logger.print(me.getApplicationContext(), "Current: ", new GregorianCalendar().getTimeInMillis() + "");

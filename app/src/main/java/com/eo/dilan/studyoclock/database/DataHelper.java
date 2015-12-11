@@ -47,7 +47,7 @@ public class DataHelper extends SQLiteOpenHelper
 		db.execSQL(Alarm.sqlCreate());
 		for ( Question quest : Question.getDebugs() )
 		{
-			addQuestion( db, quest );
+			addQuestion(db, quest);
 		}
 
 		addAlarm(db, Alarm.debugAlarm());
@@ -152,15 +152,15 @@ public class DataHelper extends SQLiteOpenHelper
 		db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{ String.valueOf(alarm.id) });
 	}
 
-	private void removeAnswers( SQLiteDatabase db, long question )
+	private void removeAnswers( SQLiteDatabase db, long qID )
 	{
-		String sql = "DELETE FROM " + Answer.NAME + " WHERE question=" + question;
+		String sql = "DELETE FROM " + Answer.NAME + " WHERE question=" + qID;
 		db.execSQL(sql);
 	}
 
 	private void removeAnswers( long question )
 	{
-		removeAnswers( this.getWritableDatabase(), question );
+		removeAnswers(this.getWritableDatabase(), question);
 	}
 
 	public void setToQuestion( long qID )
@@ -186,5 +186,21 @@ public class DataHelper extends SQLiteOpenHelper
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.close();
+	}
+
+	public void resetQuestionStats()
+	{
+		if ( allQuestions == null )
+		{
+			return;
+		}
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.execSQL( Question.resetStatSQL() );
+		for ( Question question : allQuestions )
+		{
+			question.correct = 0;
+			question.wrong = 0;
+		}
 	}
 }

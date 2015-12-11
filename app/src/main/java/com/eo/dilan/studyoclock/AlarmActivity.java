@@ -51,7 +51,7 @@ public class AlarmActivity extends AppCompatActivity
 		db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
 		if (isOn)
 		{
-			AlarmReceiver.addAlarm(this, hour, min);
+			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min);
 		}
 		//mspin.setSelection(0);
 		//mspin2.setSelection(1);

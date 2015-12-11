@@ -183,6 +183,11 @@ public class Question
 
 	public String deleteStatement()
 	{
-		return "DELETE FROM " + this.NAME + " WHERE id=" + this.id;
+		return "DELETE FROM " + NAME + " WHERE id=" + this.id;
+	}
+
+	public static String resetStatSQL()
+	{
+		return "UPDATE " + NAME + " SET correct=0,wrong=0";
 	}
 }

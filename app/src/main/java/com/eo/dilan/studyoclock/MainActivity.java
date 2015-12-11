@@ -15,7 +15,9 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		Intent serv = new Intent( getApplicationContext() , AlarmService.class );
-		getApplicationContext().startService( serv );
+		getApplicationContext().startService(serv);
+		//Intent serv2 = new Intent( getApplicationContext() , RestartService.class );
+		//getApplicationContext().startService( serv2 );
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main);
 		vibrator = (Vibrator ) getSystemService( this.VIBRATOR_SERVICE);
