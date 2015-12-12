@@ -16,8 +16,6 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		Intent serv = new Intent( getApplicationContext() , AlarmService.class );
 		getApplicationContext().startService(serv);
-		//Intent serv2 = new Intent( getApplicationContext() , RestartService.class );
-		//getApplicationContext().startService( serv2 );
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main);
 		vibrator = (Vibrator ) getSystemService( this.VIBRATOR_SERVICE);
@@ -35,9 +33,14 @@ public class MainActivity extends AppCompatActivity
 
 	}
 
+	public void clickSettings(View v )
+	{
+		Intent intent = new Intent( this , SettingsActivity.class );
+		startActivity( intent );
+	}
+
 	public void onClickShowQ(View v)
 	{
-		//vibrator.vibrate( 500 );
 		Intent intent = new Intent( this , QuestionActivity.class );
 		startActivity( intent );
 	}

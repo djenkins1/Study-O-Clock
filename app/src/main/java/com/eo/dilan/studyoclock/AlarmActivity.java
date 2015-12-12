@@ -56,6 +56,7 @@ public class AlarmActivity extends AppCompatActivity
 		//mspin.setSelection(0);
 		//mspin2.setSelection(1);
 		//text.setText("");
+		db.closeMe();
 		Intent intent = new Intent( this, MainActivity.class);
 		startActivity(intent);
 	}

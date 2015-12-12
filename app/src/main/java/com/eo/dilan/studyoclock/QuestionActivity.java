@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.eo.dilan.studyoclock.database.Answer;
 import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.Logger;
+import com.eo.dilan.studyoclock.database.PreferenceKeys;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
@@ -35,16 +37,20 @@ public class QuestionActivity extends AppCompatActivity
 
 	private boolean isAlarm = false;
 
+	private SharedPreferences shared;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		shared = getSharedPreferences(PreferenceKeys.PREF_KEY, Context.MODE_PRIVATE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_question);
 		vibrator = (Vibrator ) getSystemService( this.VIBRATOR_SERVICE);
 		Intent intent = getIntent();
 		if ( intent != null && intent.getExtras() != null && intent.getExtras().getString("alarm") != null )
 		{
+			shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
 			isAlarm = true;
 			long[] pattern = { 0, 200, 500 };
 			vibrator.vibrate( pattern, 0);
@@ -105,14 +111,13 @@ public class QuestionActivity extends AppCompatActivity
 		{
 			db.saveAllQuestions();
 		}
-		//vibrator.cancel();  // cancel for example here
 	}
 
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
-		vibrator.cancel();   // or cancel here
+		vibrator.cancel();
 		if ( db != null )
 		{
 			db.saveAllQuestions();
@@ -121,13 +126,16 @@ public class QuestionActivity extends AppCompatActivity
 		if ( isAlarm && totalNeeded > 0 )
 		{
 			AlarmService.isAlarm = true;
+			shared.edit().putBoolean(PreferenceKeys.ALARMING, true).putLong(PreferenceKeys.QUESTION, db.getCurrentQuestion().id).putInt(PreferenceKeys.TOTAL , totalNeeded ).commit();
 			return;
 		}
 		else if ( isAlarm )
 		{
 			Logger.print(this.getApplicationContext(), "Reached here", "alarm off");
+			return;
 		}
 		AlarmService.isAlarm = false;
+		shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).commit();
 	}
 
 	private void animateMyView(final View view, final boolean isCorrect )
@@ -180,10 +188,6 @@ public class QuestionActivity extends AppCompatActivity
 	private void handleQuestionEnd( final boolean isCorrect )
 	{
 		final Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		//Toast.makeText(you , myText, Toast.LENGTH_SHORT).show();
-		//long[] correctPattern = {0, 100, 50, 100};
-		//long[] incorrect = { 0, 300, 50, 0 };
-		//vibrator.vibrate( ( isCorrect ? correctPattern : incorrect ), -1); //-1 is important
 		db.getCurrentQuestion().incrementAmount( this.getApplicationContext(), isCorrect );
 		db.incrementQuestion();
 		totalNeeded += ( isCorrect ? -1 : 1 );
@@ -191,6 +195,7 @@ public class QuestionActivity extends AppCompatActivity
 		{
 			vib.cancel();
 			AlarmService.isAlarm = false;
+			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).commit();
 			Intent intent = new Intent( me, MainActivity.class );
 			me.startActivity( intent );
 			return;
@@ -237,9 +242,25 @@ public class QuestionActivity extends AppCompatActivity
 		@Override
 		protected void onPostExecute(Void param)
 		{
-			totalNeeded = db.alarms.get(0).correct;
-			showNeeded( );
-			db.alarms.get(0).setForTomorrow( me.getApplicationContext() , 0 );
+			long id = shared.getLong(PreferenceKeys.QUESTION, -1);
+			int rem = shared.getInt(PreferenceKeys.TOTAL, -1);
+			if ( id != -1 && rem != -1 )
+			{
+				//Logger.print( QuestionActivity.this.getApplicationContext(), "Reached shared" , "More " + id + " out of " + rem);
+				db.setToQuestion(id);
+				totalNeeded = rem;
+			}
+			else
+			{
+				totalNeeded = db.alarms.get(0).correct;
+			}
+
+			showNeeded();
+			if ( shared.getBoolean(PreferenceKeys.ALARM_REPEAT, true) )
+			{
+				db.alarms.get(0).setForTomorrow(me.getApplicationContext(), 0);
+			}
+
 			updateQuestion(db.getCurrentQuestion());
 		}
 

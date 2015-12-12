@@ -58,6 +58,8 @@
         </activity>
         <activity android:name="com.eo.dilan.studyoclock.AllQuestionsActivity" >
         </activity>
+        <activity android:name="com.eo.dilan.studyoclock.SettingsActivity" >
+        </activity>
     </application>
 
 </manifest>

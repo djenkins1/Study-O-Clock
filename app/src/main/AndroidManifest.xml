@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:tools="http://schemas.android.com/tools"
-          package="com.eo.dilan.studyoclock"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="com.eo.dilan.studyoclock"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -22,24 +22,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode">
-        <service
-            android:name=".AlarmService"
-            >
+        <service android:name=".AlarmService">
         </service>
-        <service
-            android:name=".RestartService"
-            >
+        <service android:name=".RestartService">
         </service>
+
         <receiver
             android:name=".RebootReceiver"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"/>
@@ -62,6 +57,8 @@
         <activity android:name=".AlarmActivity">
         </activity>
         <activity android:name=".AllQuestionsActivity">
+        </activity>
+        <activity android:name=".SettingsActivity">
         </activity>
     </application>
 

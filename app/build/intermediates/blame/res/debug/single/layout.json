@@ -144,6 +144,10 @@
         "source": "/home/dilan/AndroidStudioProjects/studyoclock/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/layout/abc_action_bar_up_container.xml"
     },
     {
+        "merged": "/home/dilan/AndroidStudioProjects/studyoclock/app/build/intermediates/res/merged/debug/layout/activity_settings.xml",
+        "source": "/home/dilan/AndroidStudioProjects/studyoclock/app/src/main/res/layout/activity_settings.xml"
+    },
+    {
         "merged": "/home/dilan/AndroidStudioProjects/studyoclock/app/build/intermediates/res/merged/debug/layout/list_viewer.xml",
         "source": "/home/dilan/AndroidStudioProjects/studyoclock/app/src/main/res/layout/list_viewer.xml"
     },

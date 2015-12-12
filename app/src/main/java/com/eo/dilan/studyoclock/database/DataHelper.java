@@ -9,11 +9,8 @@ import java.util.Collections;
 
 public class DataHelper extends SQLiteOpenHelper
 {
-	// All Static variables
-	// Database Version
 	private static final int DATABASE_VERSION = 5;
 
-	// Database Name
 	private static final String DATABASE_NAME = "study";
 
 	public ArrayList<Question> allQuestions;
@@ -28,7 +25,6 @@ public class DataHelper extends SQLiteOpenHelper
 		allQuestions = Question.getAllQuestions(db);
 		alarms = Alarm.getAlarms(db);
 		Collections.shuffle( allQuestions );
-		//db.close();
 	}
 
 	public void saveAllQuestions()
@@ -102,7 +98,6 @@ public class DataHelper extends SQLiteOpenHelper
 		SQLiteDatabase db = this.getWritableDatabase();
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
 		addAnswers(db, question);
-		//db.close();
 	}
 
 	public void addAnswers(SQLiteDatabase db,Question question )
@@ -125,12 +120,10 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void updateQuestion( Question question )
 	{
-		//Log.d("Entered update" , "updating " + question.question );
 		SQLiteDatabase db = this.getWritableDatabase();
 		removeAnswers(question.id);
 		db.update(Question.NAME, question.insertValues(), "id = ?", new String[]{ String.valueOf(question.id) });
 		addAnswers(db, question);
-		//db.close();
 	}
 
 	public void updateQuestionNotAnswers( SQLiteDatabase db, Question question )
@@ -175,11 +168,6 @@ public class DataHelper extends SQLiteOpenHelper
 			}
 		}
 
-		if ( atQuestion == -1 )
-		{
-			//Log.d("BAD QUESTION" , qID + "");
-			//Log.d( "Null" , allQuestions.get( - 1 ).question );
-		}
 	}
 
 	public void closeMe()

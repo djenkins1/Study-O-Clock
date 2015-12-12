@@ -1,6 +1,5 @@
 package com.eo.dilan.studyoclock;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -8,8 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
@@ -18,8 +15,6 @@ import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class AllQuestionsActivity extends AppCompatActivity
 {
@@ -40,38 +35,10 @@ public class AllQuestionsActivity extends AppCompatActivity
 	public void onBackPressed()
 	{
 		super.onBackPressed();
+		db.closeMe();
 		Intent intent = new Intent( this, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
-	}
-
-	private class StableArrayAdapter extends ArrayAdapter<String>
-	{
-
-		HashMap<String, Integer> mIdMap = new HashMap<>();
-
-		public StableArrayAdapter(Context context, int textViewResourceId, List<String> objects)
-		{
-			super(context, textViewResourceId, objects);
-			for (int i = 0; i < objects.size(); ++i)
-			{
-				mIdMap.put(objects.get(i), i);
-			}
-		}
-
-		@Override
-		public long getItemId(int position)
-		{
-			String item = getItem(position);
-			return mIdMap.get(item);
-		}
-
-		@Override
-		public boolean hasStableIds()
-		{
-			return true;
-		}
-
 	}
 
 	private void updateList( final ArrayList<Question> questions )

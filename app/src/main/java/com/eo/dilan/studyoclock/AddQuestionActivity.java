@@ -73,6 +73,7 @@ public class AddQuestionActivity extends AppCompatActivity
 	public void onBackPressed()
 	{
 		super.onBackPressed();
+		db.closeMe();
 	}
 
 	public void removeQuestion(View v )
