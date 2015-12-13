@@ -59,7 +59,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		edits.add( (EditText)findViewById(R.id.question) );
 		edits.add( (EditText)findViewById(R.id.button1) );
 		edits.add( (EditText)findViewById(R.id.button2) );
-		edits.add( (EditText)findViewById(R.id.button3) );
+		edits.add(( EditText ) findViewById(R.id.button3));
 		edits.add(( EditText ) findViewById(R.id.button4));
 
 		checks = new ArrayList<>();
@@ -73,6 +73,13 @@ public class AddQuestionActivity extends AppCompatActivity
 	public void onBackPressed()
 	{
 		super.onBackPressed();
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		db.clearQuestionsInMem();
 	}
 
 	public void removeQuestion(View v )

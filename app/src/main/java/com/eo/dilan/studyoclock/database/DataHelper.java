@@ -1,11 +1,13 @@
 package com.eo.dilan.studyoclock.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Vector;
 
 public class DataHelper extends SQLiteOpenHelper
 {
@@ -13,11 +15,13 @@ public class DataHelper extends SQLiteOpenHelper
 
 	private static final String DATABASE_NAME = "study";
 
-	public ArrayList<Question> allQuestions;
+	public Vector<Question> allQuestions;
 
 	public ArrayList<Alarm> alarms;
 
 	private int atQuestion = 0;
+
+	private SQLiteDatabase db;
 
 	private static DataHelper singleton;
 
@@ -41,18 +45,22 @@ public class DataHelper extends SQLiteOpenHelper
 	private DataHelper(Context context)
 	{
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		SQLiteDatabase db = this.getWritableDatabase();
-		allQuestions = Question.getAllQuestions(db);
+		db = this.getWritableDatabase();
+		allQuestions = new Vector<>();
 		alarms = Alarm.getAlarms(db);
-		Collections.shuffle( allQuestions );
+		Collections.shuffle(allQuestions);
+	}
+
+	public ArrayList<Question> getAllQuestions()
+	{
+		return Question.getAllQuestions( db );
 	}
 
 	public void saveAllQuestions()
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
 		for ( Question question : allQuestions )
 		{
-			updateQuestionNotAnswers( db, question );
+			updateQuestionNotAnswers(db, question);
 		}
 	}
 
@@ -93,6 +101,30 @@ public class DataHelper extends SQLiteOpenHelper
 		onCreate(db);
 	}
 
+	public Question getCurrentQuestionLoader(Cursor cursor, int limit )
+	{
+		if ( allQuestions == null )
+		{
+			return null;
+		}
+
+		if ( atQuestion >= allQuestions.size() )
+		{
+			loadQuestions(cursor, limit);
+			if ( atQuestion >= allQuestions.size() )
+			{
+				atQuestion = 0;
+				Collections.shuffle( allQuestions );
+			}
+		}
+
+		if ( allQuestions.size() == 0 )
+		{
+			return null;
+		}
+		return allQuestions.get( atQuestion );
+	}
+
 	public Question getCurrentQuestion()
 	{
 		if ( allQuestions == null )
@@ -126,9 +158,9 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void addQuestion( Question question )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
+		//SQLiteDatabase db = this.getWritableDatabase();
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
-		allQuestions.add( question );
+		//allQuestions.add( question );
 		addAnswers(db, question);
 	}
 
@@ -152,7 +184,7 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void updateQuestion( Question question )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
+		//SQLiteDatabase db = this.getWritableDatabase();
 		removeAnswers(question.id);
 		updateQuestionNotAnswers( db , question );
 		addAnswers(db, question);
@@ -165,14 +197,14 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void removeQuestion( Question question )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
+		//SQLiteDatabase db = this.getWritableDatabase();
 		removeAnswers(db, question.id);
 		db.execSQL(question.deleteStatement());
 	}
 
 	public void updateAlarm( Alarm alarm )
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
+		//SQLiteDatabase db = this.getWritableDatabase();
 		db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{ String.valueOf(alarm.id) });
 	}
 
@@ -180,6 +212,11 @@ public class DataHelper extends SQLiteOpenHelper
 	{
 		String sql = "DELETE FROM " + Answer.NAME + " WHERE question=" + qID;
 		db.execSQL(sql);
+	}
+
+	public void clearQuestionsInMem()
+	{
+		allQuestions.clear();
 	}
 
 	private void removeAnswers( long question )
@@ -199,6 +236,66 @@ public class DataHelper extends SQLiteOpenHelper
 			}
 		}
 
+		if ( atQuestion == -1 )
+		{
+			Question question = Question.getQuestion(db, qID);
+			if ( question != null )
+			{
+				allQuestions.add(question);
+				atQuestion = allQuestions.size() - 1;
+			}
+		}
+	}
+
+	public Cursor loadQuestions( long qID, int limit )
+	{
+		Cursor cursor = getCursorOfQuestionsNotID( qID );
+		if ( cursor != null )
+		{
+			cursor.moveToFirst();
+		}
+		return loadFromCursor( cursor, limit );
+	}
+
+	public Cursor loadQuestions( Cursor cursor, int limit )
+	{
+		return loadFromCursor( cursor, limit );
+	}
+
+	private Cursor loadFromCursor( Cursor cursor, int limit )
+	{
+		int count = 0;
+		if ( cursor != null )
+		{
+			do
+			{
+				if ( count >= limit )
+				{
+					break;
+				}
+
+				if ( cursor.isAfterLast() )
+				{
+					break;
+				}
+
+				count++;
+				Question question = Question.fromCursor(cursor);
+				if ( question != null )
+				{
+					question.withAnswers(Answer.getAnswers(db, question.id));
+					allQuestions.add(question);
+				}
+			}
+			while ( cursor.moveToNext() );
+		}
+
+		return cursor;
+	}
+
+	public Cursor getCursorOfQuestionsNotID( long qID )
+	{
+		return db.rawQuery( Question.sqlSelectNotID( qID ) , new String[]{} );
 	}
 
 	public void resetQuestionStats()
@@ -208,12 +305,8 @@ public class DataHelper extends SQLiteOpenHelper
 			return;
 		}
 
-		SQLiteDatabase db = this.getWritableDatabase();
+		//SQLiteDatabase db = this.getWritableDatabase();
 		db.execSQL( Question.resetStatSQL() );
-		for ( Question question : allQuestions )
-		{
-			question.correct = 0;
-			question.wrong = 0;
-		}
+		clearQuestionsInMem();
 	}
 }

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ public class QuestionActivity extends AppCompatActivity
 	private DataHelper db;
 
 	private int totalNeeded;
+
+	private Cursor cursor;
 
 	private Vibrator vibrator;
 
@@ -111,18 +114,33 @@ public class QuestionActivity extends AppCompatActivity
 		super.onPause();
 		if ( db != null )
 		{
-			db.saveAllQuestions();
+			//db.saveAllQuestions();
 		}
+
 	}
 
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
-		vibrator.cancel();
+		if ( vibrator != null )
+		{
+			vibrator.cancel();
+		}
+
+		if ( cursor != null )
+		{
+			cursor.close();
+			cursor = null;
+		}
+		else
+		{
+			Logger.print( this, "Cursor BAD" , "more" );
+		}
+
 		if ( db != null )
 		{
-			db.saveAllQuestions();
+			//db.saveAllQuestions();
 		}
 
 		if ( isAlarm && totalNeeded > 0 )
@@ -194,13 +212,13 @@ public class QuestionActivity extends AppCompatActivity
 		if ( totalNeeded == 0 && isAlarm )
 		{
 			vib.cancel();
-			//AlarmService.isAlarm = false;
 			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).commit();
 			Intent intent = new Intent( me, MainActivity.class );
 			me.startActivity( intent );
 			return;
 		}
-		updateQuestion(db.getCurrentQuestion() );
+		//updateQuestion(db.getCurrentQuestion() );
+		updateQuestion(db.getCurrentQuestionLoader( cursor, 5 ));
 	}
 
 	private void showNeeded()
@@ -234,6 +252,17 @@ public class QuestionActivity extends AppCompatActivity
 		protected Void doInBackground(Void... params)
 		{
 			db = DataHelper.instance(me.getApplicationContext() );
+			long id = shared.getLong(PreferenceKeys.QUESTION, -1);
+			int rem = shared.getInt(PreferenceKeys.TOTAL, -1);
+			if ( id != -1 && rem != -1 )
+			{
+				db.setToQuestion(id);
+				cursor = db.loadQuestions( id , 4 );
+			}
+			else
+			{
+				cursor = db.loadQuestions( -1 , 5 );
+			}
 			return null;
 		}
 
@@ -244,7 +273,6 @@ public class QuestionActivity extends AppCompatActivity
 			int rem = shared.getInt(PreferenceKeys.TOTAL, -1);
 			if ( id != -1 && rem != -1 )
 			{
-				db.setToQuestion(id);
 				totalNeeded = rem;
 			}
 			else if ( isAlarm )
@@ -257,7 +285,7 @@ public class QuestionActivity extends AppCompatActivity
 				db.alarms.get(0).setForTomorrow(me.getApplicationContext(), 0);
 			}
 
-			updateQuestion(db.getCurrentQuestion());
+			updateQuestion(db.getCurrentQuestionLoader( cursor, 5 ));
 		}
 
 

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -63,7 +62,7 @@ public class Question
 
 	public Question withAnswer( Answer answer )
 	{
-		this.answers.add( answer.withQuestion( this.id ) );
+		this.answers.add(answer.withQuestion(this.id));
 		return this;
 	}
 
@@ -92,7 +91,7 @@ public class Question
 		this.id = id;
 		for( Answer answer : answers )
 		{
-			answer.withQuestion( id );
+			answer.withQuestion(id);
 		}
 		return this;
 	}
@@ -121,14 +120,37 @@ public class Question
 	{
 		ContentValues values = new ContentValues();
 		values.put("question", this.question);
-		values.put( "correct" , this.correct );
-		values.put( "wrong", this.wrong);
+		values.put("correct", this.correct);
+		values.put("wrong", this.wrong);
 		return values;
 	}
 
 	public static String sqlSelectAll()
 	{
 		return "SELECT * FROM " + NAME;
+	}
+
+	public static String sqlSelectNotID( long qID )
+	{
+		return "SELECT * FROM " + NAME + " WHERE id !=" + qID + " ORDER BY RANDOM()";
+	}
+
+	public static Question getQuestion( SQLiteDatabase db, long id )
+	{
+		String stmt = "SELECT * FROM " + NAME + " WHERE id=" + id;
+		Cursor cursor = db.rawQuery( stmt , new String[] {} );
+		if (cursor.getCount() <= 0)
+		{
+			return null;
+		}
+
+		cursor.moveToFirst();
+		Question question = fromCursor( cursor );
+		if ( question != null )
+		{
+			question.withAnswers(Answer.getAnswers(db, question.id));
+		}
+		return question;
 	}
 
 	public static ArrayList<Question> getAllQuestions(SQLiteDatabase db)
@@ -142,16 +164,21 @@ public class Question
 			{
 				//get the question info
 				//get the answers for the question
-				Question question = new Question( cursor.getString( 1 ) );
-				question.withID( Long.parseLong( cursor.getString( 0 )));
-				question.withAnswers(Answer.getAnswers(db, question.id));
-				question.withCorrect(Integer.parseInt(cursor.getString(2)));
-				question.withWrong(Integer.parseInt(cursor.getString(3)));
+				Question question = fromCursor( cursor );
 				toReturn.add(question);
 			}
 			while ( cursor.moveToNext() );
 		}
 		return toReturn;
+	}
+
+	public static Question fromCursor( Cursor cursor )
+	{
+		Question question = new Question( cursor.getString( 1 ));
+		question.withID(Long.parseLong(cursor.getString( 0 )));
+		question.withCorrect(Integer.parseInt(cursor.getString(2)));
+		question.withWrong(Integer.parseInt(cursor.getString(3)));
+		return question;
 	}
 
 	public static ArrayList<Question> getDebugs()
@@ -179,10 +206,6 @@ public class Question
 			if ( quest.isValidQuestion() == QUESTION_FINE )
 			{
 				toReturn.add(quest);
-			}
-			else
-			{
-				Log.d("BAD QUEST" , "HERE at " + i );
 			}
 		}
 		return toReturn;

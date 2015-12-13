@@ -40,6 +40,13 @@ public class AllQuestionsActivity extends AppCompatActivity
 		startActivity(intent);
 	}
 
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		db.clearQuestionsInMem();
+	}
+
 	private void updateList( final ArrayList<Question> questions )
 	{
 		final ListView listview = (ListView) findViewById(R.id.listview);
@@ -87,7 +94,7 @@ public class AllQuestionsActivity extends AppCompatActivity
 		@Override
 		protected void onPostExecute(Void param)
 		{
-			updateList(db.allQuestions );
+			updateList( db.getAllQuestions() );
 		}
 	}
 

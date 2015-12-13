@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity
 		protected Void doInBackground(Void... params)
 		{
 			db = DataHelper.instance(MainActivity.this.getApplicationContext());
+			db.clearQuestionsInMem();
 			return null;
 		}
 
