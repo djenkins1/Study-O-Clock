@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -51,7 +52,7 @@ public class Question
 		}
 
 		this.wrong++;
-		Logger.print( c, "Incremented wrong", "question " + this.id + " now has " + this.wrong );
+		Logger.print(c, "Incremented wrong", "question " + this.id + " now has " + this.wrong);
 		return this;
 	}
 
@@ -112,7 +113,7 @@ public class Question
 		toReturn.append(",question TEXT ");
 		toReturn.append(",correct INTEGER");
 		toReturn.append(",wrong INTEGER");
-		toReturn.append( ")" );
+		toReturn.append(")");
 		return toReturn.toString();
 	}
 
@@ -156,6 +157,7 @@ public class Question
 	public static ArrayList<Question> getDebugs()
 	{
 		ArrayList<Question> toReturn = new ArrayList<Question>();
+		/*
 		Question quest = new Question( "I think I found myself a ___");
 		quest.withAnswer( new Answer( "virus" , 0 ) );
 		quest.withAnswer( new Answer( "train" , 0 ) );
@@ -166,6 +168,23 @@ public class Question
 		quest.withAnswer( new Answer( "a street I knew" , 1 ) );
 		quest.withAnswer(new Answer("my streetcar", 0));
 		toReturn.add(quest);
+		*/
+		for ( int i = 0; i < 100; i++ )
+		{
+			Question quest = new Question( "What is 5 + " + i);
+			quest.withAnswer( new Answer( i + "" , 0 ));
+			quest.withAnswer( new Answer( ( i + 2 ) + "" , 0 ));
+			quest.withAnswer( new Answer( ( i * 3 ) + "" , 0 ));
+			quest.withAnswer( new Answer( ( i + 5) + "" , 1 ));
+			if ( quest.isValidQuestion() == QUESTION_FINE )
+			{
+				toReturn.add(quest);
+			}
+			else
+			{
+				Log.d("BAD QUEST" , "HERE at " + i );
+			}
+		}
 		return toReturn;
 	}
 

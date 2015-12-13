@@ -53,7 +53,7 @@ public class RestartService extends Service
 	{
 		protected Void doInBackground(Void... params)
 		{
-			db = new DataHelper( RestartService.this.getApplicationContext() );
+			db = DataHelper.instance(RestartService.this.getApplicationContext() );
 			return null;
 		}
 

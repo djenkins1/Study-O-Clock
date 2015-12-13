@@ -35,7 +35,6 @@ public class AllQuestionsActivity extends AppCompatActivity
 	public void onBackPressed()
 	{
 		super.onBackPressed();
-		db.closeMe();
 		Intent intent = new Intent( this, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
@@ -71,7 +70,6 @@ public class AllQuestionsActivity extends AppCompatActivity
 				Bundle mBundle = new Bundle();
 				mBundle.putLong("question", quest );
 				appIntent.putExtras(mBundle);
-				db.closeMe();
 				startActivity(appIntent);
 			}
 
@@ -82,7 +80,7 @@ public class AllQuestionsActivity extends AppCompatActivity
 	{
 		protected Void doInBackground(Void... params)
 		{
-			db = new DataHelper( me );
+			db = DataHelper.instance(me.getApplicationContext() );
 			return null;
 		}
 

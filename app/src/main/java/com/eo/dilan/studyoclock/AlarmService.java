@@ -7,12 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.Logger;
+import com.eo.dilan.studyoclock.database.PreferenceKeys;
 
 public class AlarmService extends Service
 {
-
-	public static boolean isAlarm = false;
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
@@ -29,8 +29,10 @@ public class AlarmService extends Service
 	public void onTaskRemoved(Intent rootIntent)
 	{
 		super.onTaskRemoved(rootIntent);
+		boolean isAlarm = getSharedPreferences(PreferenceKeys.PREF_KEY, Context.MODE_PRIVATE).getBoolean( PreferenceKeys.ALARMING , false );
 		if ( !isAlarm )
 		{
+			DataHelper.instance(this.getApplicationContext() ).closeMe();
 			return;
 		}
 		Logger.print(this.getApplicationContext(), "Inside remove", "yes ");
@@ -41,6 +43,5 @@ public class AlarmService extends Service
 		PendingIntent mPendingIntent = PendingIntent.getActivity(con, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
 		AlarmManager mgr = ( AlarmManager ) con.getSystemService(Context.ALARM_SERVICE);
 		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, mPendingIntent);
-
 	}
 }

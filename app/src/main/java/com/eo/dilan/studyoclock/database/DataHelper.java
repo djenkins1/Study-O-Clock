@@ -9,7 +9,7 @@ import java.util.Collections;
 
 public class DataHelper extends SQLiteOpenHelper
 {
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 1;
 
 	private static final String DATABASE_NAME = "study";
 
@@ -19,7 +19,27 @@ public class DataHelper extends SQLiteOpenHelper
 
 	private int atQuestion = 0;
 
-	public DataHelper(Context context) {
+	private static DataHelper singleton;
+
+	public synchronized static DataHelper instance( Context context )
+	{
+		if ( singleton == null )
+		{
+			singleton = new DataHelper( context );
+		}
+		return singleton;
+	}
+
+	public void closeMe()
+	{
+		singleton = null;
+		alarms = null;
+		allQuestions = null;
+		this.close();
+	}
+
+	private DataHelper(Context context)
+	{
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		SQLiteDatabase db = this.getWritableDatabase();
 		allQuestions = Question.getAllQuestions(db);
@@ -53,6 +73,17 @@ public class DataHelper extends SQLiteOpenHelper
 	// Upgrading database
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+	{
+		// Drop older table if existed
+		db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + Answer.NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME );
+		// Create tables again
+		onCreate(db);
+	}
+
+	@Override
+	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
 		// Drop older table if existed
 		db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
@@ -97,6 +128,7 @@ public class DataHelper extends SQLiteOpenHelper
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
+		allQuestions.add( question );
 		addAnswers(db, question);
 	}
 
@@ -122,13 +154,12 @@ public class DataHelper extends SQLiteOpenHelper
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		removeAnswers(question.id);
-		db.update(Question.NAME, question.insertValues(), "id = ?", new String[]{ String.valueOf(question.id) });
+		updateQuestionNotAnswers( db , question );
 		addAnswers(db, question);
 	}
 
 	public void updateQuestionNotAnswers( SQLiteDatabase db, Question question )
 	{
-
 		db.update(Question.NAME, question.insertValues(), "id = ?", new String[]{ String.valueOf(question.id) });
 	}
 
@@ -168,12 +199,6 @@ public class DataHelper extends SQLiteOpenHelper
 			}
 		}
 
-	}
-
-	public void closeMe()
-	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.close();
 	}
 
 	public void resetQuestionStats()

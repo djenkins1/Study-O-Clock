@@ -73,7 +73,6 @@ public class AddQuestionActivity extends AppCompatActivity
 	public void onBackPressed()
 	{
 		super.onBackPressed();
-		db.closeMe();
 	}
 
 	public void removeQuestion(View v )
@@ -157,9 +156,6 @@ public class AddQuestionActivity extends AppCompatActivity
 			{
 				question.withAnswer( new Answer( text, ( value ? 1 : 0 ) ) );
 			}
-
-			//texts.get( i ).setText("");
-			//boxes.get( i - 1 ).setChecked(false);
 		}
 
 		int error = question.isValidQuestion();
@@ -184,7 +180,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		if ( db == null)
 		{
 			Toast.makeText(getApplicationContext(), "Question added!", Toast.LENGTH_LONG).show();
-			DataHelper db = new DataHelper(this);
+			DataHelper db = DataHelper.instance(this.getApplicationContext() );
 			db.addQuestion(question);
 			Intent intent = new Intent( this , AllQuestionsActivity.class );
 			startActivity(intent);
@@ -194,7 +190,6 @@ public class AddQuestionActivity extends AppCompatActivity
 			Toast.makeText(getApplicationContext(), "Question updated!", Toast.LENGTH_LONG).show();
 			db.updateQuestion( question );
 			Intent intent = new Intent( this , AllQuestionsActivity.class );
-			db.closeMe();
 			startActivity(intent);
 		}
 
@@ -206,7 +201,7 @@ public class AddQuestionActivity extends AppCompatActivity
 	{
 		protected Void doInBackground(Void... params)
 		{
-			db = new DataHelper( me );
+			db = DataHelper.instance(me.getApplicationContext() );
 			return null;
 		}
 

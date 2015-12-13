@@ -38,11 +38,28 @@ public class AlarmActivity extends AppCompatActivity
 		int hour = tpick.getCurrentHour();
 		int min = tpick.getCurrentMinute();
 		String numText = text.getText().toString();
-		if ( numText.equals("") )
+		if ( numText == null || numText.equals("") )
 		{
 			Toast.makeText(getApplicationContext(), "Number correct must be filled out", Toast.LENGTH_LONG).show();
 			return;
 		}
+
+		try
+		{
+			Integer.parseInt( numText );
+		}
+		catch( Exception e )
+		{
+			Toast.makeText(getApplicationContext(), "Number correct must be a number", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		if ( Integer.parseInt( numText ) <= 0 )
+		{
+			Toast.makeText(getApplicationContext(), "Number correct must be positive", Toast.LENGTH_LONG).show();
+			return;
+		}
+
 		int num = Integer.parseInt( numText );
 		boolean isOn = ((Switch ) findViewById(R.id.switch1)).isChecked();
 		Logger.print(this.getApplicationContext(),"Hour", hour + "");
@@ -53,10 +70,7 @@ public class AlarmActivity extends AppCompatActivity
 		{
 			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min);
 		}
-		//mspin.setSelection(0);
-		//mspin2.setSelection(1);
-		//text.setText("");
-		db.closeMe();
+
 		Intent intent = new Intent( this, MainActivity.class);
 		startActivity(intent);
 	}
@@ -82,14 +96,14 @@ public class AlarmActivity extends AppCompatActivity
 		tpick.setCurrentHour(alarm.hour);
 		tpick.setCurrentMinute(alarm.minute);
 		text.setText( alarm.correct + "" );
-		sw1.setChecked( alarm.isOn == 1 );
+		sw1.setChecked(alarm.isOn == 1);
 	}
 
 	private class LongOperation extends AsyncTask<Void, Void, Void>
 	{
 		protected Void doInBackground(Void... params)
 		{
-			db = new DataHelper( me );
+			db = DataHelper.instance(me.getApplicationContext() );
 			return null;
 		}
 

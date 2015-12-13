@@ -48,6 +48,7 @@ public class QuestionActivity extends AppCompatActivity
 		setContentView(R.layout.activity_question);
 		vibrator = (Vibrator ) getSystemService( this.VIBRATOR_SERVICE);
 		Intent intent = getIntent();
+
 		if ( intent != null && intent.getExtras() != null && intent.getExtras().getString("alarm") != null )
 		{
 			shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
@@ -55,6 +56,7 @@ public class QuestionActivity extends AppCompatActivity
 			long[] pattern = { 0, 200, 500 };
 			vibrator.vibrate( pattern, 0);
 		}
+
 		new LongOperation().execute();
 	}
 
@@ -125,7 +127,6 @@ public class QuestionActivity extends AppCompatActivity
 
 		if ( isAlarm && totalNeeded > 0 )
 		{
-			AlarmService.isAlarm = true;
 			shared.edit().putBoolean(PreferenceKeys.ALARMING, true).putLong(PreferenceKeys.QUESTION, db.getCurrentQuestion().id).putInt(PreferenceKeys.TOTAL , totalNeeded ).commit();
 			return;
 		}
@@ -134,7 +135,6 @@ public class QuestionActivity extends AppCompatActivity
 			Logger.print(this.getApplicationContext(), "Reached here", "alarm off");
 			return;
 		}
-		AlarmService.isAlarm = false;
 		shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).commit();
 	}
 
@@ -194,7 +194,7 @@ public class QuestionActivity extends AppCompatActivity
 		if ( totalNeeded == 0 && isAlarm )
 		{
 			vib.cancel();
-			AlarmService.isAlarm = false;
+			//AlarmService.isAlarm = false;
 			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).commit();
 			Intent intent = new Intent( me, MainActivity.class );
 			me.startActivity( intent );
@@ -208,11 +208,9 @@ public class QuestionActivity extends AppCompatActivity
 		TextView v = (TextView)findViewById(R.id.remains);
 		if ( !isAlarm || totalNeeded <= 0 )
 		{
-			AlarmService.isAlarm = false;
 			v.setText( "" );
 			return;
 		}
-		AlarmService.isAlarm = true;
 		v.setText( totalNeeded + ":" );
 	}
 
@@ -235,7 +233,7 @@ public class QuestionActivity extends AppCompatActivity
 	{
 		protected Void doInBackground(Void... params)
 		{
-			db = new DataHelper( me );
+			db = DataHelper.instance(me.getApplicationContext() );
 			return null;
 		}
 
@@ -246,16 +244,14 @@ public class QuestionActivity extends AppCompatActivity
 			int rem = shared.getInt(PreferenceKeys.TOTAL, -1);
 			if ( id != -1 && rem != -1 )
 			{
-				//Logger.print( QuestionActivity.this.getApplicationContext(), "Reached shared" , "More " + id + " out of " + rem);
 				db.setToQuestion(id);
 				totalNeeded = rem;
 			}
-			else
+			else if ( isAlarm )
 			{
 				totalNeeded = db.alarms.get(0).correct;
 			}
 
-			showNeeded();
 			if ( shared.getBoolean(PreferenceKeys.ALARM_REPEAT, true) )
 			{
 				db.alarms.get(0).setForTomorrow(me.getApplicationContext(), 0);

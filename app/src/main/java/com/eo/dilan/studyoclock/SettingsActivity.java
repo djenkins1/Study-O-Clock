@@ -56,14 +56,13 @@ public class SettingsActivity extends AppCompatActivity
 	public void onBackPressed()
 	{
 		super.onBackPressed();
-		db.closeMe();
 	}
 
 	private class LongOperation extends AsyncTask<Void, Void, Void>
 	{
 		protected Void doInBackground(Void... params)
 		{
-			db = new DataHelper( SettingsActivity.this );
+			db = DataHelper.instance(SettingsActivity.this.getApplicationContext() );
 			return null;
 		}
 
