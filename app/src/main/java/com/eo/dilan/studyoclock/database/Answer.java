@@ -35,6 +35,11 @@ public class Answer
 		return this;
 	}
 
+	public static String deleteAllStatement()
+	{
+		return "DELETE FROM " + NAME;
+	}
+
 	public Answer withID( long id )
 	{
 		this.id = id;

@@ -56,12 +56,9 @@ public class DataHelper extends SQLiteOpenHelper
 		return Question.getAllQuestions( db );
 	}
 
-	public void saveAllQuestions()
+	public void saveQuestion(Question question )
 	{
-		for ( Question question : allQuestions )
-		{
-			updateQuestionNotAnswers(db, question);
-		}
+		updateQuestionNotAnswers(db, question);
 	}
 
 	public void onCreate(SQLiteDatabase db)
@@ -135,7 +132,7 @@ public class DataHelper extends SQLiteOpenHelper
 		if ( atQuestion >= allQuestions.size() )
 		{
 			atQuestion = 0;
-			Collections.shuffle( allQuestions );
+			Collections.shuffle(allQuestions);
 		}
 
 		if ( allQuestions.size() == 0 )
@@ -158,9 +155,7 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void addQuestion( Question question )
 	{
-		//SQLiteDatabase db = this.getWritableDatabase();
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
-		//allQuestions.add( question );
 		addAnswers(db, question);
 	}
 
@@ -184,7 +179,6 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void updateQuestion( Question question )
 	{
-		//SQLiteDatabase db = this.getWritableDatabase();
 		removeAnswers(question.id);
 		updateQuestionNotAnswers( db , question );
 		addAnswers(db, question);
@@ -192,26 +186,71 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void updateQuestionNotAnswers( SQLiteDatabase db, Question question )
 	{
-		db.update(Question.NAME, question.insertValues(), "id = ?", new String[]{ String.valueOf(question.id) });
+		if ( question != null )
+		{
+			db.update(Question.NAME, question.insertValues(), "id = ?", new String[]{ String.valueOf(question.id) });
+		}
 	}
 
 	public void removeQuestion( Question question )
 	{
-		//SQLiteDatabase db = this.getWritableDatabase();
 		removeAnswers(db, question.id);
 		db.execSQL(question.deleteStatement());
 	}
 
+	public void removeAllQuestions()
+	{
+		clearQuestionsInMem();
+		if ( checkOpen() )
+		{
+			removeAllAnswers();
+			db.execSQL(Question.deleteAllStatement());
+		}
+	}
+
+	private boolean checkOpen()
+	{
+		return ( db != null && db.isOpen() );
+	}
+
+	public boolean areThereQuestions()
+	{
+		if ( checkOpen() )
+		{
+			Cursor cursor = db.rawQuery("SELECT 1 FROM " + Question.NAME + " LIMIT 1", new String[]{});
+			boolean toReturn = ( cursor != null && cursor.getCount() == 1 );
+			if ( cursor != null )
+			{
+				cursor.close();
+			}
+			return toReturn;
+		}
+		return false;
+	}
+
+	private void removeAllAnswers()
+	{
+		if ( checkOpen() )
+		{
+			db.execSQL(Answer.deleteAllStatement());
+		}
+	}
+
 	public void updateAlarm( Alarm alarm )
 	{
-		//SQLiteDatabase db = this.getWritableDatabase();
-		db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{ String.valueOf(alarm.id) });
+		if ( checkOpen() )
+		{
+			db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{ String.valueOf(alarm.id) });
+		}
 	}
 
 	private void removeAnswers( SQLiteDatabase db, long qID )
 	{
-		String sql = "DELETE FROM " + Answer.NAME + " WHERE question=" + qID;
-		db.execSQL(sql);
+		if ( checkOpen() )
+		{
+			String sql = "DELETE FROM " + Answer.NAME + " WHERE question=" + qID;
+			db.execSQL(sql);
+		}
 	}
 
 	public void clearQuestionsInMem()
@@ -221,7 +260,10 @@ public class DataHelper extends SQLiteOpenHelper
 
 	private void removeAnswers( long question )
 	{
-		removeAnswers(this.getWritableDatabase(), question);
+		if ( checkOpen() )
+		{
+			removeAnswers(db, question);
+		}
 	}
 
 	public void setToQuestion( long qID )
@@ -305,8 +347,10 @@ public class DataHelper extends SQLiteOpenHelper
 			return;
 		}
 
-		//SQLiteDatabase db = this.getWritableDatabase();
-		db.execSQL( Question.resetStatSQL() );
+		if ( checkOpen() )
+		{
+			db.execSQL(Question.resetStatSQL());
+		}
 		clearQuestionsInMem();
 	}
 }

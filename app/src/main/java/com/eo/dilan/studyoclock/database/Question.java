@@ -41,6 +41,11 @@ public class Question
 		return this;
 	}
 
+	public static String deleteAllStatement()
+	{
+		return "DELETE FROM " + NAME;
+	}
+
 	public Question incrementAmount( Context c, boolean isCorrect )
 	{
 		if ( isCorrect )

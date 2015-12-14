@@ -44,7 +44,11 @@ public class AllQuestionsActivity extends AppCompatActivity
 	public void onDestroy()
 	{
 		super.onDestroy();
-		db.clearQuestionsInMem();
+		if ( db != null )
+		{
+			db.clearQuestionsInMem();
+		}
+
 	}
 
 	private void updateList( final ArrayList<Question> questions )
@@ -57,12 +61,9 @@ public class AllQuestionsActivity extends AppCompatActivity
 			list.add( questions.get( i ).question );
 		}
 		final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter( this, list, questions );
-		//final StableArrayAdapter adapter = new StableArrayAdapter(this, R.layout.list_viewer, list);
 		FrameLayout footerLayout = (FrameLayout ) getLayoutInflater().inflate(R.layout.footer_res,null);
 		listview.addFooterView(footerLayout);
 		listview.setAdapter(adapter);
-
-		//btnPostYourEnquiry = (Button ) footerLayout.findViewById(R.id.btnGetMoreResults);
 
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
@@ -70,7 +71,6 @@ public class AllQuestionsActivity extends AppCompatActivity
 			@Override
 			public void onItemClick(AdapterView< ? > parent, final View view, int position, long id)
 			{
-				//final String item = ( String ) parent.getItemAtPosition(position);
 				Logger.print(me.getApplicationContext(),"Question Clicked", questions.get(position).question );
 				long quest = questions.get(position).id;
 				Intent appIntent = new Intent(me, AddQuestionActivity.class);

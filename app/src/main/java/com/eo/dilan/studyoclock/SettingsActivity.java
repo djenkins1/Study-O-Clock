@@ -45,6 +45,16 @@ public class SettingsActivity extends AppCompatActivity
 		Toast.makeText(getApplicationContext(), "Question statistics reset!", Toast.LENGTH_LONG).show();
 	}
 
+	public void resetQuestionClick( View v )
+	{
+		if ( !isLoaded || db == null )
+		{
+			Toast.makeText(getApplicationContext(), "Please wait!", Toast.LENGTH_LONG).show();
+			return;
+		}
+		db.removeAllQuestions();
+	}
+
 	public void saveSettingsClick(View v )
 	{
 		Switch sw1 = (Switch ) findViewById(R.id.repeatSwitch);

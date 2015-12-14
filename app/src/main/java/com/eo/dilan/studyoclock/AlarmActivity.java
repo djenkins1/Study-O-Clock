@@ -32,13 +32,18 @@ public class AlarmActivity extends AppCompatActivity
 
 	public void setMyAlarm(View v)
 	{
+		if ( db == null )
+		{
+			Toast.makeText(getApplicationContext(), "Please wait!", Toast.LENGTH_LONG).show();
+			return;
+		}
 		cancelAlarm(v);
 		TimePicker tpick = (TimePicker)findViewById(R.id.timePicker1);
 		EditText text = ( EditText ) findViewById(R.id.numQuestions);
 		int hour = tpick.getCurrentHour();
 		int min = tpick.getCurrentMinute();
 		String numText = text.getText().toString();
-		if ( numText == null || numText.equals("") )
+		if ( numText.equals("") )
 		{
 			Toast.makeText(getApplicationContext(), "Number correct must be filled out", Toast.LENGTH_LONG).show();
 			return;
@@ -66,7 +71,7 @@ public class AlarmActivity extends AppCompatActivity
 		Logger.print(this.getApplicationContext(), "Min", min + "");
 		Logger.print(this.getApplicationContext(), "To Ask", num + "");
 		db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
-		if (isOn)
+		if ( isOn )
 		{
 			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min);
 		}

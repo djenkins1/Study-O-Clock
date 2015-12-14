@@ -79,7 +79,10 @@ public class AddQuestionActivity extends AppCompatActivity
 	public void onDestroy()
 	{
 		super.onDestroy();
-		db.clearQuestionsInMem();
+		if ( db != null )
+		{
+			db.clearQuestionsInMem();
+		}
 	}
 
 	public void removeQuestion(View v )
@@ -141,7 +144,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		ArrayList<CheckBox > boxes = checks;
 
 		String qText = texts.get( 0 ).getText().toString().trim();
-		Question question = null;
+		Question question;
 		if ( populated && qID != -1 )
 		{
 			question = db.getCurrentQuestion().withAnswersClear().withQuestion( qText );
@@ -150,9 +153,10 @@ public class AddQuestionActivity extends AppCompatActivity
 		{
 			question = new Question( qText );
 		}
-		else if ( !populated && qID != -1 )
+		else
 		{
 			Toast.makeText(getApplicationContext(), "Please wait", Toast.LENGTH_LONG).show();
+			return;
 		}
 
 		for ( int i = 1; i < texts.size(); i++ )
@@ -199,9 +203,6 @@ public class AddQuestionActivity extends AppCompatActivity
 			Intent intent = new Intent( this , AllQuestionsActivity.class );
 			startActivity(intent);
 		}
-
-
-
 	}
 
 	private class LongOperation extends AsyncTask<Void, Void, Void>

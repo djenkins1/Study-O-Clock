@@ -59,9 +59,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 			Logger.print(me.getApplicationContext(), "Set Alarm", "Setting alarm to tomorrow");
 			later.add(Calendar.DATE , 1);
 		}
-		//later.add(Calendar.SECOND, 20);
-		//later.add(Calendar.HOUR_OF_DAY, hour);
-		//later.add(Calendar.MINUTE, minute);
 
 		Intent intent = new Intent(me, AlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(me, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);

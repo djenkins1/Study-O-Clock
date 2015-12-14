@@ -49,7 +49,7 @@ public class QuestionActivity extends AppCompatActivity
 		shared = getSharedPreferences(PreferenceKeys.PREF_KEY, Context.MODE_PRIVATE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_question);
-		vibrator = (Vibrator ) getSystemService( this.VIBRATOR_SERVICE);
+		vibrator = (Vibrator ) getSystemService( VIBRATOR_SERVICE);
 		Intent intent = getIntent();
 
 		if ( intent != null && intent.getExtras() != null && intent.getExtras().getString("alarm") != null )
@@ -112,10 +112,6 @@ public class QuestionActivity extends AppCompatActivity
 	public void onPause()
 	{
 		super.onPause();
-		if ( db != null )
-		{
-			//db.saveAllQuestions();
-		}
 
 	}
 
@@ -138,12 +134,7 @@ public class QuestionActivity extends AppCompatActivity
 			Logger.print( this, "Cursor BAD" , "more" );
 		}
 
-		if ( db != null )
-		{
-			//db.saveAllQuestions();
-		}
-
-		if ( isAlarm && totalNeeded > 0 )
+		if ( isAlarm && totalNeeded > 0 && db.getCurrentQuestion() != null )
 		{
 			shared.edit().putBoolean(PreferenceKeys.ALARMING, true).putLong(PreferenceKeys.QUESTION, db.getCurrentQuestion().id).putInt(PreferenceKeys.TOTAL , totalNeeded ).commit();
 			return;
@@ -206,7 +197,7 @@ public class QuestionActivity extends AppCompatActivity
 	private void handleQuestionEnd( final boolean isCorrect )
 	{
 		final Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		db.getCurrentQuestion().incrementAmount( this.getApplicationContext(), isCorrect );
+		db.saveQuestion(db.getCurrentQuestion().incrementAmount(this.getApplicationContext(), isCorrect));
 		db.incrementQuestion();
 		totalNeeded += ( isCorrect ? -1 : 1 );
 		if ( totalNeeded == 0 && isAlarm )
@@ -217,7 +208,6 @@ public class QuestionActivity extends AppCompatActivity
 			me.startActivity( intent );
 			return;
 		}
-		//updateQuestion(db.getCurrentQuestion() );
 		updateQuestion(db.getCurrentQuestionLoader( cursor, 5 ));
 	}
 
@@ -241,7 +231,7 @@ public class QuestionActivity extends AppCompatActivity
 			{
 				public void onClick(View v)
 				{
-					animateMyView(v , isCorrect );
+					animateMyView(v, isCorrect );
 				}
 			});
 		}
@@ -285,9 +275,10 @@ public class QuestionActivity extends AppCompatActivity
 				db.alarms.get(0).setForTomorrow(me.getApplicationContext(), 0);
 			}
 
-			updateQuestion(db.getCurrentQuestionLoader( cursor, 5 ));
+			updateQuestion(db.getCurrentQuestionLoader(cursor, 5));
 		}
 
 
 	}
+
 }
