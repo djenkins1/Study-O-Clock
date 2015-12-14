@@ -14,7 +14,6 @@ import java.util.GregorianCalendar;
 public class Alarm
 {
 	public static final String NAME = "alarm";
-	public static final String[] COLUMNS = { "id" , "hour", "minute", "correct", "ison" };
 	public long id;
 	public int hour;
 	public int minute;
@@ -115,7 +114,7 @@ public class Alarm
 	public static Alarm debugAlarm()
 	{
 		GregorianCalendar now = new GregorianCalendar();
-		return new Alarm().withHour( now.get(Calendar.HOUR) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 1 ).withOn( 0 );
+		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 1 ).withOn( 0 );
 	}
 
 	public void setForTomorrow( Context from, int id  )

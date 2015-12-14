@@ -1,5 +1,6 @@
 package com.eo.dilan.studyoclock;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.eo.dilan.studyoclock.database.AlertBuilder;
 import com.eo.dilan.studyoclock.database.Answer;
 import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.Logger;
@@ -89,11 +91,18 @@ public class AddQuestionActivity extends AppCompatActivity
 	{
 		if ( qID != -1 && db != null)
 		{
-			Logger.print(this.getApplicationContext(), "Question removal", qID + "");
-			db.removeQuestion(db.getCurrentQuestion());
-			Toast.makeText(getApplicationContext(), "Question removed!", Toast.LENGTH_LONG).show();
-			Intent intent = new Intent( this , MainActivity.class );
-			startActivity(intent);
+			new AlertBuilder( "Remove Question" , "Do you really wish to remove this question?" ,this,new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface dialog, int whichButton)
+				{
+					Logger.print(AddQuestionActivity.this.getApplicationContext(), "Question removal", qID + "");
+					db.removeQuestion(db.getCurrentQuestion());
+					Toast.makeText(getApplicationContext(), "Question removed!", Toast.LENGTH_LONG).show();
+					Intent intent = new Intent( AddQuestionActivity.this , MainActivity.class );
+					startActivity(intent);
+				}
+			} , null );
+
 		}
 	}
 

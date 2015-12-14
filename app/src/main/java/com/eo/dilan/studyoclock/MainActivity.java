@@ -1,5 +1,7 @@
 package com.eo.dilan.studyoclock;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -7,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import com.eo.dilan.studyoclock.database.AlertBuilder;
 import com.eo.dilan.studyoclock.database.DataHelper;
 
 public class MainActivity extends AppCompatActivity

@@ -1,6 +1,8 @@
 package com.eo.dilan.studyoclock;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -10,7 +12,9 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.eo.dilan.studyoclock.database.AlertBuilder;
 import com.eo.dilan.studyoclock.database.DataHelper;
+import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.PreferenceKeys;
 
 public class SettingsActivity extends AppCompatActivity
@@ -41,8 +45,14 @@ public class SettingsActivity extends AppCompatActivity
 			return;
 		}
 
-		db.resetQuestionStats();
-		Toast.makeText(getApplicationContext(), "Question statistics reset!", Toast.LENGTH_LONG).show();
+		new AlertBuilder( "Clear Statistics" , "Do you really wish to clear answer statistics?" ,this,new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int whichButton)
+			{
+				db.resetQuestionStats();
+				Toast.makeText(getApplicationContext(), "Answer statistics reset!", Toast.LENGTH_LONG).show();
+			}
+		} , null );
 	}
 
 	public void resetQuestionClick( View v )
@@ -52,7 +62,15 @@ public class SettingsActivity extends AppCompatActivity
 			Toast.makeText(getApplicationContext(), "Please wait!", Toast.LENGTH_LONG).show();
 			return;
 		}
-		db.removeAllQuestions();
+
+		new AlertBuilder( "Clear Questions" , "Do you really wish to remove all questions?" ,this,new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int whichButton)
+			{
+				db.removeAllQuestions();
+				Toast.makeText(getApplicationContext(), "Questions Removed", Toast.LENGTH_LONG).show();
+			}
+		} , null );
 	}
 
 	public void saveSettingsClick(View v )
