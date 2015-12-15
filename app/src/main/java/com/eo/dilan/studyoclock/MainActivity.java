@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity
 			Toast.makeText(getApplicationContext(), "Please wait", Toast.LENGTH_SHORT).show();
 			return;
 		}
+
+		if ( db != null && !db.areThereQuestions() )
+		{
+			Toast.makeText(getApplicationContext(), "You need to add questions in order to study", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		Intent intent = new Intent( this , QuestionActivity.class );
 		startActivity( intent );
 	}
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity
 			return;
 		}
 		Intent intent = new Intent( this , AlarmActivity.class );
-		startActivity( intent );
+		startActivity(intent);
 	}
 
 	public void allQuestionsClick(View v)

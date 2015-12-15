@@ -274,6 +274,10 @@ public class QuestionActivity extends AppCompatActivity
 			{
 				db.alarms.get(0).setForTomorrow(me.getApplicationContext(), 0);
 			}
+			else
+			{
+				db.updateAlarm( db.alarms.get( 0 ).withOn( 0 ) );
+			}
 
 			updateQuestion(db.getCurrentQuestionLoader(cursor, 5));
 		}

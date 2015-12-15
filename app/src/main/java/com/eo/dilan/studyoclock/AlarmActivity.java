@@ -61,13 +61,20 @@ public class AlarmActivity extends AppCompatActivity
 			return;
 		}
 
-		if ( Integer.parseInt( numText ) <= 0 )
+		int num = Integer.parseInt( numText );
+		if ( num <= 0 )
 		{
 			Toast.makeText(getApplicationContext(), "Number correct must be positive", Toast.LENGTH_LONG).show();
 			return;
 		}
 
-		int num = Integer.parseInt( numText );
+		if ( num > 100 )
+		{
+			Toast.makeText(getApplicationContext(), "Number correct cannot be more than 100", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+
 		boolean isOn = ((Switch ) findViewById(R.id.switch1)).isChecked();
 		Logger.print(this.getApplicationContext(),"Hour", hour + "");
 		Logger.print(this.getApplicationContext(), "Min", min + "");
