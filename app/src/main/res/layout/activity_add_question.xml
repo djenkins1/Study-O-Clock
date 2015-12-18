@@ -17,6 +17,10 @@
         android:textSize="24sp"
         android:id="@+id/question"
         android:gravity="center"
+        android:singleLine="true"
+        android:lines="1"
+        android:scrollHorizontally="false"
+        android:ellipsize="end"
         />
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
@@ -29,6 +33,10 @@
         android:hint="Answer 1"
         android:id="@+id/button1"
         android:textSize="15sp"
+        android:singleLine="true"
+        android:lines="1"
+        android:scrollHorizontally="false"
+        android:ellipsize="end"
 
         />
         <CheckBox
@@ -49,6 +57,10 @@
             android:hint="Answer 2"
             android:id="@+id/button2"
             android:textSize="15sp"
+            android:singleLine="true"
+            android:lines="1"
+            android:scrollHorizontally="false"
+            android:ellipsize="end"
 
             />
         <CheckBox
@@ -69,6 +81,10 @@
             android:hint="Answer 3"
             android:id="@+id/button3"
             android:textSize="15sp"
+            android:singleLine="true"
+            android:lines="1"
+            android:scrollHorizontally="false"
+            android:ellipsize="end"
 
             />
         <CheckBox
@@ -89,7 +105,10 @@
             android:hint="Answer 4"
             android:id="@+id/button4"
             android:textSize="15sp"
-
+            android:singleLine="true"
+            android:lines="1"
+            android:scrollHorizontally="false"
+            android:ellipsize="end"
             />
         <CheckBox
             android:id="@+id/chk4"

@@ -14,10 +14,14 @@
     android:id="@+id/myLine"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:text="Description"
+    android:text=""
     android:focusable="false"
     android:textSize="14sp"
     android:layout_weight="8"
+    android:singleLine="true"
+    android:lines="1"
+    android:scrollHorizontally="false"
+    android:ellipsize="end"
     />
     <TextView
         android:id="@+id/myCorrect"
@@ -27,6 +31,10 @@
         android:focusable="false"
         android:textSize="14sp"
         android:layout_weight="1"
+        android:singleLine="true"
+        android:lines="1"
+        android:scrollHorizontally="false"
+        android:ellipsize="end"
         />
     <TextView
         android:id="@+id/myWrong"
@@ -36,5 +44,9 @@
         android:focusable="false"
         android:textSize="14sp"
         android:layout_weight="1"
+        android:singleLine="true"
+        android:lines="1"
+        android:scrollHorizontally="false"
+        android:ellipsize="end"
         />
 </LinearLayout>

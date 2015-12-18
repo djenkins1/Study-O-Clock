@@ -201,7 +201,7 @@ public class Question
 		quest.withAnswer(new Answer("my streetcar", 0));
 		toReturn.add(quest);
 		*/
-		for ( int i = 0; i < 100; i++ )
+		for ( int i = 0; i < 10; i++ )
 		{
 			Question quest = new Question( "What is 5 + " + i);
 			quest.withAnswer( new Answer( i + "" , 0 ));

@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.AlertBuilder;
@@ -29,6 +30,24 @@ public class MainActivity extends AppCompatActivity
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main);
 		new LongOperation().execute();
+		addUnicodeToButtons();
+	}
+
+	private void addUnicodeToButtons( )
+	{
+		//viewQuestionBtn
+		//setAlarmBtn
+		//seeQuestionBtn
+		//settingsBtn
+		Button btn = (Button)findViewById(R.id.viewQuestionBtn);
+		btn.setText( new StringBuilder( "\u21F6 " ).append( btn.getText()) );
+		btn = (Button)findViewById(R.id.seeQuestionBtn);
+		btn.setText( new StringBuilder( "\uD83D\uDCD6 " ).append( btn.getText()) );
+		btn = (Button)findViewById(R.id.setAlarmBtn);
+		btn.setText( new StringBuilder( "\uD83D\uDD50 " ).append( btn.getText()) );
+		btn = (Button)findViewById(R.id.settingsBtn);
+		btn.setText( new StringBuilder( "\u2261 " ).append( btn.getText()) );
+
 	}
 
 	public void clickSettings(View v )
