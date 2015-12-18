@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.AlertBuilder;
@@ -35,20 +36,42 @@ public class MainActivity extends AppCompatActivity
 
 	private void addUnicodeToButtons( )
 	{
-		//viewQuestionBtn
-		//setAlarmBtn
-		//seeQuestionBtn
-		//settingsBtn
-		Button btn = (Button)findViewById(R.id.viewQuestionBtn);
-		btn.setText( new StringBuilder( "\u21F6 " ).append( btn.getText()) );
-		btn = (Button)findViewById(R.id.seeQuestionBtn);
-		btn.setText( new StringBuilder( "\uD83D\uDCD6 " ).append( btn.getText()) );
-		btn = (Button)findViewById(R.id.setAlarmBtn);
-		btn.setText( new StringBuilder( "\uD83D\uDD50 " ).append( btn.getText()) );
-		btn = (Button)findViewById(R.id.settingsBtn);
-		btn.setText( new StringBuilder( "\u2261 " ).append( btn.getText()) );
+		TextView btn = (TextView)findViewById(R.id.studyIcon);
+		btn.setText( new StringBuilder( "\uD83D\uDCD6" ) );
+		btn = (TextView)findViewById(R.id.questIcon);
+		btn.setText(new StringBuilder("\u21F6"));
+		btn = (TextView)findViewById(R.id.alarmIcon);
+		btn.setText(new StringBuilder("\uD83D\uDD50"));
+		btn = (TextView)findViewById(R.id.settingIcon);
+		btn.setText(new StringBuilder("\u2261"));
 
 	}
+
+    public void handleClick( View v )
+    {
+        switch( v.getId() )
+        {
+            case R.id.settingsBtn:
+                clickSettings(v);
+                break;
+            case R.id.setAlarmBtn:
+                onClickAddAlarm(v);
+                break;
+            case R.id.viewQuestionBtn:
+                allQuestionsClick(v);
+                break;
+            case R.id.seeQuestionBtn:
+                onClickShowQ(v);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void runOnClick( View v )
+    {
+        handleClick( v );
+    }
 
 	public void clickSettings(View v )
 	{

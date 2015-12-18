@@ -9,50 +9,154 @@
               android:paddingTop="@dimen/activity_vertical_margin"
               tools:context="com.eo.dilan.studyoclock.MainActivity"
               android:screenOrientation="landscape"
-              android:orientation="vertical">
+              android:orientation="vertical"
+            android:weightSum="10"
+            android:background="#1240AB"
+    >
     <TextView android:text="Study O'Clock"
-              android:background="@android:color/holo_blue_dark"
+              android:background="#0E00F3"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="0dp"
               android:textSize="24sp"
               android:paddingTop="10dp"
               android:paddingBottom="10dp"
               android:id="@+id/question"
               android:gravity="center"
+            android:textStyle="bold"
+            android:layout_weight="2"
         />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="View Questions"
-        android:onClick="allQuestionsClick"
-        android:id="@+id/viewQuestionBtn"
-        android:background="@android:drawable/btn_default"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_weight="8"
+        >
+        <LinearLayout
+            android:id="@+id/seeQuestionBtn"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            style="@android:style/Widget.Button"
+            android:onClick="runOnClick"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#06269F"
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Set Alarm"
-        android:onClick="onClickAddAlarm"
-        android:id="@+id/setAlarmBtn"
-        android:background="@android:drawable/btn_default"
-        />
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Start Studying"
-        android:id="@+id/seeQuestionBtn"
-        android:onClick="onClickShowQ"
-        android:background="@android:drawable/btn_default"
-        />
+            >
+            <TextView
+                android:text="A"
+                android:id="@+id/studyIcon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:textColor="#000"
+                android:text="Study"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:onClick="clickSettings"
-        android:id="@+id/settingsBtn"
-        android:background="@android:drawable/btn_default"
-        />
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            style="@android:style/Widget.Button"
+            android:onClick="runOnClick"
+            android:id="@+id/viewQuestionBtn"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#2A44B0"
+            >
+            <TextView
+                android:text="A"
+                android:id="@+id/questIcon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:textColor="#000"
+                android:text="All Questions"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            style="@android:style/Widget.Button"
+            android:onClick="runOnClick"
+            android:id="@+id/setAlarmBtn"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#6C8CF6"
+            >
+            <TextView
+                android:text="A"
+                android:id="@+id/alarmIcon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:textColor="#000"
+                android:text="Set Alarm"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            style="@android:style/Widget.Button"
+            android:onClick="runOnClick"
+            android:id="@+id/settingsBtn"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#4671F6"
+            >
+            <TextView
+                android:text="A"
+                android:id="@+id/settingIcon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textSize="36sp"
+                android:textStyle="bold"
+
+                />
+            <TextView
+                android:textColor="#000"
+                android:text="Settings"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
