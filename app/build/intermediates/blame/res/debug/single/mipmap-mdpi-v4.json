@@ -4,6 +4,10 @@
         "source": "/home/dilan/workspace/Apps/StudyClock/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     },
     {
+        "merged": "/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/res/merged/debug/mipmap-mdpi-v4/ic_launcher.png",
+        "source": "/home/dilan/workspace/Apps/studyoclock/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
         "merged": "/home/dilan/AndroidStudioProjects/studyoclock/app/build/intermediates/res/merged/debug/mipmap-mdpi-v4/ic_launcher.png",
         "source": "/home/dilan/AndroidStudioProjects/studyoclock/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     }
