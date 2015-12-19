@@ -1,9 +1,14 @@
 package com.eo.dilan.studyoclock;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,11 +44,15 @@ public class MainActivity extends AppCompatActivity
 		TextView btn = (TextView)findViewById(R.id.studyIcon);
 		btn.setText( new StringBuilder( "\uD83D\uDCD6" ) );
 		btn = (TextView)findViewById(R.id.questIcon);
-		btn.setText(new StringBuilder("\u21F6"));
+		//btn.setText(new StringBuilder("\u2261"));
+		//\u270E
+		btn.setText(new StringBuilder("\u270E"));
 		btn = (TextView)findViewById(R.id.alarmIcon);
 		btn.setText(new StringBuilder("\uD83D\uDD50"));
 		btn = (TextView)findViewById(R.id.settingIcon);
-		btn.setText(new StringBuilder("\u2261"));
+		//btn.setText(new StringBuilder("\u2261"));
+		//u2699
+		btn.setText(new StringBuilder("\u2600"));
 
 	}
 
@@ -68,9 +77,48 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void runOnClick( View v )
+    public void runOnClick( final View view )
     {
-        handleClick( v );
+		final float[] from = new float[3],
+				to =   new float[3];
+
+		final int color = ((ColorDrawable)view.getBackground()).getColor();
+		Color.colorToHSV(Color.parseColor("#5CCCCC"), to);
+		Color.colorToHSV( color , from);
+
+		ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
+		anim.setDuration(100);
+
+		final float[] hsv  = new float[3];
+		anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				// Transition along each axis of HSV (hue, saturation, value)
+				hsv[0] = from[0] + (to[0] - from[0]) * animation.getAnimatedFraction();
+				hsv[1] = from[1] + (to[1] - from[1]) * animation.getAnimatedFraction();
+				hsv[2] = from[2] + (to[2] - from[2]) * animation.getAnimatedFraction();
+
+				view.setBackgroundColor(Color.HSVToColor(hsv));
+			}
+		});
+
+		anim.addListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationStart(Animator arg0) {
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator arg0) {
+			}
+
+			@Override
+			public void onAnimationEnd(Animator arg0) {
+				view.setBackgroundColor( color );
+				handleClick(view);
+			}
+		});
+
+		anim.start();
     }
 
 	public void clickSettings(View v )
