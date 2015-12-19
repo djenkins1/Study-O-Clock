@@ -104,7 +104,7 @@
             android:id="@+id/setAlarmBtn"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#6C8CF6"
+            android:background="#4671F6"
             >
             <TextView
                 android:text="A"
@@ -135,7 +135,7 @@
             android:id="@+id/settingsBtn"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#4671F6"
+            android:background="#6C8CF6"
             >
             <TextView
                 android:text="A"

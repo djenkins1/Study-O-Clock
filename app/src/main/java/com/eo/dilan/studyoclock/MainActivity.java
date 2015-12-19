@@ -44,16 +44,11 @@ public class MainActivity extends AppCompatActivity
 		TextView btn = (TextView)findViewById(R.id.studyIcon);
 		btn.setText( new StringBuilder( "\uD83D\uDCD6" ) );
 		btn = (TextView)findViewById(R.id.questIcon);
-		//btn.setText(new StringBuilder("\u2261"));
-		//\u270E
 		btn.setText(new StringBuilder("\u270E"));
 		btn = (TextView)findViewById(R.id.alarmIcon);
 		btn.setText(new StringBuilder("\uD83D\uDD50"));
 		btn = (TextView)findViewById(R.id.settingIcon);
-		//btn.setText(new StringBuilder("\u2261"));
-		//u2699
 		btn.setText(new StringBuilder("\u2600"));
-
 	}
 
     public void handleClick( View v )

@@ -11,6 +11,7 @@
     tools:context="com.eo.dilan.studyoclock.SettingsActivity"
     android:screenOrientation="landscape"
     android:orientation="vertical"
+    android:background="#1240AB"
     >
 
     <LinearLayout
@@ -26,12 +27,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Repeat Daily"
+            android:textStyle="bold"
             android:layout_weight="2"
             />
         <Switch
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text=""
+            android:textStyle="bold"
             android:layout_weight="1"
             android:id="@+id/repeatSwitch"
             />

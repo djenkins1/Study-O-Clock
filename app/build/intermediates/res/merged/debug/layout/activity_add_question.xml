@@ -8,10 +8,12 @@
               tools:context="com.eo.dilan.studyoclock.AddQuestionActivity"
               android:screenOrientation="landscape"
               android:orientation="vertical"
+                android:background="#1240AB"
     >
     <EditText
         android:hint="Your question here"
-        android:background="@android:color/holo_blue_dark"
+        android:background="#0E00F3"
+        android:textStyle="bold"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="24sp"
@@ -27,13 +29,14 @@
                   android:weightSum="10"
         >
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_weight="9"
         android:layout_height="wrap_content"
         android:hint="Answer 1"
         android:id="@+id/button1"
         android:textSize="15sp"
         android:singleLine="true"
+        android:textStyle="bold"
         android:lines="1"
         android:scrollHorizontally="false"
         android:ellipsize="end"
@@ -41,7 +44,7 @@
         />
         <CheckBox
             android:id="@+id/chk1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="" />
@@ -51,7 +54,7 @@
                   android:weightSum="10"
         >
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
             android:hint="Answer 2"
@@ -59,13 +62,14 @@
             android:textSize="15sp"
             android:singleLine="true"
             android:lines="1"
+            android:textStyle="bold"
             android:scrollHorizontally="false"
             android:ellipsize="end"
 
             />
         <CheckBox
             android:id="@+id/chk2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="" />
@@ -75,11 +79,12 @@
                   android:weightSum="10"
         >
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
             android:hint="Answer 3"
             android:id="@+id/button3"
+            android:textStyle="bold"
             android:textSize="15sp"
             android:singleLine="true"
             android:lines="1"
@@ -89,7 +94,7 @@
             />
         <CheckBox
             android:id="@+id/chk3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="" />
@@ -99,11 +104,12 @@
                   android:weightSum="10"
         >
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="9"
             android:layout_height="wrap_content"
             android:hint="Answer 4"
             android:id="@+id/button4"
+            android:textStyle="bold"
             android:textSize="15sp"
             android:singleLine="true"
             android:lines="1"
@@ -112,7 +118,7 @@
             />
         <CheckBox
             android:id="@+id/chk4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="" />
@@ -121,22 +127,24 @@
                   android:layout_height="wrap_content"
                   android:weightSum="2">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Add"
             android:layout_weight="1"
             android:id="@+id/addQuestBtn"
             android:onClick="addQuestion"
             android:background="@android:drawable/btn_default"
+            android:textStyle="bold"
             />
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Remove"
             android:layout_weight="1"
             android:id="@+id/delQuestBtn"
             android:onClick="removeQuestion"
             android:background="@android:drawable/btn_default"
+            android:textStyle="bold"
             />
     </LinearLayout>
 

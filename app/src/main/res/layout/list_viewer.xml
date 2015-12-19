@@ -9,6 +9,7 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:orientation="horizontal"
                 android:weightSum="10"
+    android:background="#0E00F3"
     >
 <TextView
     android:id="@+id/myLine"
@@ -16,12 +17,13 @@
     android:layout_height="wrap_content"
     android:text=""
     android:focusable="false"
-    android:textSize="14sp"
+    android:textSize="18sp"
     android:layout_weight="8"
     android:singleLine="true"
     android:lines="1"
     android:scrollHorizontally="false"
     android:ellipsize="end"
+    android:textStyle="bold"
     />
     <TextView
         android:id="@+id/myCorrect"
@@ -29,12 +31,13 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:focusable="false"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:layout_weight="1"
         android:singleLine="true"
         android:lines="1"
         android:scrollHorizontally="false"
         android:ellipsize="end"
+        android:textStyle="bold"
         />
     <TextView
         android:id="@+id/myWrong"
@@ -42,11 +45,12 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:focusable="false"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:layout_weight="1"
         android:singleLine="true"
         android:lines="1"
         android:scrollHorizontally="false"
         android:ellipsize="end"
+        android:textStyle="bold"
         />
 </LinearLayout>
