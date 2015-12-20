@@ -110,7 +110,12 @@ public class QuestionActivity extends AppCompatActivity
 		{
 			return;
 		}
-		super.onBackPressed();
+
+		Intent intent = new Intent( me, ScoreActivity.class );
+		intent.putExtra( PreferenceKeys.Q_LIST , questionsWrong.toString() );
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		me.startActivity(intent);
+		//super.onBackPressed();
 	}
 
 	@Override
@@ -217,8 +222,10 @@ public class QuestionActivity extends AppCompatActivity
 		{
 			vib.cancel();
 			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.Q_LIST).remove(PreferenceKeys.TOTAL).commit();
-			Intent intent = new Intent( me, MainActivity.class );
-			me.startActivity( intent );
+			Intent intent = new Intent( me, ScoreActivity.class );
+			intent.putExtra( PreferenceKeys.Q_LIST , questionsWrong.toString() );
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			me.startActivity(intent);
 			return;
 		}
 		updateQuestion(db.getCurrentQuestionLoader( cursor, 5 ));

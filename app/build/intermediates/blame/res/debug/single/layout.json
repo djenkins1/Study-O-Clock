@@ -4,6 +4,10 @@
         "source": "/home/dilan/AndroidStudioProjects/studyoclock/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/layout/select_dialog_item_material.xml"
     },
     {
+        "merged": "/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/res/merged/debug/layout/footer_score_res.xml",
+        "source": "/home/dilan/workspace/Apps/studyoclock/app/src/main/res/layout/footer_score_res.xml"
+    },
+    {
         "merged": "/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
         "source": "/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/layout/abc_alert_dialog_button_bar_material.xml"
     },

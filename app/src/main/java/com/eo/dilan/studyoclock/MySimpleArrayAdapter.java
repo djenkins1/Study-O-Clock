@@ -11,13 +11,14 @@ import android.widget.TextView;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MySimpleArrayAdapter extends ArrayAdapter<String>
 {
 	private final Context context;
-	private final ArrayList<Question> questions;
+	private final List<Question> questions;
 
-	public MySimpleArrayAdapter(Context context, ArrayList<String> values, ArrayList<Question > questions )
+	public MySimpleArrayAdapter(Context context, ArrayList<String> values, List<Question > questions )
 	{
 		super(context, -1, values);
 		this.context = context;

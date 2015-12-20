@@ -15,20 +15,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0E00F3"
+        android:id="@+id/counter"
+        android:background="#06269F"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:text="You missed ? questions"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#06269F"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:gravity="center"
-        android:text="Questions Missed"
+        android:text="Questions Missed: ?"
+
         />
     <ListView
         android:id="@+id/listview"
