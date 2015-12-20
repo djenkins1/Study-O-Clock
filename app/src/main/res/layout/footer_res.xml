@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/addQuestion"
         android:text="Add Question"
-        android:background="@android:drawable/btn_default"
+        android:background="@drawable/apptheme_btn_default_holo_dark"
         android:onClick="onClickAddQ"
         />
 </FrameLayout>

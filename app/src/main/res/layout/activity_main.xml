@@ -19,6 +19,7 @@
               android:layout_height="0dp"
               android:textSize="24sp"
               android:paddingTop="10dp"
+        android:textColor="#FFF"
               android:paddingBottom="10dp"
               android:id="@+id/question"
               android:gravity="center"
@@ -49,13 +50,13 @@
                 android:id="@+id/studyIcon"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:gravity="center"
                 android:textSize="36sp"
                 android:textStyle="bold"
                 />
             <TextView
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:text="Study"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
@@ -80,13 +81,13 @@
                 android:id="@+id/questIcon"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:gravity="center"
                 android:textSize="36sp"
                 android:textStyle="bold"
                 />
             <TextView
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:text="All Questions"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
@@ -111,13 +112,13 @@
                 android:id="@+id/alarmIcon"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:gravity="center"
                 android:textSize="36sp"
                 android:textStyle="bold"
                 />
             <TextView
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:text="Set Alarm"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
@@ -142,14 +143,14 @@
                 android:id="@+id/settingIcon"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:gravity="center"
                 android:textSize="36sp"
                 android:textStyle="bold"
 
                 />
             <TextView
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:text="Settings"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"

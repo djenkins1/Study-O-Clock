@@ -18,6 +18,7 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
+    <color name="apptheme_color">#33b5e5</color>
     <color name="background_floating_material_dark">@color/material_grey_800</color>
     <color name="background_floating_material_light">@android:color/white</color>
     <color name="background_material_dark">@color/material_grey_850</color>
@@ -223,6 +224,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">#ffffff</item>
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.NoActionBar">
@@ -1165,6 +1167,19 @@
         <item name="android:minWidth">56dp</item>
         <item name="android:scaleType">center</item>
     </style>
+    <style name="BtnTheme" parent="android:Theme.Holo">
+
+    <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonAppTheme</item>
+
+  </style>
+    <style name="ButtonAppTheme" parent="android:Widget.Holo.Button">
+	  <item name="android:background">@drawable/apptheme_btn_default_holo_dark</item>
+  </style>
+    <style name="ImageButtonAppTheme" parent="android:Widget.Holo.ImageButton">
+	  <item name="android:background">@drawable/apptheme_btn_default_holo_dark</item>
+  </style>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
 

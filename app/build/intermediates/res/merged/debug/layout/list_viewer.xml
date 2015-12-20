@@ -23,6 +23,7 @@
     android:lines="1"
     android:scrollHorizontally="false"
     android:ellipsize="end"
+    android:textColor="#FFF"
     android:textStyle="bold"
     />
     <TextView

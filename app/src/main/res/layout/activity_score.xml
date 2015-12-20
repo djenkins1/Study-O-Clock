@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/counter"
         android:background="#06269F"
+        android:textColor="#FFF"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"

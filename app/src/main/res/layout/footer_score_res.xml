@@ -6,7 +6,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Done"
-        android:background="@android:drawable/btn_default"
+        android:background="@drawable/apptheme_btn_default_holo_dark"
         android:onClick="handleFinish"
         />
 </FrameLayout>

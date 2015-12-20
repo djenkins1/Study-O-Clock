@@ -198,7 +198,8 @@ public class QuestionActivity extends AppCompatActivity
 			@Override
 			public void onAnimationEnd(Animator arg0)
 			{
-				view.setBackgroundResource(android.R.drawable.btn_default);
+				//view.setBackgroundResource(android.R.drawable.btn_default);
+				view.setBackgroundResource(R.drawable.apptheme_btn_default_holo_dark);
 				handleQuestionEnd( isCorrect );
 			}
 		});
