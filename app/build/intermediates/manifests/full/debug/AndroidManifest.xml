@@ -22,10 +22,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <service android:name="com.eo.dilan.studyoclock.AlarmService" >
-        </service>
-        <service android:name="com.eo.dilan.studyoclock.RestartService" >
-        </service>
+        <service android:name="com.eo.dilan.studyoclock.AlarmService" />
+        <service android:name="com.eo.dilan.studyoclock.RestartService" />
 
         <receiver
             android:name="com.eo.dilan.studyoclock.RebootReceiver"
@@ -52,14 +50,11 @@
             </intent-filter>
         </activity>
         <activity android:name="com.eo.dilan.studyoclock.QuestionActivity" />
-        <activity android:name="com.eo.dilan.studyoclock.AddQuestionActivity" >
-        </activity>
-        <activity android:name="com.eo.dilan.studyoclock.AlarmActivity" >
-        </activity>
-        <activity android:name="com.eo.dilan.studyoclock.AllQuestionsActivity" >
-        </activity>
-        <activity android:name="com.eo.dilan.studyoclock.SettingsActivity" >
-        </activity>
+        <activity android:name="com.eo.dilan.studyoclock.AddQuestionActivity" />
+        <activity android:name="com.eo.dilan.studyoclock.AlarmActivity" />
+        <activity android:name="com.eo.dilan.studyoclock.AllQuestionsActivity" />
+        <activity android:name="com.eo.dilan.studyoclock.SettingsActivity" />
+        <activity android:name="com.eo.dilan.studyoclock.ScoreActivity" />
     </application>
 
 </manifest>

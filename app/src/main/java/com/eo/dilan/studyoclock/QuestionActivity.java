@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.Preference;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.prefs.PreferenceChangeListener;
 
 public class QuestionActivity extends AppCompatActivity
 {
@@ -42,6 +44,8 @@ public class QuestionActivity extends AppCompatActivity
 
 	private SharedPreferences shared;
 
+	private StringBuilder questionsWrong = new StringBuilder("");
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -52,6 +56,7 @@ public class QuestionActivity extends AppCompatActivity
 		vibrator = (Vibrator ) getSystemService( VIBRATOR_SERVICE);
 		Intent intent = getIntent();
 
+		questionsWrong = new StringBuilder( shared.getString( PreferenceKeys.Q_LIST , "" ) );
 		if ( intent != null && intent.getExtras() != null && intent.getExtras().getString("alarm") != null )
 		{
 			shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
@@ -119,6 +124,7 @@ public class QuestionActivity extends AppCompatActivity
 	public void onDestroy()
 	{
 		super.onDestroy();
+		Logger.print(me, "STUDY", questionsWrong.toString());
 		if ( vibrator != null )
 		{
 			vibrator.cancel();
@@ -144,7 +150,7 @@ public class QuestionActivity extends AppCompatActivity
 			Logger.print(this.getApplicationContext(), "Reached here", "alarm off");
 			return;
 		}
-		shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).commit();
+		shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).remove(PreferenceKeys.Q_LIST ).commit();
 	}
 
 	private void animateMyView(final View view, final boolean isCorrect )
@@ -160,12 +166,13 @@ public class QuestionActivity extends AppCompatActivity
 		anim.setDuration(500);                              // for 300 ms
 
 		final float[] hsv  = new float[3];                  // transition color
-		anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
-			@Override public void onAnimationUpdate(ValueAnimator animation) {
+		anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
 				// Transition along each axis of HSV (hue, saturation, value)
-				hsv[0] = from[0] + (to[0] - from[0])*animation.getAnimatedFraction();
-				hsv[1] = from[1] + (to[1] - from[1])*animation.getAnimatedFraction();
-				hsv[2] = from[2] + (to[2] - from[2])*animation.getAnimatedFraction();
+				hsv[0] = from[0] + (to[0] - from[0]) * animation.getAnimatedFraction();
+				hsv[1] = from[1] + (to[1] - from[1]) * animation.getAnimatedFraction();
+				hsv[2] = from[2] + (to[2] - from[2]) * animation.getAnimatedFraction();
 
 				view.setBackgroundColor(Color.HSVToColor(hsv));
 			}
@@ -196,14 +203,20 @@ public class QuestionActivity extends AppCompatActivity
 
 	private void handleQuestionEnd( final boolean isCorrect )
 	{
+		if ( !isCorrect )
+		{
+			questionsWrong = PreferenceKeys.addNumberToEnd( questionsWrong, db.getCurrentQuestion().id );
+		}
+
 		final Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		db.saveQuestion(db.getCurrentQuestion().incrementAmount(this.getApplicationContext(), isCorrect));
 		db.incrementQuestion();
 		totalNeeded += ( isCorrect ? -1 : 1 );
+
 		if ( totalNeeded == 0 && isAlarm )
 		{
 			vib.cancel();
-			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.TOTAL).commit();
+			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.Q_LIST).remove(PreferenceKeys.TOTAL).commit();
 			Intent intent = new Intent( me, MainActivity.class );
 			me.startActivity( intent );
 			return;

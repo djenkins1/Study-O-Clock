@@ -9,6 +9,13 @@
         <dex dex="/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1_b0c91f45b5c2e0241b5a2511dcb2eec0f59fb5f5.jar" />
     </item>
     <item
+        jar="/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_ab78147248eebc5cca84a2b63f5cdf5b369bf14e.jar" />
+    </item>
+    <item
         jar="/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
@@ -21,13 +28,6 @@
         revision="23.0.2"
         sha1="5c5699834e9722f1c288fea2de82725d078ba127">
         <dex dex="/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.1.1_a223490587f43d59d9e2981c4f9fd0709da6e4bf.jar" />
-    </item>
-    <item
-        jar="/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/home/dilan/workspace/Apps/studyoclock/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_ab78147248eebc5cca84a2b63f5cdf5b369bf14e.jar" />
     </item>
 
 </items>
