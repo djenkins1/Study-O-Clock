@@ -71,9 +71,8 @@ public class Answer
 
 	public static ArrayList<Answer> getAnswers( SQLiteDatabase db, long question )
 	{
-		ArrayList<Answer> toReturn = new ArrayList<Answer>();
+		ArrayList<Answer> toReturn = new ArrayList<>();
 		Cursor cursor = db.query( NAME , COLUMNS, "question=?" , new String[] {String.valueOf( question )}, null, null, null );
-		// looping through all rows and adding to list
 		if (cursor != null && cursor.moveToFirst())
 		{
 			do
@@ -86,6 +85,7 @@ public class Answer
 				) );
 			}
 			while ( cursor.moveToNext() );
+			cursor.close();
 		}
 		return toReturn;
 	}

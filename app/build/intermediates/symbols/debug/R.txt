@@ -466,7 +466,7 @@ int id action_mode_bar_stub 0x7f0c003d
 int id action_mode_close_button 0x7f0c0023
 int id activity_chooser_view_content 0x7f0c0024
 int id addQuestBtn 0x7f0c0059
-int id addQuestion 0x7f0c006d
+int id addQuestion 0x7f0c0070
 int id alarmIcon 0x7f0c0064
 int id alertTitle 0x7f0c0030
 int id always 0x7f0c001b
@@ -511,9 +511,9 @@ int id listview 0x7f0c005f
 int id media_actions 0x7f0c0074
 int id middle 0x7f0c001a
 int id multiply 0x7f0c0013
-int id myCorrect 0x7f0c006f
-int id myLine 0x7f0c006e
-int id myWrong 0x7f0c0070
+int id myCorrect 0x7f0c006a
+int id myLine 0x7f0c0069
+int id myWrong 0x7f0c006b
 int id never 0x7f0c001e
 int id none 0x7f0c000e
 int id normal 0x7f0c000a
@@ -525,10 +525,10 @@ int id questIcon 0x7f0c0063
 int id question 0x7f0c0050
 int id radio 0x7f0c003b
 int id remains 0x7f0c0067
-int id repeatSwitch 0x7f0c0069
-int id resetQuest 0x7f0c006b
-int id resetStats 0x7f0c006a
-int id saveSettings 0x7f0c006c
+int id repeatSwitch 0x7f0c006c
+int id resetQuest 0x7f0c006e
+int id resetStats 0x7f0c006d
+int id saveSettings 0x7f0c006f
 int id screen 0x7f0c0014
 int id scrollIndicatorDown 0x7f0c0035
 int id scrollIndicatorUp 0x7f0c0032

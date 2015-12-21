@@ -93,7 +93,6 @@ public class Alarm
 	{
 		ArrayList<Alarm> toReturn = new ArrayList<>();
 		Cursor cursor = db.rawQuery(sqlSelectAll(), null);
-		// looping through all rows and adding to list
 		if (cursor != null && cursor.moveToFirst())
 		{
 			do
@@ -107,6 +106,7 @@ public class Alarm
 				toReturn.add( alarm );
 			}
 			while ( cursor.moveToNext() );
+			cursor.close();
 		}
 		return toReturn;
 	}
@@ -114,7 +114,7 @@ public class Alarm
 	public static Alarm debugAlarm()
 	{
 		GregorianCalendar now = new GregorianCalendar();
-		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 1 ).withOn( 0 );
+		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 5 ).withOn( 0 );
 	}
 
 	public void setForTomorrow( Context from, int id  )

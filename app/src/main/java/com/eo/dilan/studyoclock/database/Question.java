@@ -140,7 +140,7 @@ public class Question
 		return "SELECT * FROM " + NAME + " WHERE id !=" + qID + " ORDER BY RANDOM()";
 	}
 
-	public static Question getQuestion( SQLiteDatabase db, long id )
+	public static Question getQuestion( SQLiteDatabase db, long id, boolean loadAnswers )
 	{
 		String stmt = "SELECT * FROM " + NAME + " WHERE id=" + id;
 		Cursor cursor = db.rawQuery( stmt , new String[] {} );
@@ -151,7 +151,7 @@ public class Question
 
 		cursor.moveToFirst();
 		Question question = fromCursor( cursor );
-		if ( question != null )
+		if ( question != null && loadAnswers )
 		{
 			question.withAnswers(Answer.getAnswers(db, question.id));
 		}
@@ -162,13 +162,10 @@ public class Question
 	{
 		ArrayList<Question> toReturn = new ArrayList<>();
 		Cursor cursor = db.rawQuery( sqlSelectAll(), null);
-		// looping through all rows and adding to list
 		if (cursor != null && cursor.moveToFirst())
 		{
 			do
 			{
-				//get the question info
-				//get the answers for the question
 				Question question = fromCursor( cursor );
 				toReturn.add(question);
 			}
@@ -201,6 +198,7 @@ public class Question
 		quest.withAnswer(new Answer("my streetcar", 0));
 		toReturn.add(quest);
 		*/
+		/*
 		for ( int i = 0; i < 10; i++ )
 		{
 			Question quest = new Question( "What is 5 + " + i);
@@ -213,6 +211,7 @@ public class Question
 				toReturn.add(quest);
 			}
 		}
+		*/
 		return toReturn;
 	}
 

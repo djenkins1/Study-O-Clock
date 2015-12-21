@@ -1620,7 +1620,7 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f0c0023;
         public static final int activity_chooser_view_content=0x7f0c0024;
         public static final int addQuestBtn=0x7f0c0059;
-        public static final int addQuestion=0x7f0c006d;
+        public static final int addQuestion=0x7f0c0070;
         public static final int alarmIcon=0x7f0c0064;
         public static final int alertTitle=0x7f0c0030;
         public static final int always=0x7f0c001b;
@@ -1665,9 +1665,9 @@ containing a value of this type.
         public static final int media_actions=0x7f0c0074;
         public static final int middle=0x7f0c001a;
         public static final int multiply=0x7f0c0013;
-        public static final int myCorrect=0x7f0c006f;
-        public static final int myLine=0x7f0c006e;
-        public static final int myWrong=0x7f0c0070;
+        public static final int myCorrect=0x7f0c006a;
+        public static final int myLine=0x7f0c0069;
+        public static final int myWrong=0x7f0c006b;
         public static final int never=0x7f0c001e;
         public static final int none=0x7f0c000e;
         public static final int normal=0x7f0c000a;
@@ -1679,10 +1679,10 @@ containing a value of this type.
         public static final int question=0x7f0c0050;
         public static final int radio=0x7f0c003b;
         public static final int remains=0x7f0c0067;
-        public static final int repeatSwitch=0x7f0c0069;
-        public static final int resetQuest=0x7f0c006b;
-        public static final int resetStats=0x7f0c006a;
-        public static final int saveSettings=0x7f0c006c;
+        public static final int repeatSwitch=0x7f0c006c;
+        public static final int resetQuest=0x7f0c006e;
+        public static final int resetStats=0x7f0c006d;
+        public static final int saveSettings=0x7f0c006f;
         public static final int screen=0x7f0c0014;
         public static final int scrollIndicatorDown=0x7f0c0035;
         public static final int scrollIndicatorUp=0x7f0c0032;

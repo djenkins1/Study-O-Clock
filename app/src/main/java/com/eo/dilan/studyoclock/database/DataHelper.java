@@ -268,6 +268,11 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void setToQuestion( long qID )
 	{
+		setToQuestion( qID, true );
+	}
+
+	public void setToQuestion( long qID, boolean loadAnswers )
+	{
 		atQuestion = -1;
 		for ( int i = 0; i < allQuestions.size(); i++ )
 		{
@@ -280,7 +285,7 @@ public class DataHelper extends SQLiteOpenHelper
 
 		if ( atQuestion == -1 )
 		{
-			Question question = Question.getQuestion(db, qID);
+			Question question = Question.getQuestion(db, qID, loadAnswers);
 			if ( question != null )
 			{
 				allQuestions.add(question);

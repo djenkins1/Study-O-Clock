@@ -12,11 +12,11 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.preference.Preference;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Answer;
 import com.eo.dilan.studyoclock.database.DataHelper;
@@ -26,7 +26,6 @@ import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.prefs.PreferenceChangeListener;
 
 public class QuestionActivity extends AppCompatActivity
 {
@@ -63,6 +62,10 @@ public class QuestionActivity extends AppCompatActivity
 			isAlarm = true;
 			long[] pattern = { 0, 200, 500 };
 			vibrator.vibrate( pattern, 0);
+		}
+		else
+		{
+			Toast.makeText(this.getApplicationContext(), "Press back to stop studying" , Toast.LENGTH_LONG ).show();
 		}
 
 		new LongOperation().execute();

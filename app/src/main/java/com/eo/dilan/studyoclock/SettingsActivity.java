@@ -2,7 +2,6 @@ package com.eo.dilan.studyoclock;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.AlertBuilder;
 import com.eo.dilan.studyoclock.database.DataHelper;
-import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.PreferenceKeys;
 
 public class SettingsActivity extends AppCompatActivity

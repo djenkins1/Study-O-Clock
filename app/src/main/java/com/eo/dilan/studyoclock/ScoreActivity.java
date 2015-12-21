@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -93,7 +92,7 @@ public class ScoreActivity extends AppCompatActivity
                 try
                 {
                     long id = Long.parseLong(str);
-                    db.setToQuestion(id);
+                    db.setToQuestion(id, false );
                 }
                 catch( NumberFormatException e )
                 {
