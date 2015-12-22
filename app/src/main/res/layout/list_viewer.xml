@@ -53,5 +53,6 @@
         android:scrollHorizontally="false"
         android:ellipsize="end"
         android:textStyle="bold"
+        android:gravity="center"
         />
 </LinearLayout>

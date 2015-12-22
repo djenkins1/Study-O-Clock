@@ -41,6 +41,7 @@
             android:layout_weight="6"
             android:textColor="#FFF"
             android:textStyle="bold"
+            android:gravity="center"
             />
         <TextView
             android:id="@+id/myCorrect"

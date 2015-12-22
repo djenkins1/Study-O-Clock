@@ -42,11 +42,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 
 	public static void addAlarm( Context me, int hour, int minute )
 	{
-		addAlarm( me, hour, minute, 0);
+		addAlarm(me, hour, minute, 0);
 	}
 
-	public static void addAlarm( Context me, int hour, int minute, int id )
+	public static boolean addAlarm( Context me, int hour, int minute, int id , boolean rollTomorrow )
 	{
+        boolean toReturn = true;
 		Logger.print(me.getApplicationContext(), "Entered: ", "addAlarm");
 		AlarmManager am = (AlarmManager ) me.getSystemService(Context.ALARM_SERVICE);
 		GregorianCalendar later = new GregorianCalendar();
@@ -54,11 +55,16 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		later.set(Calendar.HOUR_OF_DAY, hour);
 		later.set(Calendar.MINUTE, minute);
 		later.set(Calendar.SECOND, 0);
-		if ( later.compareTo( now ) != 1 )
+		if ( later.compareTo( now ) != 1 && rollTomorrow )
 		{
 			Logger.print(me.getApplicationContext(), "Set Alarm", "Setting alarm to tomorrow");
 			later.add(Calendar.DATE , 1);
+            toReturn = true;
 		}
+        else if ( later.compareTo( now ) == 1 && !rollTomorrow )
+        {
+            toReturn = false;
+        }
 
 		Intent intent = new Intent(me, AlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(me, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -66,5 +72,11 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		Logger.print(me.getApplicationContext(), "Time: ", later.getTimeInMillis() + "");
 		Logger.print(me.getApplicationContext(), "Current: ", new GregorianCalendar().getTimeInMillis() + "");
 		am.set(AlarmManager.RTC_WAKEUP, later.getTimeInMillis(), sender);
+        return toReturn;
 	}
+
+    public static boolean addAlarm( Context me, int hour, int minute, int id )
+    {
+        return addAlarm( me, hour, minute, id , true );
+    }
 }

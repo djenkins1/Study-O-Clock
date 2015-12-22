@@ -117,8 +117,13 @@ public class Alarm
 		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 5 ).withOn( 0 );
 	}
 
-	public void setForTomorrow( Context from, int id  )
+	public boolean setForTomorrow( Context from, int id  )
 	{
-		AlarmReceiver.addAlarm(from, this.hour, this.minute , id);
+		return AlarmReceiver.addAlarm(from, this.hour, this.minute , id);
 	}
+
+    public boolean setForToday( Context from, int id )
+    {
+        return ( !AlarmReceiver.addAlarm(from, this.hour, this.minute , id, false) );
+    }
 }

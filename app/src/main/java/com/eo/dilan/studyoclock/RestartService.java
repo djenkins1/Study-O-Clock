@@ -43,7 +43,18 @@ public class RestartService extends Service
 			{
 				if ( alarm.isOn == 1 )
 				{
-					alarm.setForTomorrow( this.getApplicationContext() , (int)(alarm.id) - 1 );
+                    if ( shared.getBoolean( PreferenceKeys.ALARM_REPEAT, true ) )
+                    {
+                        alarm.setForTomorrow(this.getApplicationContext(), (int) (alarm.id) - 1);
+                    }
+                    else
+                    {
+                        boolean val = alarm.setForToday(this.getApplicationContext(), (int) (alarm.id) - 1);
+                        if ( !val )
+                        {
+                            db.updateAlarm( alarm.withOn( 0 ) );
+                        }
+                    }
 				}
 			}
 		}
