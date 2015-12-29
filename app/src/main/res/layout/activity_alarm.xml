@@ -29,6 +29,15 @@
         android:layout_weight="1"
         >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Questions asked"
+            android:focusable="false"
+            android:textSize="18sp"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            />
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -36,6 +45,7 @@
         android:inputType="number"
         android:hint="Total Correct Needed"
         android:textColor="#FFF"
+        android:textColorHint="#A0A5A0"
     />
         <RelativeLayout
             android:layout_width="match_parent"
