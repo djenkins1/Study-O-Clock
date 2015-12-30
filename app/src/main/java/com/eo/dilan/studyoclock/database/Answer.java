@@ -49,7 +49,7 @@ public class Answer
 	public static String sqlCreate()
 	{
 		StringBuilder toReturn = new StringBuilder();
-		toReturn.append( "CREATE TABLE " );
+		toReturn.append( "CREATE TABLE IF NOT EXISTS " );
 		toReturn.append( NAME );
 		toReturn.append( "( " );
 		toReturn.append( "id INTEGER PRIMARY KEY");

@@ -15,6 +15,7 @@ public class Question
 	public ArrayList<Answer> answers;
 	public int correct;
 	public int wrong;
+    public Course course;
 
 	public static final int QUESTION_FINE = 9;
 	public static final int QUESTION_EMPTY = 10;
@@ -27,6 +28,7 @@ public class Question
 		this.question = question;
 		this.answers = new ArrayList<>();
 		this.withAnswers( answers );
+        this.course = new Course().withID( -1 );
 	}
 
 	public Question withCorrect( int i)
@@ -101,22 +103,34 @@ public class Question
 		return this;
 	}
 
+    public Question withCourse( Course course )
+    {
+        this.course = course;
+        return this;
+    }
+
 	public Question withAnswersClear()
 	{
 		this.answers.clear();
 		return this;
 	}
 
+    public static String alterSQL()
+    {
+        return "ALTER TABLE " + Question.NAME + " ADD course INTEGER DEFAULT(-1)";
+    }
+
 	public static String sqlCreate()
 	{
 		StringBuilder toReturn = new StringBuilder();
-		toReturn.append( "CREATE TABLE " );
+		toReturn.append( "CREATE TABLE IF NOT EXISTS " );
 		toReturn.append( NAME );
 		toReturn.append( "( " );
 		toReturn.append( "id INTEGER PRIMARY KEY");
 		toReturn.append(",question TEXT ");
 		toReturn.append(",correct INTEGER");
 		toReturn.append(",wrong INTEGER");
+        toReturn.append(",course INTEGER");
 		toReturn.append(")");
 		return toReturn.toString();
 	}
@@ -127,6 +141,7 @@ public class Question
 		values.put("question", this.question);
 		values.put("correct", this.correct);
 		values.put("wrong", this.wrong);
+        values.put( "course" , this.course.id );
 		return values;
 	}
 
@@ -180,6 +195,7 @@ public class Question
 		question.withID(Long.parseLong(cursor.getString( 0 )));
 		question.withCorrect(Integer.parseInt(cursor.getString(2)));
 		question.withWrong(Integer.parseInt(cursor.getString(3)));
+        question.withCourse( new Course().withID( Long.parseLong( cursor.getString(4) ) ));
 		return question;
 	}
 
@@ -237,3 +253,4 @@ public class Question
 		return "UPDATE " + NAME + " SET correct=0,wrong=0";
 	}
 }
+

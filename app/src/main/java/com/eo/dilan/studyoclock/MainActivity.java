@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
 			Toast.makeText(getApplicationContext(), "You need to add questions in order to study", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		Intent intent = new Intent( this , QuestionActivity.class );
+		Intent intent = new Intent( this , SubjectActivity.class );
 		startActivity( intent );
 	}
 

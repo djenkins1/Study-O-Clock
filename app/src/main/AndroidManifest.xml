@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.eo.dilan.studyoclock">
+<manifest package="com.eo.dilan.studyoclock"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="17"/>
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -19,20 +23,20 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode">
-        <service android:name=".AlarmService"></service>
-        <service android:name=".RestartService"></service>
+        <service android:name=".AlarmService"/>
+        <service android:name=".RestartService"/>
 
         <receiver
             android:name=".RebootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name=".AlarmReceiver"
-            android:enabled="true" />
+            android:enabled="true"/>
 
         <activity
             android:name=".MainActivity"
@@ -41,17 +45,19 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".QuestionActivity" />
-        <activity android:name=".AddQuestionActivity"></activity>
-        <activity android:name=".AlarmActivity"></activity>
-        <activity android:name=".AllQuestionsActivity"></activity>
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".ScoreActivity"></activity>
+        <activity android:name=".QuestionActivity"/>
+        <activity android:name=".AddQuestionActivity"/>
+        <activity android:name=".AlarmActivity"/>
+        <activity android:name=".AllQuestionsActivity"/>
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".ScoreActivity"/>
+        <activity android:name=".SubjectActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,24 @@
+package com.eo.dilan.studyoclock;
+
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+
+public class SubjectActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setContentView(R.layout.activity_subject);
+    }
+
+    public void studyNowClick( View v )
+    {
+        Intent intent = new Intent( this , QuestionActivity.class );
+        startActivity( intent );
+    }
+}

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Study O\'Clock</string>
+    <string-array name="extraItems">
+        <item>None</item>
+        <item>Not Answered</item>
+        <item>Answered Wrong</item>
+        <item>Answered Right</item>
+        <item>Answered Little</item>
+    </string-array>
 </resources>

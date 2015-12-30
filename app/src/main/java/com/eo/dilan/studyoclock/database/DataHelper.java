@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class DataHelper extends SQLiteOpenHelper
 {
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private static final String DATABASE_NAME = "study";
 
@@ -61,11 +61,17 @@ public class DataHelper extends SQLiteOpenHelper
 		updateQuestionNotAnswers(db, question);
 	}
 
+    private void createTables(SQLiteDatabase db)
+    {
+        db.execSQL(Question.sqlCreate());
+        db.execSQL(Answer.sqlCreate());
+        db.execSQL(Alarm.sqlCreate());
+        db.execSQL( Course.sqlCreate() );
+    }
+
 	public void onCreate(SQLiteDatabase db)
 	{
-		db.execSQL(Question.sqlCreate());
-		db.execSQL(Answer.sqlCreate());
-		db.execSQL(Alarm.sqlCreate());
+        createTables(db);
 		for ( Question quest : Question.getDebugs() )
 		{
 			addQuestion(db, quest);
@@ -79,12 +85,21 @@ public class DataHelper extends SQLiteOpenHelper
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-		// Drop older table if existed
-		db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
-		db.execSQL("DROP TABLE IF EXISTS " + Answer.NAME);
-		db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME );
-		// Create tables again
-		onCreate(db);
+        createTables(db);
+        if ( newVersion == 2 )
+        {
+            db.execSQL( Question.alterSQL() );
+        }
+        else
+        {
+            // Drop older table if existed
+            db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + Answer.NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME);
+            db.execSQL( "DROP TABLE IF EXISTS " + Course.NAME );
+            // Create tables again
+            onCreate(db);
+        }
 	}
 
 	@Override
@@ -94,6 +109,7 @@ public class DataHelper extends SQLiteOpenHelper
 		db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + Answer.NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME );
+        db.execSQL( "DROP TABLE IF EXISTS " + Course.NAME );
 		// Create tables again
 		onCreate(db);
 	}

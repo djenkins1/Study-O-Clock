@@ -23,6 +23,10 @@ public abstract class StudySubject
                 return new NoCourseSubject();
             case SHY:
                 return new ShySubject();
+            case ANY_COURSE:
+                return new AnyCourseSubject();
+            case NONE:
+                return null;
             default:
                 Log.d( "Default" , "Reached default in subject switch with " + subject.name() );
                 return null;
