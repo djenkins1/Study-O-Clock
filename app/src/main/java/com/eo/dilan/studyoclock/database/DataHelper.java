@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 
 public class DataHelper extends SQLiteOpenHelper
@@ -15,9 +16,11 @@ public class DataHelper extends SQLiteOpenHelper
 
 	private static final String DATABASE_NAME = "study";
 
-	public Vector<Question> allQuestions;
+	public List<Question> allQuestions;
 
-	public ArrayList<Alarm> alarms;
+	public List<Alarm> alarms;
+
+    public List<Course> courses;
 
 	private int atQuestion = 0;
 
@@ -48,7 +51,7 @@ public class DataHelper extends SQLiteOpenHelper
 		db = this.getWritableDatabase();
 		allQuestions = new Vector<>();
 		alarms = Alarm.getAlarms(db);
-		Collections.shuffle(allQuestions);
+        courses = Course.getAllCourses(db);
 	}
 
 	public ArrayList<Question> getAllQuestions()
@@ -76,6 +79,13 @@ public class DataHelper extends SQLiteOpenHelper
 		{
 			addQuestion(db, quest);
 		}
+
+        for ( Course course : Course.getDebugList() )
+        {
+            if ( course != null ) {
+                addCourse(db,course);
+            }
+        }
 
 		addAlarm(db, Alarm.debugAlarm());
 
@@ -168,6 +178,20 @@ public class DataHelper extends SQLiteOpenHelper
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
 		addAnswers(db, question);
 	}
+
+    public void loadTitleForCourse( Course courseWithID )
+    {
+        int index = courses.indexOf( courseWithID );
+        if ( index != -1)
+        {
+            courseWithID.withTitle( courses.get( index ).title );
+        }
+    }
+
+    public void addCourse( SQLiteDatabase db, Course course )
+    {
+            course.withID(db.insert(Course.NAME, null, course.insertValues()));
+    }
 
 	public void addQuestion( Question question )
 	{

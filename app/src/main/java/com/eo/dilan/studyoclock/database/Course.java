@@ -3,16 +3,15 @@ package com.eo.dilan.studyoclock.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //TODO
-//course spinner in add question
 //load up courses in add question
-//associate course id with text in dataHelper
-//add courses to spinner in subject activity, along with other options of no course/any course
 //take into account the options selected when going into study session
+//integrate spinner into view on add question somehow
 
 //add course selector from subject activity to alarm activity and save that somehow in database
 public class Course
@@ -22,6 +21,12 @@ public class Course
     public String title;
 
     public long id;
+
+    public Course()
+    {
+        this.id = -1;
+        this.title = "";
+    }
 
     public Course withTitle( String title )
     {
@@ -54,7 +59,7 @@ public class Course
     public ContentValues insertValues()
     {
         ContentValues values = new ContentValues();
-        values.put("answer", this.title);
+        values.put("title", this.title);
         return values;
     }
 
@@ -70,6 +75,14 @@ public class Course
         return toReturn.toString();
     }
 
+    public static List<Course> getDebugList()
+    {
+        List<Course> toReturn = new ArrayList<>();
+        toReturn.add( new Course().withTitle( "Computer Science"));
+        toReturn.add( new Course().withTitle( "Art History"));
+        return toReturn;
+    }
+
     public static List<Course> getAllCourses(SQLiteDatabase db)
     {
         List<Course> toReturn = new ArrayList<>();
@@ -78,7 +91,8 @@ public class Course
         {
             do
             {
-                toReturn.add( fromCursor( cursor ) );
+                toReturn.add(fromCursor(cursor));
+                Log.d( "Data", toReturn.get(toReturn.size() - 1).title);
             }
             while ( cursor.moveToNext() );
         }

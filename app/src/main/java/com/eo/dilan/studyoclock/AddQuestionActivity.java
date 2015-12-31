@@ -9,18 +9,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.AlertBuilder;
 import com.eo.dilan.studyoclock.database.Answer;
+import com.eo.dilan.studyoclock.database.Course;
 import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddQuestionActivity extends AppCompatActivity
 {
@@ -243,8 +247,8 @@ public class AddQuestionActivity extends AppCompatActivity
 		boxes.add( (CheckBox)findViewById(R.id.chk1) );
 		boxes.add( (CheckBox)findViewById(R.id.chk2) );
 		boxes.add( (CheckBox)findViewById(R.id.chk3) );
-		boxes.add(( CheckBox ) findViewById(R.id.chk4));
-		texts.get(0).setText( question.question );
+		boxes.add((CheckBox) findViewById(R.id.chk4));
+		texts.get(0).setText(question.question);
 		for ( int i = 1; i < texts.size(); i++ )
 		{
 			if ( i > question.answers.size() )

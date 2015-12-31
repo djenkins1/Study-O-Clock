@@ -58,8 +58,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:id="@+id/course"
-            android:textColor="#FFF"
+            android:textColor="#000"
+            android:id="@+id/courseSpin"
             android:textSize="24sp"
             />
     </LinearLayout>
@@ -83,8 +83,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/extra"
-            android:textColor="#FFF"
             android:textSize="24sp"
+            android:textColor="#000"
             android:entries="@array/extraItems"
             />
     </LinearLayout>
