@@ -195,8 +195,7 @@ public class DataHelper extends SQLiteOpenHelper
 
 	public void addQuestion( Question question )
 	{
-		question.withID(db.insert(Question.NAME, null, question.insertValues()));
-		addAnswers(db, question);
+        addQuestion(db, question);
 	}
 
 	public void addAnswers(SQLiteDatabase db,Question question )

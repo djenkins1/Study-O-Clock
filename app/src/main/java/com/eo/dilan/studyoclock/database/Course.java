@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO
-//load up courses in add question
 //take into account the options selected when going into study session
-//integrate spinner into view on add question somehow
-
+//need a way to add a course somehow
 //add course selector from subject activity to alarm activity and save that somehow in database
+
+
 public class Course
 {
     public static final String NAME = "Course";
@@ -48,6 +48,11 @@ public class Course
     @Override
     public boolean equals( Object other )
     {
+        if ( other == null )
+        {
+            return false;
+        }
+
         if ( this.getClass() != other.getClass() )
         {
             return false;

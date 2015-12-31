@@ -39,7 +39,7 @@ public class SubjectActivity extends AppCompatActivity
         Spinner spin = (Spinner) findViewById(R.id.courseSpin );
         Spinner spin2 = (Spinner)findViewById(R.id.extra );
         List<String> courseList = new ArrayList<>();
-        courseList.add( "None");
+        courseList.add( "None" );
         for ( Course course: db.courses )
         {
             courseList.add( course.title );

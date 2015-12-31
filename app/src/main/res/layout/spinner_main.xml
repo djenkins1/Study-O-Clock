@@ -8,4 +8,6 @@
     android:gravity="left"
     android:textColor="#000"
     android:padding="5dip"
+    android:ellipsize="end"
+    android:singleLine="true"
     />

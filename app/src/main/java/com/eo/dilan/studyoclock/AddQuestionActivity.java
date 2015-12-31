@@ -20,7 +20,6 @@ import com.eo.dilan.studyoclock.database.AlertBuilder;
 import com.eo.dilan.studyoclock.database.Answer;
 import com.eo.dilan.studyoclock.database.Course;
 import com.eo.dilan.studyoclock.database.DataHelper;
-import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
@@ -54,9 +53,9 @@ public class AddQuestionActivity extends AppCompatActivity
 		if ( intent != null && intent.getExtras() != null && intent.getExtras().getLong("question", -1) != -1 )
 		{
 			qID = intent.getExtras().getLong("question", -1);
-			Logger.print(this.getApplicationContext(), "Question entered", qID + "");
-			new LongOperation().execute();
 		}
+
+        new LongOperation().execute();
 	}
 
 	private void readViews()
@@ -64,15 +63,15 @@ public class AddQuestionActivity extends AppCompatActivity
 		edits = new ArrayList<>();
 		edits.add( (EditText)findViewById(R.id.question) );
 		edits.add( (EditText)findViewById(R.id.button1) );
-		edits.add( (EditText)findViewById(R.id.button2) );
-		edits.add(( EditText ) findViewById(R.id.button3));
-		edits.add(( EditText ) findViewById(R.id.button4));
+		edits.add((EditText) findViewById(R.id.button2));
+		edits.add((EditText) findViewById(R.id.button3));
+		edits.add((EditText) findViewById(R.id.button4));
 
 		checks = new ArrayList<>();
-		checks.add(( CheckBox ) findViewById(R.id.chk1));
+		checks.add((CheckBox) findViewById(R.id.chk1));
 		checks.add(( CheckBox ) findViewById(R.id.chk2));
-		checks.add( (CheckBox)findViewById(R.id.chk3) );
-		checks.add(( CheckBox ) findViewById(R.id.chk4));
+		checks.add((CheckBox) findViewById(R.id.chk3));
+		checks.add((CheckBox) findViewById(R.id.chk4));
 	}
 
 	@Override
@@ -99,7 +98,6 @@ public class AddQuestionActivity extends AppCompatActivity
 			{
 				public void onClick(DialogInterface dialog, int whichButton)
 				{
-					Logger.print(AddQuestionActivity.this.getApplicationContext(), "Question removal", qID + "");
 					db.removeQuestion(db.getCurrentQuestion());
 					Toast.makeText(getApplicationContext(), "Question removed!", Toast.LENGTH_LONG).show();
 					Intent intent = new Intent( AddQuestionActivity.this , MainActivity.class );
@@ -182,6 +180,17 @@ public class AddQuestionActivity extends AppCompatActivity
 			}
 		}
 
+        Spinner spin = (Spinner)findViewById( R.id.courseSpin );
+        int index = spin.getSelectedItemPosition() - 1;
+        if ( index >= 0 ) {
+            question.withCourse(db.courses.get(index));
+        }
+        else
+        {
+            question.withCourse( new Course() );
+        }
+
+
 		int error = question.isValidQuestion();
 		switch( error )
 		{
@@ -201,10 +210,9 @@ public class AddQuestionActivity extends AppCompatActivity
 				return;
 		}
 
-		if ( db == null)
+		if ( qID == -1 )
 		{
 			Toast.makeText(getApplicationContext(), "Question added!", Toast.LENGTH_LONG).show();
-			DataHelper db = DataHelper.instance(this.getApplicationContext() );
 			db.addQuestion(question);
 			Intent intent = new Intent( this , AllQuestionsActivity.class );
 			startActivity(intent);
@@ -229,8 +237,14 @@ public class AddQuestionActivity extends AppCompatActivity
 		@Override
 		protected void onPostExecute(Void param)
 		{
-			db.setToQuestion(qID);
-			updateList(db.getCurrentQuestion());
+            if ( qID != -1 ) {
+                db.setToQuestion(qID);
+                updateList(db.getCurrentQuestion());
+            }
+            else
+            {
+                updateCourse(null);
+            }
 		}
 	}
 
@@ -269,6 +283,29 @@ public class AddQuestionActivity extends AppCompatActivity
 		Button button = (Button) findViewById(R.id.addQuestBtn);
 		button.setText("Edit Question");
 		findViewById(R.id.delQuestBtn).setEnabled(true);
-		populated = true;
+        updateCourse(question.course);
+        populated = true;
+
 	}
+
+    private void updateCourse( Course atMe )
+    {
+        Spinner spin = (Spinner)findViewById( R.id.courseSpin );
+        List<String> courseList = new ArrayList<>();
+        int index = 0;
+        int atPlace = 1;
+        courseList.add("None");
+        for ( Course course: db.courses )
+        {
+            if ( course.equals( atMe ) )
+            {
+                index = atPlace;
+            }
+            courseList.add( course.title );
+            atPlace++;
+        }
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>( this, R.layout.spinner_main, courseList);
+        spin.setAdapter(spinnerArrayAdapter);
+        spin.setSelection( index );
+    }
 }
