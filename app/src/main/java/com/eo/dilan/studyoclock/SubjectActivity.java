@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Course;
 import com.eo.dilan.studyoclock.database.DataHelper;
@@ -34,16 +35,39 @@ public class SubjectActivity extends AppCompatActivity
 
     public void studyNowClick( View v )
     {
-        if ( isLoaded ) {
+        if ( isLoaded && checkForm() ) {
             Intent intent = new Intent(this, QuestionActivity.class);
             handleForm( intent );
             startActivity(intent);
         }
+        else if ( !isLoaded )
+        {
+            Toast.makeText( this, "Please wait!" , Toast.LENGTH_SHORT );
+        }
+    }
+
+    private boolean checkForm()
+    {
+        String check = ((EditText) findViewById( R.id.total ) ).getText().toString();
+        try
+        {
+            long value = Long.parseLong( check );
+            if ( value < 1 )
+            {
+                Toast.makeText(this, "Total must be at least one" , Toast.LENGTH_SHORT);
+                return false;
+            }
+        }
+        catch ( Exception e )
+        {
+            return false;
+        }
+        return true;
     }
 
     private void handleForm( Intent intent )
     {
-        intent.putExtra(PreferenceKeys.COURSE_INTENT , ((Spinner) findViewById( R.id.courseSpin ) ).getSelectedItemPosition() + "" );
+        intent.putExtra(PreferenceKeys.COURSE_INTENT , ( ((Spinner) findViewById( R.id.courseSpin ) ).getSelectedItemPosition() - 1 ) + "" );
         intent.putExtra(PreferenceKeys.EXTRA_INTENT , ((Spinner) findViewById( R.id.extra ) ).getSelectedItem().toString() );
         intent.putExtra(PreferenceKeys.TOTAL_INTENT , ((EditText) findViewById( R.id.total ) ).getText().toString() );
     }
@@ -54,6 +78,7 @@ public class SubjectActivity extends AppCompatActivity
         Spinner spin2 = (Spinner)findViewById(R.id.extra );
         List<String> courseList = new ArrayList<>();
         courseList.add( "None" );
+        courseList.add( "Any" );
         for ( Course course: db.courses )
         {
             courseList.add( course.title );
@@ -66,6 +91,7 @@ public class SubjectActivity extends AppCompatActivity
                         R.array.extraItems,
                         R.layout.spinner_main);
         spin2.setAdapter(madaptor);
+        isLoaded = true;
     }
 
     private class LongOperation extends AsyncTask<Void, Void, Void> {
@@ -79,7 +105,6 @@ public class SubjectActivity extends AppCompatActivity
         protected void onPostExecute(Void param)
         {
             updateList();
-            isLoaded = true;
         }
     }
 }

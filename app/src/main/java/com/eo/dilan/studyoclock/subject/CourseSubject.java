@@ -1,6 +1,5 @@
 package com.eo.dilan.studyoclock.subject;
-
-import com.eo.dilan.studyoclock.database.Course;
+import com.eo.dilan.studyoclock.database.Question;
 
 /*
 Get questions from a specific course
@@ -17,8 +16,7 @@ public class CourseSubject extends StudySubject
 
     public String getSQL()
     {
-        //TODO: use course provided to get sql needed
-        return null;
+        return Question.getSqlForCourse( course );
     }
 
     public CourseSubject withCourse( long value )

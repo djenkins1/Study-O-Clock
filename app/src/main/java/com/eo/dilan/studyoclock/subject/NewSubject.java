@@ -8,7 +8,6 @@ public class NewSubject extends StudySubject
 {
     public String getSQL()
     {
-        //TODO
-        return null;
+        return " AND correct=0 AND wrong=0";
     }
 }

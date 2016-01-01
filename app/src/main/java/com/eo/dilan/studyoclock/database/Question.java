@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -141,7 +142,7 @@ public class Question
 		values.put("question", this.question);
 		values.put("correct", this.correct);
 		values.put("wrong", this.wrong);
-        values.put( "course" , this.course.id );
+        values.put("course", this.course.id);
 		return values;
 	}
 
@@ -176,7 +177,7 @@ public class Question
 	public static ArrayList<Question> getAllQuestions(SQLiteDatabase db)
 	{
 		ArrayList<Question> toReturn = new ArrayList<>();
-		Cursor cursor = db.rawQuery( sqlSelectAll(), null);
+		Cursor cursor = db.rawQuery(sqlSelectAll(), null);
 		if (cursor != null && cursor.moveToFirst())
 		{
 			do
@@ -198,6 +199,23 @@ public class Question
         question.withCourse( new Course().withID( Long.parseLong( cursor.getString(4) ) ));
 		return question;
 	}
+
+    public static String getSqlForCourse( long courseID )
+    {
+        StringBuilder toReturn = new StringBuilder();
+        if ( courseID != -1 )
+        {
+            toReturn.append( "SELECT * FROM " );
+            toReturn.append( Question.NAME );
+            toReturn.append( " WHERE course=" );
+            toReturn.append( courseID );
+        }
+        else
+        {
+            Log.d("BAD COURSE", courseID + "");
+        }
+        return toReturn.toString();
+    }
 
 	public static ArrayList<Question> getDebugs()
 	{

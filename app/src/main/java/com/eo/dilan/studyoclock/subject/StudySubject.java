@@ -16,7 +16,7 @@ public abstract class StudySubject
 
     public static StudySubject getCourseSubject( long value )
     {
-        if ( value == -1 )
+        if ( value <= -1 )
         {
             return new NoCourseSubject();
         }

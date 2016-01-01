@@ -38,6 +38,7 @@
             android:textColor="#FFF"
             android:textColorHint="#CAC"
             android:textSize="24sp"
+            android:inputType="number"
             />
     </LinearLayout>
     <LinearLayout

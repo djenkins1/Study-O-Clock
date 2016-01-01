@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO
-//need a way to add a course somehow
+//(!!!)make sure input is numeric on number of questions in subject activity
+//(!!!)check for off by one error on study intent passed
+//write the sql for all the subjects
+//---shy subject needs complex sql for averages
+//execute it to get questions, course subject objects have beginning and extras have and clauses, concatenate by chaining
+//need a way to add a course somehow( see bookmarks, dialog interface)
 //add course selector from subject activity to alarm activity and save that somehow in database
-//make sure input is numeric on number of questions in subject activity
-//write the sql for all the subjects and execute it to get questions
+
 
 
 public class Course
