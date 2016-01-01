@@ -4,12 +4,10 @@
     <string name="extra_none">None</string>
     <string name="extra_wrong">Answered Wrong</string>
     <string name="extra_right">Answered Right</string>
-    <string name="extra_little">Answered Little</string>
     <string-array name="extraItems">
         <item>@string/extra_none</item>
         <item>@string/extra_not</item>
         <item>@string/extra_wrong</item>
         <item>@string/extra_right</item>
-        <item>@string/extra_little</item>
     </string-array>
 </resources>

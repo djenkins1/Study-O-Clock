@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO
-//(!!!)make sure input is numeric on number of questions in subject activity
-//(!!!)check for off by one error on study intent passed
-//write the sql for all the subjects
-//---shy subject needs complex sql for averages
-//execute it to get questions, course subject objects have beginning and extras have and clauses, concatenate by chaining
+//(!!!)write the sql for all the subjects
+//(!!!)execute it to get questions, course subject objects have beginning and extras have and clauses, concatenate by chaining
+//(!!!)need to take into account total passed from subject intent into studying and disable back button
+//---works for (any course and none extra)
+//---need to test for others
+//---if there are no questions from the query then go back to menu and toast user
 //need a way to add a course somehow( see bookmarks, dialog interface)
-//add course selector from subject activity to alarm activity and save that somehow in database
+//copy the course selector from subject activity to alarm activity and save that somehow in database
 
 
 

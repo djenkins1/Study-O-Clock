@@ -7,6 +7,6 @@ public class AnyCourseSubject extends StudySubject
 {
     public String getSQL()
     {
-        return Question.sqlSelectAll();
+        return Question.sqlSelectAll() + " WHERE 1=1 ";
     }
 }

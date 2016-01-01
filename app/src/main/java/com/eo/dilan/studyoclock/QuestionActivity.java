@@ -47,6 +47,12 @@ public class QuestionActivity extends AppCompatActivity
 
 	private StringBuilder questionsWrong = new StringBuilder("");
 
+    private StudySubject extra;
+
+    private StudySubject course;
+
+    private int totalIntent;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -70,8 +76,9 @@ public class QuestionActivity extends AppCompatActivity
                     && intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) != null
                     && intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ) != null )
             {
-                StudySubject extra = StudySubject.getSubject( intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
-                StudySubject course = StudySubject.getCourseSubject( Long.parseLong( intent.getExtras().getString(PreferenceKeys.COURSE_INTENT )));
+                extra = StudySubject.getSubject( this, intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
+                course = StudySubject.getCourseSubject(Long.parseLong(intent.getExtras().getString(PreferenceKeys.COURSE_INTENT)));
+                totalIntent = Integer.parseInt( intent.getExtras().getString( PreferenceKeys.TOTAL_INTENT ) );
                 Log.d("Passed", intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
                 Log.d("Passed", intent.getExtras().getString(PreferenceKeys.COURSE_INTENT ));
                 Log.d("Passed", intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ));
@@ -123,9 +130,11 @@ public class QuestionActivity extends AppCompatActivity
 	}
 
 	@Override
-	public void onBackPressed(){
-		if ( isAlarm )
+	public void onBackPressed()
+    {
+		if ( isAlarm || course != null )
 		{
+            Toast.makeText( this, "There are questions remaining" , Toast.LENGTH_SHORT ).show();
 			return;
 		}
 
@@ -133,7 +142,6 @@ public class QuestionActivity extends AppCompatActivity
 		intent.putExtra( PreferenceKeys.Q_LIST , questionsWrong.toString() );
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		me.startActivity(intent);
-		//super.onBackPressed();
 	}
 
 	@Override
@@ -147,7 +155,6 @@ public class QuestionActivity extends AppCompatActivity
 	public void onDestroy()
 	{
 		super.onDestroy();
-		Logger.print(me, "STUDY", questionsWrong.toString());
 		if ( vibrator != null )
 		{
 			vibrator.cancel();
@@ -190,16 +197,16 @@ public class QuestionActivity extends AppCompatActivity
 
 		final float[] hsv  = new float[3];                  // transition color
 		anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-			@Override
-			public void onAnimationUpdate(ValueAnimator animation) {
-				// Transition along each axis of HSV (hue, saturation, value)
-				hsv[0] = from[0] + (to[0] - from[0]) * animation.getAnimatedFraction();
-				hsv[1] = from[1] + (to[1] - from[1]) * animation.getAnimatedFraction();
-				hsv[2] = from[2] + (to[2] - from[2]) * animation.getAnimatedFraction();
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                // Transition along each axis of HSV (hue, saturation, value)
+                hsv[0] = from[0] + (to[0] - from[0]) * animation.getAnimatedFraction();
+                hsv[1] = from[1] + (to[1] - from[1]) * animation.getAnimatedFraction();
+                hsv[2] = from[2] + (to[2] - from[2]) * animation.getAnimatedFraction();
 
-				view.setBackgroundColor(Color.HSVToColor(hsv));
-			}
-		});
+                view.setBackgroundColor(Color.HSVToColor(hsv));
+            }
+        });
 
 		anim.addListener(new AnimatorListenerAdapter()
 		{
@@ -216,7 +223,6 @@ public class QuestionActivity extends AppCompatActivity
 			@Override
 			public void onAnimationEnd(Animator arg0)
 			{
-				//view.setBackgroundResource(android.R.drawable.btn_default);
 				view.setBackgroundResource(R.drawable.apptheme_btn_default_holo_dark);
 				handleQuestionEnd( isCorrect );
 			}
@@ -241,19 +247,30 @@ public class QuestionActivity extends AppCompatActivity
 		{
 			vib.cancel();
 			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.Q_LIST).remove(PreferenceKeys.TOTAL).commit();
-			Intent intent = new Intent( me, ScoreActivity.class );
-			intent.putExtra( PreferenceKeys.Q_LIST , questionsWrong.toString() );
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			me.startActivity(intent);
+            gotoWrongActivity();
 			return;
 		}
+        else if ( totalNeeded == 0 && course != null )
+        {
+            gotoWrongActivity();
+            return;
+        }
+
 		updateQuestion(db.getCurrentQuestionLoader( cursor, 5 ));
 	}
+
+    private void gotoWrongActivity()
+    {
+        Intent intent = new Intent( me, ScoreActivity.class );
+        intent.putExtra( PreferenceKeys.Q_LIST , questionsWrong.toString() );
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        me.startActivity(intent);
+    }
 
 	private void showNeeded()
 	{
 		TextView v = (TextView)findViewById(R.id.remains);
-		if ( !isAlarm || totalNeeded <= 0 )
+		if ( ( !isAlarm && course == null ) || totalNeeded <= 0 )
 		{
 			v.setText( "" );
 			return;
@@ -288,6 +305,11 @@ public class QuestionActivity extends AppCompatActivity
 				db.setToQuestion(id);
 				cursor = db.loadQuestions( id , 4 );
 			}
+            else if ( course != null )
+            {
+                cursor =  db.getCursorOfQuestionSubjects( course, extra );
+                cursor = db.loadQuestions(cursor, 5);
+            }
 			else
 			{
 				cursor = db.loadQuestions( -1 , 5 );
@@ -308,6 +330,10 @@ public class QuestionActivity extends AppCompatActivity
 			{
 				totalNeeded = db.alarms.get(0).correct;
 			}
+            else if ( course != null )
+            {
+                totalNeeded = totalIntent;
+            }
 
 			if ( shared.getBoolean(PreferenceKeys.ALARM_REPEAT, true) )
 			{

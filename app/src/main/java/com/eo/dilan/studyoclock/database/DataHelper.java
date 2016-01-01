@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.eo.dilan.studyoclock.subject.StudySubject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,7 +72,7 @@ public class DataHelper extends SQLiteOpenHelper
         db.execSQL(Question.sqlCreate());
         db.execSQL(Answer.sqlCreate());
         db.execSQL(Alarm.sqlCreate());
-        db.execSQL( Course.sqlCreate() );
+        db.execSQL(Course.sqlCreate());
     }
 
 	public void onCreate(SQLiteDatabase db)
@@ -279,7 +282,7 @@ public class DataHelper extends SQLiteOpenHelper
 	{
 		if ( checkOpen() )
 		{
-			db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{ String.valueOf(alarm.id) });
+			db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{String.valueOf(alarm.id)});
 		}
 	}
 
@@ -336,15 +339,19 @@ public class DataHelper extends SQLiteOpenHelper
 	public Cursor loadQuestions( long qID, int limit )
 	{
 		Cursor cursor = getCursorOfQuestionsNotID( qID );
-		if ( cursor != null )
-		{
-			cursor.moveToFirst();
-		}
+        if ( cursor != null )
+        {
+            cursor.moveToFirst();
+        }
 		return loadFromCursor( cursor, limit );
 	}
 
 	public Cursor loadQuestions( Cursor cursor, int limit )
 	{
+        if ( cursor != null )
+        {
+            cursor.moveToFirst();
+        }
 		return loadFromCursor( cursor, limit );
 	}
 
@@ -383,6 +390,17 @@ public class DataHelper extends SQLiteOpenHelper
 	{
 		return db.rawQuery( Question.sqlSelectNotID( qID ) , new String[]{} );
 	}
+
+    public Cursor getCursorOfQuestionSubjects( StudySubject courseSubject, StudySubject extraSubject )
+    {
+        StringBuilder query = new StringBuilder( courseSubject.getSQL() );
+        if ( extraSubject != null )
+        {
+            query.append( extraSubject.getSQL() );
+        }
+        Log.d("QUERY", query.toString());
+        return db.rawQuery( query.toString(), new String[]{} );
+    }
 
 	public void resetQuestionStats()
 	{

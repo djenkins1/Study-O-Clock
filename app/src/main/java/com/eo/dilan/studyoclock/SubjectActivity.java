@@ -42,7 +42,7 @@ public class SubjectActivity extends AppCompatActivity
         }
         else if ( !isLoaded )
         {
-            Toast.makeText( this, "Please wait!" , Toast.LENGTH_SHORT );
+            Toast.makeText( this, "Please wait!" , Toast.LENGTH_SHORT ).show();
         }
     }
 
@@ -54,12 +54,13 @@ public class SubjectActivity extends AppCompatActivity
             long value = Long.parseLong( check );
             if ( value < 1 )
             {
-                Toast.makeText(this, "Total must be at least one" , Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Total must be more than zero" , Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
         catch ( Exception e )
         {
+            Toast.makeText(this, "Total must be more than zero" , Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -67,7 +68,9 @@ public class SubjectActivity extends AppCompatActivity
 
     private void handleForm( Intent intent )
     {
-        intent.putExtra(PreferenceKeys.COURSE_INTENT , ( ((Spinner) findViewById( R.id.courseSpin ) ).getSelectedItemPosition() - 1 ) + "" );
+        int index = ( ((Spinner) findViewById( R.id.courseSpin ) ).getSelectedItemPosition() - 1 );
+        long id  = ( index <= 0 ? index : db.courses.get( index - 1 ).id );
+        intent.putExtra(PreferenceKeys.COURSE_INTENT , id + "" );
         intent.putExtra(PreferenceKeys.EXTRA_INTENT , ((Spinner) findViewById( R.id.extra ) ).getSelectedItem().toString() );
         intent.putExtra(PreferenceKeys.TOTAL_INTENT , ((EditText) findViewById( R.id.total ) ).getText().toString() );
     }
@@ -78,19 +81,20 @@ public class SubjectActivity extends AppCompatActivity
         Spinner spin2 = (Spinner)findViewById(R.id.extra );
         List<String> courseList = new ArrayList<>();
         courseList.add( "None" );
-        courseList.add( "Any" );
+        courseList.add("Any");
         for ( Course course: db.courses )
         {
             courseList.add( course.title );
         }
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>( this, R.layout.spinner_main, courseList);
-        spin.setAdapter( spinnerArrayAdapter);
+        spin.setAdapter(spinnerArrayAdapter);
+        spin.setSelection( 1 );
 
-        ArrayAdapter<CharSequence> madaptor = ArrayAdapter
+        ArrayAdapter<CharSequence> mAdaptor = ArrayAdapter
                 .createFromResource(this,
                         R.array.extraItems,
                         R.layout.spinner_main);
-        spin2.setAdapter(madaptor);
+        spin2.setAdapter(mAdaptor);
         isLoaded = true;
     }
 

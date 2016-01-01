@@ -1,34 +1,32 @@
 package com.eo.dilan.studyoclock.subject;
 
+import android.content.Context;
+import android.content.res.Resources;
+
 import com.eo.dilan.studyoclock.R;
 
 public enum Subject
 {
-    COURSE, NEW, NO_COURSE, RIGHT, WRONG, SHY, ANY_COURSE, NONE, BAD;
+    COURSE, NEW, NO_COURSE, RIGHT, WRONG, ANY_COURSE, NONE, BAD;
 
-    public static Subject getSubject( String name )
+    public static Subject getSubject( Context context, String name )
     {
-        if ( name.equals( R.string.extra_none ) )
+        if ( name.equals( context.getString(R.string.extra_none)) )
         {
             return NONE;
         }
 
-        if ( name.equals( R.string.extra_little ) )
-        {
-            return SHY;
-        }
-
-        if ( name.equals( R.string.extra_not ) )
+        if ( name.equals(context.getString(R.string.extra_not) ))
         {
             return NEW;
         }
 
-        if ( name.equals( R.string.extra_right))
+        if ( name.equals(context.getString(R.string.extra_right)))
         {
             return RIGHT;
         }
 
-        if ( name.equals( R.string.extra_wrong))
+        if (name.equals(context.getString( R.string.extra_wrong)))
         {
             return WRONG;
         }

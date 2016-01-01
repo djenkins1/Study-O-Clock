@@ -10,10 +10,6 @@ public class RightSubject extends StudySubject
 {
     public String getSQL()
     {
-        StringBuilder toReturn = new StringBuilder();
-        toReturn.append( "SELECT * FROM " );
-        toReturn.append( Question.NAME );
-        toReturn.append( " WHERE (correct-wrong)>0 ");
-        return toReturn.toString();
+        return ( " AND (correct-wrong)>0 ");
     }
 }
