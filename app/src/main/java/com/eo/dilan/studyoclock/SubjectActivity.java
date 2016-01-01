@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.eo.dilan.studyoclock.database.Course;
 import com.eo.dilan.studyoclock.database.DataHelper;
+import com.eo.dilan.studyoclock.database.PreferenceKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.List;
 public class SubjectActivity extends AppCompatActivity
 {
     private DataHelper db;
+
+    private boolean isLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,8 +34,18 @@ public class SubjectActivity extends AppCompatActivity
 
     public void studyNowClick( View v )
     {
-        Intent intent = new Intent( this , QuestionActivity.class );
-        startActivity(intent);
+        if ( isLoaded ) {
+            Intent intent = new Intent(this, QuestionActivity.class);
+            handleForm( intent );
+            startActivity(intent);
+        }
+    }
+
+    private void handleForm( Intent intent )
+    {
+        intent.putExtra(PreferenceKeys.COURSE_INTENT , ((Spinner) findViewById( R.id.courseSpin ) ).getSelectedItemPosition() + "" );
+        intent.putExtra(PreferenceKeys.EXTRA_INTENT , ((Spinner) findViewById( R.id.extra ) ).getSelectedItem().toString() );
+        intent.putExtra(PreferenceKeys.TOTAL_INTENT , ((EditText) findViewById( R.id.total ) ).getText().toString() );
     }
 
     public void updateList()
@@ -65,6 +79,7 @@ public class SubjectActivity extends AppCompatActivity
         protected void onPostExecute(Void param)
         {
             updateList();
+            isLoaded = true;
         }
     }
 }

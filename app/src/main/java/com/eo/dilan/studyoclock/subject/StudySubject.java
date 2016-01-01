@@ -2,11 +2,33 @@ package com.eo.dilan.studyoclock.subject;
 
 import android.util.Log;
 
+import com.eo.dilan.studyoclock.database.Course;
+
 /*
 (?)Get questions that have been answered right/wrong the same number of times
  */
 public abstract class StudySubject
 {
+    public static StudySubject getSubject( String name )
+    {
+        return getSubject( Subject.getSubject( name ) );
+    }
+
+    public static StudySubject getCourseSubject( long value )
+    {
+        if ( value == -1 )
+        {
+            return new NoCourseSubject();
+        }
+
+        if ( value == 0 )
+        {
+            return new AnyCourseSubject();
+        }
+
+        return new CourseSubject().withCourse( value );
+    }
+
     public static StudySubject getSubject( Subject subject )
     {
         switch( subject )

@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Study O\'Clock</string>
+    <string name="extra_not">Not Answered</string>
+    <string name="extra_none">None</string>
+    <string name="extra_wrong">Answered Wrong</string>
+    <string name="extra_right">Answered Right</string>
+    <string name="extra_little">Answered Little</string>
     <string-array name="extraItems">
-        <item>None</item>
-        <item>Not Answered</item>
-        <item>Answered Wrong</item>
-        <item>Answered Right</item>
-        <item>Answered Little</item>
+        <item>@string/extra_none</item>
+        <item>@string/extra_not</item>
+        <item>@string/extra_wrong</item>
+        <item>@string/extra_right</item>
+        <item>@string/extra_little</item>
     </string-array>
 </resources>

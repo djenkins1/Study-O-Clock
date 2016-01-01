@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.PreferenceKeys;
 import com.eo.dilan.studyoclock.database.Question;
+import com.eo.dilan.studyoclock.subject.StudySubject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,12 +58,25 @@ public class QuestionActivity extends AppCompatActivity
 		Intent intent = getIntent();
 
 		questionsWrong = new StringBuilder( shared.getString( PreferenceKeys.Q_LIST , "" ) );
-		if ( intent != null && intent.getExtras() != null && intent.getExtras().getString("alarm") != null )
+		if ( intent != null && intent.getExtras() != null  )
 		{
-			shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
-			isAlarm = true;
-			long[] pattern = { 0, 200, 500 };
-			vibrator.vibrate( pattern, 0);
+            if ( intent.getExtras().getString( "alarm" ) != null ) {
+                shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
+                isAlarm = true;
+                long[] pattern = {0, 200, 500};
+                vibrator.vibrate(pattern, 0);
+            }
+            else if ( intent.getExtras().getString( PreferenceKeys.COURSE_INTENT ) != null
+                    && intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) != null
+                    && intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ) != null )
+            {
+                StudySubject extra = StudySubject.getSubject( intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
+                StudySubject course = StudySubject.getCourseSubject( Long.parseLong( intent.getExtras().getString(PreferenceKeys.COURSE_INTENT )));
+                Log.d("Passed", intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
+                Log.d("Passed", intent.getExtras().getString(PreferenceKeys.COURSE_INTENT ));
+                Log.d("Passed", intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ));
+                Log.d( "Passed" , course.toString() );
+            }
 		}
 		else
 		{

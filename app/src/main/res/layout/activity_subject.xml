@@ -60,6 +60,7 @@
             android:layout_weight="1"
             android:textColor="#000"
             android:id="@+id/courseSpin"
+            android:spinnerMode="dialog"
             android:textSize="24sp"
             />
     </LinearLayout>
@@ -86,6 +87,7 @@
             android:textSize="24sp"
             android:textColor="#000"
             android:entries="@array/extraItems"
+            android:spinnerMode="dialog"
             />
     </LinearLayout>
     <Button

@@ -14,6 +14,12 @@ public class PreferenceKeys
 
 	public static final String Q_LIST = "listOfQuestions";
 
+    public static final String COURSE_INTENT = "courseIntent";
+
+    public static final String EXTRA_INTENT = "extraSpinIntent";
+
+    public static final String TOTAL_INTENT = "totalQuestions";
+
 
 	public static StringBuilder addNumberToEnd( StringBuilder str, long value )
 	{
