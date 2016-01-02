@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -181,7 +184,7 @@ public class AddQuestionActivity extends AppCompatActivity
 		}
 
         Spinner spin = (Spinner)findViewById( R.id.courseSpin );
-        int index = spin.getSelectedItemPosition() - 1;
+        int index = spin.getSelectedItemPosition() - 2;
         if ( index >= 0 ) {
             question.withCourse(db.courses.get(index));
         }
@@ -292,9 +295,10 @@ public class AddQuestionActivity extends AppCompatActivity
     {
         Spinner spin = (Spinner)findViewById( R.id.courseSpin );
         List<String> courseList = new ArrayList<>();
-        int index = 0;
-        int atPlace = 1;
         courseList.add("None");
+        courseList.add( "New Course");
+        int index = 0;
+        int atPlace = courseList.size();
         for ( Course course: db.courses )
         {
             if ( course.equals( atMe ) )
@@ -306,6 +310,32 @@ public class AddQuestionActivity extends AppCompatActivity
         }
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>( this, R.layout.spinner_main, courseList);
         spin.setAdapter(spinnerArrayAdapter);
-        spin.setSelection( index );
+        spin.setSelection(index);
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if ( position == 1 )
+                {
+                    popupAddCourse();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                return;
+            }
+        });
+    }
+
+    private void popupAddCourse()
+    {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.prompt_view, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( this );
+        alertDialogBuilder.setView( promptsView );
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }

@@ -59,7 +59,7 @@ public class QuestionActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		shared = getSharedPreferences(PreferenceKeys.PREF_KEY, Context.MODE_PRIVATE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		setContentView(R.layout.activity_question);
+		setContentView(R.layout.activity_study);
 		vibrator = (Vibrator ) getSystemService( VIBRATOR_SERVICE);
 		Intent intent = getIntent();
 
@@ -95,19 +95,27 @@ public class QuestionActivity extends AppCompatActivity
 
 	private void updateQuestion( Question question )
 	{
-		TextView quest = ( TextView ) findViewById(R.id.question);
+        TextView quest = ( TextView ) findViewById(R.id.question);
 		if ( question == null )
 		{
-			quest.setText("NO QUESTION");
+            quest.setText("NO QUESTION");
+            if ( course != null )
+            {
+                Toast.makeText( this, "No questions match the options provided." , Toast.LENGTH_SHORT ).show();
+                Intent intent = new Intent( this , SubjectActivity.class );
+                startActivity( intent );
+            }
+
 			return;
 		}
 
+        ArrayList< Button > buttons = new ArrayList<>();
+        buttons.add(( Button ) findViewById(R.id.button1));
+        buttons.add(( Button ) findViewById(R.id.button2));
+        buttons.add(( Button ) findViewById(R.id.button3));
+        buttons.add(( Button ) findViewById(R.id.button4));
 		quest.setText(question.question);
-		ArrayList< Button > buttons = new ArrayList<>();
-		buttons.add(( Button ) findViewById(R.id.button1));
-		buttons.add(( Button ) findViewById(R.id.button2));
-		buttons.add(( Button ) findViewById(R.id.button3));
-		buttons.add(( Button ) findViewById(R.id.button4));
+
 		int min = Math.min(buttons.size(), question.answers.size());
 		Collections.shuffle(question.answers);
 		for ( int i = 0; i < min; i++ )

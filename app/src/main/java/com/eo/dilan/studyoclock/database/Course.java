@@ -10,12 +10,16 @@ import java.util.List;
 
 //TODO
 //(!!!)write the sql for all the subjects
-//(!!!)execute it to get questions, course subject objects have beginning and extras have and clauses, concatenate by chaining
 //(!!!)need to take into account total passed from subject intent into studying and disable back button
+//(!!!)if there are no questions from the query then go back to menu and toast user
+//(!!!)execute it to get questions, course subject objects have beginning and extras have and clauses, concatenate by chaining
 //---works for (any course and none extra)
 //---need to test for others
-//---if there are no questions from the query then go back to menu and toast user
+//
 //need a way to add a course somehow( see bookmarks, dialog interface)
+//---popup added, need to add buttons from Bookmark page
+//---also need to get the input text when the submit button is pressed
+//---also need a way to notify that the course should be created to the database helper and get the id
 //copy the course selector from subject activity to alarm activity and save that somehow in database
 
 
