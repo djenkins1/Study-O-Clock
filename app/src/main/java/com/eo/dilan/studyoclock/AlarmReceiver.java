@@ -31,18 +31,20 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 	public static void cancelThisAlarm( Activity me, int hour, int minute, int id )
 	{
 		Intent intent = new Intent(me, AlarmReceiver.class);
-		PendingIntent sender = PendingIntent.getBroadcast(me, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent sender = PendingIntent.getBroadcast(me, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		sender.cancel();
 	}
 
 	public static void cancelThisAlarm( Activity me, int hour, int minute )
 	{
+        //TODO: CHANGE USAGE
 		cancelThisAlarm(me, hour, minute, 0);
 	}
 
 	public static void addAlarm( Context me, int hour, int minute )
 	{
-		addAlarm(me, hour, minute, 0);
+		//TODO: CHANGE USAGE
+        addAlarm(me, hour, minute, 0);
 	}
 
 	public static boolean addAlarm( Context me, int hour, int minute, int id , boolean rollTomorrow )

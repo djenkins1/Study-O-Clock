@@ -196,6 +196,12 @@ public class DataHelper extends SQLiteOpenHelper
             course.withID(db.insert(Course.NAME, null, course.insertValues()));
     }
 
+    public void addCourse( Course course )
+    {
+        addCourse( this.db, course );
+        courses.add( course );
+    }
+
 	public void addQuestion( Question question )
 	{
         addQuestion(db, question);

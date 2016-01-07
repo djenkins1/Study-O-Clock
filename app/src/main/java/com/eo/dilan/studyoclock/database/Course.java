@@ -16,10 +16,6 @@ import java.util.List;
 //---works for (any course and none extra)
 //---need to test for others
 //
-//need a way to add a course somehow( see bookmarks, dialog interface)
-//---popup added, need to add buttons from Bookmark page
-//---also need to get the input text when the submit button is pressed
-//---also need a way to notify that the course should be created to the database helper and get the id
 //copy the course selector from subject activity to alarm activity and save that somehow in database
 
 

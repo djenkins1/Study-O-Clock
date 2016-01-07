@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -331,11 +332,33 @@ public class AddQuestionActivity extends AppCompatActivity
     {
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.prompt_view, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( this );
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( this, R.style.AppCompatAlertDialogStyle );
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
         alertDialogBuilder.setView( promptsView );
+        alertDialogBuilder.setCancelable( false ).setPositiveButton("Create",
+            new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog,int id)
+                {
+                    Course course = new Course().withID( -2 ).withTitle( userInput.getText().toString() );
+                    db.addCourse( course );
+                    updateCourse( course );
+                }
+            })
+            .setNegativeButton("Cancel",
+                    new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            dialog.cancel();
+                        }
+                    });
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
+
+        Button b = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setBackgroundDrawable(getResources().getDrawable(R.drawable.apptheme_btn_default_holo_dark));
+        b = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        b.setBackgroundDrawable(getResources().getDrawable(R.drawable.apptheme_btn_default_holo_dark));
     }
 }

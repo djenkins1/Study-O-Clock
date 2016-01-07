@@ -8,11 +8,11 @@
               tools:context="com.eo.dilan.studyoclock.AddQuestionActivity"
               android:screenOrientation="landscape"
               android:orientation="vertical"
-                android:background="#1240AB"
+                android:background="@color/blueBackground"
     >
     <EditText
         android:hint="Your question here"
-        android:background="#0E00F3"
+        android:background="@color/darkBlueBack"
         android:textStyle="bold"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
