@@ -7,7 +7,14 @@ import com.eo.dilan.studyoclock.R;
 
 public enum Subject
 {
-    COURSE, NEW, NO_COURSE, RIGHT, WRONG, ANY_COURSE, NONE, BAD;
+    COURSE(0), NEW(1), NO_COURSE(2), RIGHT(3), WRONG(4), ANY_COURSE(5), NONE(6), BAD(-1);
+
+    public final int value;
+
+    Subject ( int value )
+    {
+        this.value = value;
+    }
 
     public static Subject getSubject( Context context, String name )
     {
@@ -29,6 +36,19 @@ public enum Subject
         if (name.equals(context.getString( R.string.extra_wrong)))
         {
             return WRONG;
+        }
+
+        return BAD;
+    }
+
+    public Subject getSubject( int value )
+    {
+        for ( Subject subject : values() )
+        {
+            if ( value == subject.value )
+            {
+                return subject;
+            }
         }
 
         return BAD;

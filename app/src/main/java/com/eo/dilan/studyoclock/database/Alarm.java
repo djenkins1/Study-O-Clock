@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.eo.dilan.studyoclock.AlarmReceiver;
+import com.eo.dilan.studyoclock.subject.Subject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,6 +20,9 @@ public class Alarm
 	public int minute;
 	public int correct;
 	public int isOn;
+    public int course;
+    public int extra;
+    public int sound;
 
 	public Alarm()
 	{
@@ -27,8 +31,26 @@ public class Alarm
 
 	public Alarm( int hour, int minute, int correct )
 	{
-		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID(-1);
+		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID(-1).withExtra( Subject.NONE.value ).withCourse( -1 ).withSound( -1 );
 	}
+
+    public Alarm withCourse( int course )
+    {
+        this.course = course;
+        return this;
+    }
+
+    public Alarm withSound( int sound )
+    {
+        this.sound = sound;
+        return this;
+    }
+
+    public Alarm withExtra( int extra )
+    {
+        this.extra = extra;
+        return this;
+    }
 
 	public Alarm withHour( int hour )
 	{
@@ -71,6 +93,9 @@ public class Alarm
 		toReturn.append( ",minute INTEGER");
 		toReturn.append( ",correct INTEGER");
 		toReturn.append( ",ison INTEGER");
+        toReturn.append( ",course INTEGER");
+        toReturn.append( ",extra INTEGER");
+        toReturn.append( ",sound INTEGER");
 		toReturn.append( ")" );
 		return toReturn.toString();
 	}
@@ -82,6 +107,9 @@ public class Alarm
 		values.put("minute", this.minute);
 		values.put("correct", this.correct);
 		values.put("ison", this.isOn);
+        values.put( "course" , this.course );
+        values.put( "extra" , this.extra );
+        values.put( "sound" , this.sound );
 		return values;
 	}
 	public static String sqlSelectAll()
@@ -98,11 +126,15 @@ public class Alarm
 			do
 			{
 				Alarm alarm = new Alarm();
-				alarm.withID( Long.parseLong( cursor.getString( 0 )));
-				alarm.withHour(Integer.parseInt(cursor.getString(1)));
-				alarm.withMinute(Integer.parseInt(cursor.getString(2)));
-				alarm.withCorrect(Integer.parseInt(cursor.getString(3)));
-				alarm.withOn(Integer.parseInt(cursor.getString(4)));
+                int index = 0;
+				alarm.withID( Long.parseLong( cursor.getString( index++ )));
+				alarm.withHour(Integer.parseInt(cursor.getString(index++)));
+				alarm.withMinute(Integer.parseInt(cursor.getString(index++)));
+				alarm.withCorrect(Integer.parseInt(cursor.getString(index++)));
+				alarm.withOn(Integer.parseInt(cursor.getString(index++)));
+                alarm.withCourse(Integer.parseInt(cursor.getString(index++)));
+                alarm.withExtra(Integer.parseInt(cursor.getString(index++)));
+                alarm.withSound(Integer.parseInt(cursor.getString(index++)));
 				toReturn.add( alarm );
 			}
 			while ( cursor.moveToNext() );

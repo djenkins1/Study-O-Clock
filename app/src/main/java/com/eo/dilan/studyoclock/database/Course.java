@@ -10,13 +10,15 @@ import java.util.List;
 
 //TODO
 //(!!!)write the sql for all the subjects
-//(!!!)need to take into account total passed from subject intent into studying and disable back button
-//(!!!)if there are no questions from the query then go back to menu and toast user
-//(!!!)execute it to get questions, course subject objects have beginning and extras have and clauses, concatenate by chaining
 //---works for (any course and none extra)
 //---need to test for others
 //
-//copy the course selector from subject activity to alarm activity and save that somehow in database
+//go to the subject activity for setting the alarm, save the alarm values in preferences until the user adds the alarm
+//replace the number of questions box with a toggle box for vibrate/sound in alarm activity
+//start integrating the code for the alarm activity to use a id value passed in for alarm to edit/add alarm if not passed
+//
+//use the sound value in the database to determine if vibrate/sound for alarm
+//use the course and extra values in the database for the alarm going off
 
 
 
