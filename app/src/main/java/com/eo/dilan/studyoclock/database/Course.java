@@ -17,7 +17,6 @@ import java.util.List;
 //replace the number of questions box with a toggle box for vibrate/sound in alarm activity
 //start integrating the code for the alarm activity to use a id value passed in for alarm to edit/add alarm if not passed
 //
-//use the sound value in the database to determine if vibrate/sound for alarm
 //use the course and extra values in the database for the alarm going off
 
 

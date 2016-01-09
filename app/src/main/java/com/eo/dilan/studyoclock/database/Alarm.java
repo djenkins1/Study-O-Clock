@@ -146,7 +146,7 @@ public class Alarm
 	public static Alarm debugAlarm()
 	{
 		GregorianCalendar now = new GregorianCalendar();
-		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 5 ).withOn( 0 );
+		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 5 ).withOn( 0 ).withSound( 1 );
 	}
 
 	public boolean setForTomorrow( Context from, int id  )

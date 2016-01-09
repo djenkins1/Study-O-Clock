@@ -9,6 +9,10 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -26,6 +30,7 @@ import com.eo.dilan.studyoclock.database.PreferenceKeys;
 import com.eo.dilan.studyoclock.database.Question;
 import com.eo.dilan.studyoclock.subject.StudySubject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -38,6 +43,10 @@ public class QuestionActivity extends AppCompatActivity
 	private Cursor cursor;
 
 	private Vibrator vibrator;
+
+    private MediaPlayer player;
+
+    private boolean playsSound = false;
 
 	private final QuestionActivity me = this;
 
@@ -69,20 +78,18 @@ public class QuestionActivity extends AppCompatActivity
             if ( intent.getExtras().getString( "alarm" ) != null ) {
                 shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
                 isAlarm = true;
-                long[] pattern = {0, 200, 500};
-                vibrator.vibrate(pattern, 0);
             }
             else if ( intent.getExtras().getString( PreferenceKeys.COURSE_INTENT ) != null
                     && intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) != null
                     && intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ) != null )
             {
-                extra = StudySubject.getSubject( this, intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
+                extra = StudySubject.getSubject(this, intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT));
                 course = StudySubject.getCourseSubject(Long.parseLong(intent.getExtras().getString(PreferenceKeys.COURSE_INTENT)));
                 totalIntent = Integer.parseInt( intent.getExtras().getString( PreferenceKeys.TOTAL_INTENT ) );
-                Log.d("Passed", intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
-                Log.d("Passed", intent.getExtras().getString(PreferenceKeys.COURSE_INTENT ));
-                Log.d("Passed", intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ));
-                Log.d( "Passed" , course.toString() );
+                //Log.d("Passed", intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
+                //Log.d("Passed", intent.getExtras().getString(PreferenceKeys.COURSE_INTENT ));
+                //Log.d("Passed", intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ));
+                //Log.d( "Passed" , course.toString() );
             }
 		}
 		else
@@ -110,10 +117,10 @@ public class QuestionActivity extends AppCompatActivity
 		}
 
         ArrayList< Button > buttons = new ArrayList<>();
-        buttons.add(( Button ) findViewById(R.id.button1));
+        buttons.add((Button) findViewById(R.id.button1));
         buttons.add(( Button ) findViewById(R.id.button2));
-        buttons.add(( Button ) findViewById(R.id.button3));
-        buttons.add(( Button ) findViewById(R.id.button4));
+        buttons.add((Button) findViewById(R.id.button3));
+        buttons.add((Button) findViewById(R.id.button4));
 		quest.setText(question.question);
 
 		int min = Math.min(buttons.size(), question.answers.size());
@@ -147,7 +154,7 @@ public class QuestionActivity extends AppCompatActivity
 		}
 
 		Intent intent = new Intent( me, ScoreActivity.class );
-		intent.putExtra( PreferenceKeys.Q_LIST , questionsWrong.toString() );
+		intent.putExtra(PreferenceKeys.Q_LIST, questionsWrong.toString());
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		me.startActivity(intent);
 	}
@@ -156,17 +163,48 @@ public class QuestionActivity extends AppCompatActivity
 	public void onPause()
 	{
 		super.onPause();
-
+        if ( playsSound && player != null && player.isPlaying() )
+        {
+            player.pause();
+        }
 	}
+
+    public void onWindowFocusChanged (boolean hasFocus)
+    {
+
+        if(hasFocus && playsSound && player != null )
+        {
+
+            if (!player.isPlaying())
+            {
+                player.start();
+            }
+
+        }
+        else
+        {
+
+            if ( playsSound && player != null && player.isPlaying())
+            {
+                player.pause();
+            }
+        }
+    }
+
+    public void onResume()
+    {
+        super.onResume();
+        if ( playsSound && player != null )
+        {
+            player.start();
+        }
+    }
 
 	@Override
 	public void onDestroy()
 	{
 		super.onDestroy();
-		if ( vibrator != null )
-		{
-			vibrator.cancel();
-		}
+        cancelSoundAndVibrate();
 
 		if ( cursor != null )
 		{
@@ -246,14 +284,13 @@ public class QuestionActivity extends AppCompatActivity
 			questionsWrong = PreferenceKeys.addNumberToEnd( questionsWrong, db.getCurrentQuestion().id );
 		}
 
-		final Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		db.saveQuestion(db.getCurrentQuestion().incrementAmount(this.getApplicationContext(), isCorrect));
 		db.incrementQuestion();
 		totalNeeded += ( isCorrect ? -1 : 1 );
 
 		if ( totalNeeded == 0 && isAlarm )
 		{
-			vib.cancel();
+            cancelSoundAndVibrate();
 			shared.edit().putBoolean( PreferenceKeys.ALARMING , false).remove(PreferenceKeys.QUESTION).remove(PreferenceKeys.Q_LIST).remove(PreferenceKeys.TOTAL).commit();
             gotoWrongActivity();
 			return;
@@ -264,8 +301,25 @@ public class QuestionActivity extends AppCompatActivity
             return;
         }
 
-		updateQuestion(db.getCurrentQuestionLoader( cursor, 5 ));
+		updateQuestion(db.getCurrentQuestionLoader(cursor, 5));
 	}
+
+    private void cancelSoundAndVibrate()
+    {
+        if ( vibrator != null )
+        {
+            vibrator.cancel();
+        }
+
+        if ( player != null && player.isPlaying() )
+        {
+            player.stop();
+            player.reset();
+            player.release();
+            player = null;
+
+        }
+    }
 
     private void gotoWrongActivity()
     {
@@ -301,6 +355,54 @@ public class QuestionActivity extends AppCompatActivity
 		}
 	}
 
+    private void startSounds()
+    {
+        try {
+            Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            if ( alert == null )
+            {
+                // alert is null, using backup
+                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                if(alert == null)
+                {
+                    // alert backup is null, using 2nd backup
+                    alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                    if ( alert == null )
+                    {
+                        throw new IOException( "Could not load uri for any backup sounds" );
+                    }
+                }
+            }
+
+            player = new MediaPlayer();
+            player.setDataSource(QuestionActivity.this, alert);
+            final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+                player.setAudioStreamType(AudioManager.STREAM_ALARM);
+                player.setLooping(true);
+                player.prepare();
+                player.start();
+                playsSound = true;
+            }
+            else
+            {
+                startVibrate();
+            }
+        }
+        catch( IOException e )
+        {
+            Log.d( "PROBLEM" , "PROBLEM WITH " + e.getMessage() );
+            startVibrate();
+        }
+    }
+
+    private void startVibrate()
+    {
+        long[] pattern = {0, 200, 500};
+        vibrator.vibrate(pattern, 0);
+    }
+
 	private class LongOperation extends AsyncTask<Void, Void, Void>
 	{
 		protected Void doInBackground(Void... params)
@@ -334,9 +436,19 @@ public class QuestionActivity extends AppCompatActivity
 			{
 				totalNeeded = rem;
 			}
-			else if ( isAlarm )
+
+            if ( isAlarm )
 			{
 				totalNeeded = db.alarms.get(0).correct;
+                if ( db.alarms.get( 0 ).sound != -1 )
+                {
+                    startSounds();
+                }
+                else
+                {
+                    Log.d( "VIBRATING" , " BLANK ");
+                    startVibrate();
+                }
 			}
             else if ( course != null )
             {
