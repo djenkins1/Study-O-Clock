@@ -13,11 +13,19 @@ import java.util.List;
 //---works for (any course and none extra)
 //---need to test for others
 //
+//TODO: ADD ALARM
 //go to the subject activity for setting the alarm, save the alarm values in preferences until the user adds the alarm
 //replace the number of questions box with a toggle box for vibrate/sound in alarm activity
 //start integrating the code for the alarm activity to use a id value passed in for alarm to edit/add alarm if not passed
 //
+//TODO: PASS TO STUDY
 //use the course and extra values in the database for the alarm going off
+//
+//TODO: ALL ALARMS
+//need to put in course title for each alarm in the all questions activity for alarms
+//need to pass along id of the alarm chosen in the all questions activity for alarms
+//need to take into account the id passed in the intent if passed for add alarm activity
+//alarm should show 12 for midnight when hour is 0 on all alarms getTime
 
 
 

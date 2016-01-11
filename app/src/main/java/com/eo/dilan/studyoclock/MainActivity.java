@@ -153,7 +153,9 @@ public class MainActivity extends AppCompatActivity
 			Toast.makeText(getApplicationContext(), "Please wait", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		Intent intent = new Intent( this , AlarmActivity.class );
+
+		Intent intent = new Intent( this , AllQuestionsActivity.class );
+        intent.putExtra( "alarm" , "TRUE" );
 		startActivity(intent);
 	}
 

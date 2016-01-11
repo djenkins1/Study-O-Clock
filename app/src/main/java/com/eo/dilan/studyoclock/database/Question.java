@@ -232,7 +232,7 @@ public class Question
 		quest.withAnswer(new Answer("my streetcar", 0));
 		toReturn.add(quest);
 		*/
-		/*
+
 		for ( int i = 0; i < 10; i++ )
 		{
 			Question quest = new Question( "What is 5 + " + i);
@@ -245,7 +245,7 @@ public class Question
 				toReturn.add(quest);
 			}
 		}
-		*/
+
 		return toReturn;
 	}
 

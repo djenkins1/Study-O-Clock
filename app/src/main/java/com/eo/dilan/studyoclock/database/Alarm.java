@@ -31,7 +31,7 @@ public class Alarm
 
 	public Alarm( int hour, int minute, int correct )
 	{
-		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID(-1).withExtra( Subject.NONE.value ).withCourse( -1 ).withSound( -1 );
+		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID(-1).withExtra( Subject.NONE.value ).withCourse( -1 ).withSound(-1);
 	}
 
     public Alarm withCourse( int course )
@@ -81,6 +81,25 @@ public class Alarm
 		this.isOn = on;
 		return this;
 	}
+
+    public String getTime()
+    {
+        StringBuilder toReturn = new StringBuilder();
+        int time = ( isNight( hour ) && hour != 12 ? hour - 12 : hour );
+        toReturn.append( ( time < 10 ? "0" : "" ) );
+        toReturn.append( time );
+        toReturn.append( ":");
+        toReturn.append( ( minute < 10 ? "0" : "" ) );
+        toReturn.append( minute );
+        toReturn.append( " " );
+        toReturn.append( ( isNight( hour ) ? "PM" : "AM" ) );
+        return toReturn.toString();
+    }
+
+    private boolean isNight( int time )
+    {
+        return ( time > 12 );
+    }
 
 	public static String sqlCreate()
 	{
@@ -146,7 +165,7 @@ public class Alarm
 	public static Alarm debugAlarm()
 	{
 		GregorianCalendar now = new GregorianCalendar();
-		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 5 ).withOn( 0 ).withSound( 1 );
+		return new Alarm().withHour( now.get(Calendar.HOUR_OF_DAY) ).withMinute( now.get(Calendar.MINUTE) ).withCorrect( 5 ).withOn( 0 ).withSound( -1 );
 	}
 
 	public boolean setForTomorrow( Context from, int id  )

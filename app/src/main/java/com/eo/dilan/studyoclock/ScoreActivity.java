@@ -67,7 +67,7 @@ public class ScoreActivity extends AppCompatActivity
             list.add(db.allQuestions.get(i).question);
         }
 
-        final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this, list, db.allQuestions );
+        final QuestionArrayAdapter adapter = new QuestionArrayAdapter(this, list, db.allQuestions );
         FrameLayout footerLayout = (FrameLayout) getLayoutInflater().inflate(R.layout.footer_score_res, null);
         listview.addFooterView(footerLayout);
         listview.setAdapter(adapter);
