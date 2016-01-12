@@ -10,7 +10,9 @@ import com.eo.dilan.studyoclock.subject.StudySubject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class DataHelper extends SQLiteOpenHelper
@@ -56,6 +58,39 @@ public class DataHelper extends SQLiteOpenHelper
 		alarms = Alarm.getAlarms(db);
         courses = Course.getAllCourses(db);
 	}
+
+    public Alarm getAlarm( long id )
+    {
+        for ( Alarm alarm : alarms )
+        {
+            if ( alarm.id == id )
+            {
+                return alarm;
+            }
+        }
+        return Alarm.debugAlarm();
+    }
+
+    public Course getCourse( Course lookFor )
+    {
+        if ( lookFor.id == -1 )
+        {
+            return new Course().withID( lookFor.id).withTitle( "None");
+        }
+        else if ( lookFor.id == 0 )
+        {
+            return new Course().withID( lookFor.id).withTitle( "Any");
+        }
+
+        for ( Course course : courses )
+        {
+            if ( lookFor.equals( course ) )
+            {
+                return course;
+            }
+        }
+        return new Course().withID( lookFor.id ).withTitle( "BAD" );
+    }
 
 	public ArrayList<Question> getAllQuestions()
 	{

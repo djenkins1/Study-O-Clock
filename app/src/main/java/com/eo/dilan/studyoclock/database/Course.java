@@ -14,18 +14,21 @@ import java.util.List;
 //---need to test for others
 //
 //TODO: ADD ALARM
+//(!!!)start integrating the code for the alarm activity to use a id value passed in for alarm to edit/add alarm if not passed
 //go to the subject activity for setting the alarm, save the alarm values in preferences until the user adds the alarm
 //replace the number of questions box with a toggle box for vibrate/sound in alarm activity
-//start integrating the code for the alarm activity to use a id value passed in for alarm to edit/add alarm if not passed
+//need to add a new alarm to the database when button pressed and alarmId == -1 in edit alarm activity
+//should go back to all alarms when done adding/editing alarm
 //
 //TODO: PASS TO STUDY
 //use the course and extra values in the database for the alarm going off
 //
 //TODO: ALL ALARMS
-//need to put in course title for each alarm in the all questions activity for alarms
-//need to pass along id of the alarm chosen in the all questions activity for alarms
-//need to take into account the id passed in the intent if passed for add alarm activity
-//alarm should show 12 for midnight when hour is 0 on all alarms getTime
+//(!!!)need to pass along id of the alarm chosen in the all questions activity for alarms
+//(!!!)need to take into account the id passed in the intent if passed for add alarm activity
+//(!!!)need to put in course title for each alarm in the all questions activity for alarms
+//update the on/off switch for database in all alarms, have to add onClick to getView in adapter class
+
 
 
 

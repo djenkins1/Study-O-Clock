@@ -86,6 +86,7 @@ public class Alarm
     {
         StringBuilder toReturn = new StringBuilder();
         int time = ( isNight( hour ) && hour != 12 ? hour - 12 : hour );
+        time = ( time == 0 ? 12 : time );
         toReturn.append( ( time < 10 ? "0" : "" ) );
         toReturn.append( time );
         toReturn.append( ":");
@@ -98,7 +99,7 @@ public class Alarm
 
     private boolean isNight( int time )
     {
-        return ( time > 12 );
+        return ( time >= 12 );
     }
 
 	public static String sqlCreate()

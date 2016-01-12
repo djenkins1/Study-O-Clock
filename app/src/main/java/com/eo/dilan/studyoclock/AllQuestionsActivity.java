@@ -10,13 +10,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Alarm;
+import com.eo.dilan.studyoclock.database.Course;
 import com.eo.dilan.studyoclock.database.DataHelper;
+import com.eo.dilan.studyoclock.database.PreferenceKeys;
 import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
@@ -116,7 +121,7 @@ public class AllQuestionsActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animator arg0) {
                         view.setBackgroundColor(color);
-                        long quest = questions.get(position).id;
+                        long quest = questions.get(position - 1).id;
                         Intent appIntent = new Intent(me, AddQuestionActivity.class);
                         Bundle mBundle = new Bundle();
                         mBundle.putLong("question", quest);
@@ -139,13 +144,15 @@ public class AllQuestionsActivity extends AppCompatActivity {
         final ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < alarms.size(); ++i)
         {
-            list.add(alarms.get(i).getTime() );
+            //list.add(alarms.get(i).getTime() );
+            Log.d("COURSE", alarms.get(i).course + "");
+            list.add( db.getCourse(new Course().withID(alarms.get(i).course)).title );
         }
 
         final AlarmArrayAdapter adapter = new AlarmArrayAdapter(this, list, alarms);
         FrameLayout footerLayout = (FrameLayout) getLayoutInflater().inflate(R.layout.footer_alarm, null);
         FrameLayout headerLayout = (FrameLayout) getLayoutInflater().inflate(R.layout.header_alarm, null);
-        listview.addHeaderView( headerLayout );
+        listview.addHeaderView(headerLayout);
         listview.addFooterView(footerLayout);
         listview.setAdapter(adapter);
 
@@ -153,6 +160,7 @@ public class AllQuestionsActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+
                 final float[] from = new float[3],
                         to = new float[3];
 
@@ -187,16 +195,10 @@ public class AllQuestionsActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationEnd(Animator arg0) {
-                        //TODO: need to go to Alarm activity with id intent passed
-                        /*
                         view.setBackgroundColor(color);
-                        long quest = alarms.get(position).id;
-                        Intent appIntent = new Intent(me, AddQuestionActivity.class);
-                        Bundle mBundle = new Bundle();
-                        mBundle.putLong("question", quest);
-                        appIntent.putExtras(mBundle);
-                        startActivity(appIntent);
-                        */
+                        long id = alarms.get( position - 1 ).id;
+                        Intent appIntent = new Intent( me, AlarmActivity.class );
+                        startActivity( appIntent.putExtra(PreferenceKeys.COURSE_INTENT , id + "") );
                     }
                 });
 

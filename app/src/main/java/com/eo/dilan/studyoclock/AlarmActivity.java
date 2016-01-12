@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.eo.dilan.studyoclock.database.Alarm;
 import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.Logger;
+import com.eo.dilan.studyoclock.database.PreferenceKeys;
 
 public class AlarmActivity extends AppCompatActivity
 {
@@ -21,12 +23,23 @@ public class AlarmActivity extends AppCompatActivity
 
 	private final AlarmActivity me = this;
 
+    private long alarmId = -1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_alarm);
+        Intent intent = getIntent();
+        if ( intent != null && intent.getExtras() != null  )
+        {
+            if (intent.getExtras().getString(PreferenceKeys.COURSE_INTENT) != null)
+            {
+                alarmId = Long.parseLong(intent.getExtras().getString(PreferenceKeys.COURSE_INTENT));
+                Log.d("ALARM", intent.getExtras().getString(PreferenceKeys.COURSE_INTENT));
+            }
+        }
 		new LongOperation().execute();
 	}
 
@@ -77,7 +90,8 @@ public class AlarmActivity extends AppCompatActivity
 		Logger.print(this.getApplicationContext(),"Hour", hour + "");
 		Logger.print(this.getApplicationContext(), "Min", min + "");
 		Logger.print(this.getApplicationContext(), "To Ask", num + "");
-		db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+        db.updateAlarm( db.getAlarm(alarmId).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+        //db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
 		if ( isOn )
 		{
 			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min);
@@ -89,12 +103,14 @@ public class AlarmActivity extends AppCompatActivity
 	
 	private void cancelAlarm(View v )
 	{
+        //TODO: make this not accessible and put into all alarms
 		//update the alarm in the database to off
 		//cancel the alarm in the database currently
 		if ( db != null )
 		{
-			Alarm alarm = db.alarms.get( 0 );
-			AlarmReceiver.cancelThisAlarm( me, alarm.hour, alarm.minute);
+			Alarm alarm = db.getAlarm(alarmId);//db.alarms.get( 0 );
+			//AlarmReceiver.cancelThisAlarm( me, alarm.hour, alarm.minute);
+            AlarmReceiver.cancelThisAlarm( me, alarm.hour, alarm.minute, (int) alarmId );
 			alarm.withOn(0);
 			db.updateAlarm( alarm );
 		}
@@ -122,7 +138,7 @@ public class AlarmActivity extends AppCompatActivity
 		@Override
 		protected void onPostExecute(Void param)
 		{
-			updateList( db.alarms.get(0) );
+            updateList( db.getAlarm( alarmId ) );
 		}
 	}
 
