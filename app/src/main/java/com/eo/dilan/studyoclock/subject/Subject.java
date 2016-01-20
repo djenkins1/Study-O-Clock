@@ -1,7 +1,6 @@
 package com.eo.dilan.studyoclock.subject;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.eo.dilan.studyoclock.R;
 
@@ -41,7 +40,7 @@ public enum Subject
         return BAD;
     }
 
-    public Subject getSubject( int value )
+    public static Subject getSubject( int value )
     {
         for ( Subject subject : values() )
         {

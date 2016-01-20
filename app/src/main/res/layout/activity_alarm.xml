@@ -29,44 +29,63 @@
         android:layout_weight="1"
         >
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Questions asked"
+            android:weightSum="2"
+            >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Vibrate"
             android:focusable="false"
             android:textSize="18sp"
             android:textColor="#FFF"
             android:textStyle="bold"
             />
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/numQuestions"
-        android:inputType="number"
-        android:hint="Total Correct Needed"
-        android:textColor="#FFF"
-        android:textColorHint="#A0A5A0"
-    />
+        <Switch
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:id="@+id/vibrateSwitch"
+            android:textColor="#FFF"
+            />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Set"
+                android:focusable="false"
+                android:textSize="18sp"
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                />
+            <Switch
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:id="@+id/switch1"
+                android:textColor="#FFF"
+                />
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-        >
-
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_centerInParent="true"
-                android:id="@+id/switch1"
-                android:textColor="#FFF"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
             >
             <Button
                 android:layout_width="fill_parent"

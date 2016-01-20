@@ -15,8 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.Alarm;
 import com.eo.dilan.studyoclock.database.Course;
@@ -26,8 +24,6 @@ import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 public class AllQuestionsActivity extends AppCompatActivity {
 	private DataHelper db;

@@ -3,18 +3,21 @@ package com.eo.dilan.studyoclock;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.eo.dilan.studyoclock.database.Alarm;
 import com.eo.dilan.studyoclock.database.Course;
 import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.PreferenceKeys;
+import com.eo.dilan.studyoclock.subject.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +41,37 @@ public class SubjectActivity extends AppCompatActivity
         {
             alarmId = intent.getExtras().getLong("alarm", -1);
             Log.d("Excelsior", alarmId + "");
+            ((Button )findViewById( R.id.studyBtn)).setText("Save Alarm");
         }
         new LongOperation().execute();
     }
 
+    private void saveAlarm()
+    {
+        String check = ((EditText) findViewById( R.id.total ) ).getText().toString();
+        int value = Integer.parseInt(check);
+        int index = ( ((Spinner) findViewById( R.id.courseSpin ) ).getSelectedItemPosition() - 1 );
+        long id  = ( index <= 0 ? index : db.courses.get( index - 1 ).id );
+        Subject sub = Subject.getSubject(this, (( Spinner ) findViewById(R.id.extra)).getSelectedItem().toString());
+        db.updateAlarm( db.getAlarm(alarmId).withCorrect(value).withCourse(( int ) id).withExtra(sub.value) );
+    }
+
     public void studyNowClick( View v )
     {
-        if ( isLoaded && checkForm() ) {
-            Intent intent = new Intent(this, QuestionActivity.class);
-            handleForm( intent );
-            startActivity(intent);
+        if ( isLoaded && checkForm() )
+        {
+            if ( alarmId == -1 )
+            {
+                Intent intent = new Intent(this, QuestionActivity.class);
+                handleForm(intent);
+                startActivity(intent);
+            }
+            else
+            {
+                saveAlarm();
+                Intent appIntent = new Intent( this, AlarmActivity.class );
+                startActivity(appIntent.putExtra(PreferenceKeys.COURSE_INTENT, alarmId + ""));
+            }
         }
         else if ( !isLoaded )
         {
@@ -84,26 +108,66 @@ public class SubjectActivity extends AppCompatActivity
         intent.putExtra(PreferenceKeys.TOTAL_INTENT , ((EditText) findViewById( R.id.total ) ).getText().toString() );
     }
 
-    public void updateList()
+    public void updateList( boolean isAlarm )
     {
+        Alarm alarm = null;
+        if ( alarmId != -1 )
+        {
+            alarm = db.getAlarm(alarmId);
+        }
         Spinner spin = (Spinner) findViewById(R.id.courseSpin );
         Spinner spin2 = (Spinner)findViewById(R.id.extra );
         List<String> courseList = new ArrayList<>();
         courseList.add( "None" );
         courseList.add("Any");
+        int index = 1;
+        int found = index;
         for ( Course course: db.courses )
         {
+            index++;
             courseList.add( course.title );
+            if ( alarm != null && alarm.course == course.id )
+            {
+                found = index;
+            }
         }
+
+        if ( alarm != null && alarm.course < 1 )
+        {
+            found = ( alarm.course == 0 ? 1 : 0 );
+        }
+
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>( this, R.layout.spinner_main, courseList);
         spin.setAdapter(spinnerArrayAdapter);
-        spin.setSelection( 1 );
+        spin.setSelection(found);
+        if ( isAlarm )
+        {
+            (( EditText ) findViewById(R.id.total)).setText( String.valueOf( alarm.correct ) );
+        }
 
         ArrayAdapter<CharSequence> mAdaptor = ArrayAdapter
                 .createFromResource(this,
                         R.array.extraItems,
                         R.layout.spinner_main);
         spin2.setAdapter(mAdaptor);
+        if ( alarm != null )
+        {
+            index = 0;
+            found = index;
+            Subject subject = Subject.getSubject( alarm.extra );
+            Log.d( "Look" , subject.name() );
+            for ( CharSequence str : this.getResources().getTextArray(R.array.extraItems) )
+            {
+                if ( subject == Subject.getSubject( this, str.toString() ) )
+                {
+                    found = index;
+                    Log.d( "Found" , str.toString() );
+                }
+                index++;
+            }
+
+            spin2.setSelection( found );
+        }
         isLoaded = true;
     }
 
@@ -117,7 +181,7 @@ public class SubjectActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void param)
         {
-            updateList();
+            updateList( alarmId != -1 );
         }
     }
 }

@@ -26,12 +26,12 @@ public class Alarm
 
 	public Alarm()
 	{
-		this( 0, 0, 0);
+		this( 0, 0, 5);
 	}
 
 	public Alarm( int hour, int minute, int correct )
 	{
-		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID(-1).withExtra( Subject.NONE.value ).withCourse( -1 ).withSound(-1);
+		this.withHour( hour ).withMinute( minute ).withCorrect( correct ).withOn( 0 ).withID(-1).withExtra( Subject.NONE.value ).withCourse( 0 ).withSound(-1);
 	}
 
     public Alarm withCourse( int course )
@@ -51,6 +51,11 @@ public class Alarm
         this.extra = extra;
         return this;
     }
+
+	public Alarm withSound( boolean isOn )
+	{
+		return withSound(( isOn ? 0 : -1 ) );
+	}
 
 	public Alarm withHour( int hour )
 	{
@@ -80,6 +85,11 @@ public class Alarm
 	{
 		this.isOn = on;
 		return this;
+	}
+
+	public Alarm withOn( boolean on )
+	{
+		return withOn( ( on ? 1 : 0 ) );
 	}
 
     public String getTime()

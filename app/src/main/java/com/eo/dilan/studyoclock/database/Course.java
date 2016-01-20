@@ -14,8 +14,9 @@ import java.util.List;
 //---need to test for others
 //
 //TODO: ADD ALARM
-//need to edit the specific options for the alarm from subject activity if alarm id was passed in intent
-//replace the number of questions box with a toggle box for vibrate/sound in alarm activity
+//(!!!)replace the number of questions box with a toggle box for vibrate/sound in alarm activity
+//(!!!)need to edit the specific options for the alarm from subject activity if alarm id was passed in intent
+//
 //
 //TODO: PASS TO STUDY
 //pass the alarm id along with the pending intent for turning alarm on

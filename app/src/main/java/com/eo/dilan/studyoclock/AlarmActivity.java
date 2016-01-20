@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -57,9 +56,10 @@ public class AlarmActivity extends AppCompatActivity
 		}
 		cancelAlarm(v);
 		TimePicker tpick = ( TimePicker ) findViewById(R.id.timePicker1);
-		EditText text = ( EditText ) findViewById(R.id.numQuestions);
+		//EditText text = ( EditText ) findViewById(R.id.numQuestions);
 		int hour = tpick.getCurrentHour();
 		int min = tpick.getCurrentMinute();
+		/*
 		String numText = text.getText().toString();
 		if ( numText.equals("") )
 		{
@@ -88,27 +88,26 @@ public class AlarmActivity extends AppCompatActivity
 			Toast.makeText(getApplicationContext(), "Number correct cannot be more than 100", Toast.LENGTH_LONG).show();
 			return;
 		}
-
+		*/
 
 		boolean isOn = (( Switch ) findViewById(R.id.switch1)).isChecked();
 		Logger.print(this.getApplicationContext(), "Hour", hour + "");
 		Logger.print(this.getApplicationContext(), "Min", min + "");
-		Logger.print(this.getApplicationContext(), "To Ask", num + "");
+		boolean isVibrate = ((Switch) findViewById(R.id.vibrateSwitch)).isChecked();
 
 		if ( alarmId != -1 )
 		{
 			Log.d( "Alarm update" , alarmId + " was updated" );
-			db.updateAlarm( db.getAlarm(alarmId).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+			db.updateAlarm( db.getAlarm(alarmId).withHour(hour).withMinute(min).withOn( isOn ).withSound( !isVibrate ) );
 		}
 		else
 		{
 			Alarm alarm = new Alarm();
-			db.addAlarm(alarm.withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+			db.addAlarm(alarm.withHour(hour).withMinute(min).withOn(isOn).withSound( !isVibrate ));
 			Log.d("Alarm create", alarm.id + " was created");
 			alarmId = alarm.id;
 		}
 
-        //db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
 		if ( isOn )
 		{
 			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min);
@@ -151,11 +150,13 @@ public class AlarmActivity extends AppCompatActivity
 	private void updateList(Alarm alarm )
 	{
 		Switch sw1 = (Switch ) findViewById(R.id.switch1);
+		Switch vSwitch = (Switch ) findViewById(R.id.vibrateSwitch);
 		TimePicker tpick = (TimePicker)findViewById(R.id.timePicker1);
-		EditText text = ( EditText ) findViewById(R.id.numQuestions);
+		//EditText text = ( EditText ) findViewById(R.id.numQuestions);
+		//text.setText( alarm.correct + "" );
 		tpick.setCurrentHour(alarm.hour);
 		tpick.setCurrentMinute(alarm.minute);
-		text.setText( alarm.correct + "" );
+		vSwitch.setChecked( alarm.sound == -1 );
 		sw1.setChecked(alarm.isOn == 1);
 	}
 
