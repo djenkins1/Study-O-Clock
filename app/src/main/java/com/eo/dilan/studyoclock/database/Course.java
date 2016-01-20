@@ -22,12 +22,6 @@ import java.util.List;
 //
 //TODO: PASS TO STUDY
 //use the course and extra values in the database for the alarm going off
-//
-//TODO: ALL ALARMS
-//(!!!)need to pass along id of the alarm chosen in the all questions activity for alarms
-//(!!!)need to take into account the id passed in the intent if passed for add alarm activity
-//(!!!)need to put in course title for each alarm in the all questions activity for alarms
-//update the on/off switch for database in all alarms, have to add onClick to getView in adapter class
 
 
 

@@ -26,6 +26,8 @@ import com.eo.dilan.studyoclock.database.Question;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public class AllQuestionsActivity extends AppCompatActivity {
 	private DataHelper db;
@@ -242,4 +244,18 @@ public class AllQuestionsActivity extends AppCompatActivity {
         Intent intent = new Intent( this , AlarmActivity.class );
         startActivity( intent );
     }
+
+	public void toggleAlarm( Alarm alarm, boolean toggleOn )
+	{
+		Log.d( "Alarm Toggle" , toggleOn + "");
+		db.updateAlarm( alarm.withOn( ( toggleOn ? 1 : 0 ) ) );
+		if ( toggleOn )
+		{
+			AlarmReceiver.addAlarm(this.getApplicationContext(), alarm.hour, alarm.minute, (int)alarm.id );
+		}
+		else
+		{
+			AlarmReceiver.cancelThisAlarm( me, alarm.hour, alarm.minute, (int) alarm.id );
+		}
+	}
 }

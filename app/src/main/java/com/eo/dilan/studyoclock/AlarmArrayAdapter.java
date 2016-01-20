@@ -17,11 +17,11 @@ import java.util.List;
 
 public class AlarmArrayAdapter extends ArrayAdapter<String>
 {
-	private final Context context;
+	private final AllQuestionsActivity context;
 	private final List<Alarm> alarms;
     private final List<String> courses;
 
-	public AlarmArrayAdapter(Context context, ArrayList<String> values, List<Alarm> alarms)
+	public AlarmArrayAdapter(AllQuestionsActivity context, ArrayList<String> values, List<Alarm> alarms)
 	{
 		super(context, -1, values);
 		this.context = context;
@@ -37,7 +37,14 @@ public class AlarmArrayAdapter extends ArrayAdapter<String>
         View rowView = inflater.inflate(R.layout.list_viewer_alarm, parent, false);
 		TextView timeView = (TextView ) rowView.findViewById(R.id.myTime );
 		TextView courseView = (TextView)rowView.findViewById(R.id.myCourse);
-		Switch onView = (Switch)rowView.findViewById(R.id.myOn);
+		final Switch onView = (Switch)rowView.findViewById(R.id.myOn);
+		onView.setOnClickListener( new View.OnClickListener(){
+			public void onClick( View v )
+			{
+				context.toggleAlarm( alarm, onView.isChecked() );
+			}
+
+		});
         timeView.setText( alarm.getTime() );
         courseView.setText( courses.get( position ) );
         onView.setChecked( alarm.isOn != 0 );
