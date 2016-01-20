@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -24,12 +25,20 @@ public class SubjectActivity extends AppCompatActivity
 
     private boolean isLoaded = false;
 
+    private long alarmId = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_subject);
+        Intent intent = getIntent();
+        if ( intent != null && intent.getExtras() != null  )
+        {
+            alarmId = intent.getExtras().getLong("alarm", -1);
+            Log.d("Excelsior", alarmId + "");
+        }
         new LongOperation().execute();
     }
 

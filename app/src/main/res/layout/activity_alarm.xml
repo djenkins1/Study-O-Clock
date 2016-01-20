@@ -50,8 +50,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
         >
 
             <Switch
@@ -69,6 +68,21 @@
             android:layout_height="wrap_content"
 
             >
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Options"
+                android:onClick="setMyOptions"
+                android:background="@drawable/apptheme_btn_default_holo_dark"
+                android:textStyle="bold"
+                android:textColor="#FFF"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -76,7 +90,6 @@
             android:text="Set Alarm"
             android:id="@+id/setAlarmBtn"
             android:background="@drawable/apptheme_btn_default_holo_dark"
-            android:layout_alignParentBottom="true"
             android:textStyle="bold"
             android:textColor="#FFF"
             />

@@ -43,7 +43,12 @@ public class AlarmActivity extends AppCompatActivity
 		new LongOperation().execute();
 	}
 
-	public void setMyAlarm(View v)
+	public void setMyAlarm( View v )
+	{
+		setMyAlarm( v , false);
+	}
+
+	private void setMyAlarm(View v, boolean gotoSubject)
 	{
 		if ( db == null )
 		{
@@ -100,6 +105,7 @@ public class AlarmActivity extends AppCompatActivity
 			Alarm alarm = new Alarm();
 			db.addAlarm(alarm.withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
 			Log.d("Alarm create", alarm.id + " was created");
+			alarmId = alarm.id;
 		}
 
         //db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
@@ -108,19 +114,34 @@ public class AlarmActivity extends AppCompatActivity
 			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min);
 		}
 
-		Intent intent = new Intent( this, MainActivity.class);
+		Intent intent;
+		if ( gotoSubject )
+		{
+			Log.d( "Subject" , alarmId + "" );
+			intent = new Intent(this, SubjectActivity.class);
+			intent.putExtra("alarm", alarmId );
+		}
+		else
+		{
+			Log.d( "All Alarms" , "MORE");
+			intent = new Intent(this, AllQuestionsActivity.class);
+			intent.putExtra("alarm", "TRUE");
+		}
 		startActivity(intent);
+	}
+
+	public void setMyOptions( View v)
+	{
+		setMyAlarm( v, true );
 	}
 	
 	private void cancelAlarm(View v )
 	{
-        //TODO: make this not accessible and put into all alarms
 		//update the alarm in the database to off
 		//cancel the alarm in the database currently
 		if ( db != null )
 		{
-			Alarm alarm = db.getAlarm(alarmId);//db.alarms.get( 0 );
-			//AlarmReceiver.cancelThisAlarm( me, alarm.hour, alarm.minute);
+			Alarm alarm = db.getAlarm(alarmId);
             AlarmReceiver.cancelThisAlarm( me, alarm.hour, alarm.minute, (int) alarmId );
 			alarm.withOn(0);
 			db.updateAlarm( alarm );
