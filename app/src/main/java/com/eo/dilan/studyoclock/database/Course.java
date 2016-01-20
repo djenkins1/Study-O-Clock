@@ -15,15 +15,13 @@ import java.util.List;
 //
 //TODO: ADD ALARM
 //(!!!)start integrating the code for the alarm activity to use a id value passed in for alarm to edit/add alarm if not passed
+//(!!!)need to add a new alarm to the database when button pressed and alarmId == -1 in edit alarm activity
 //go to the subject activity for setting the alarm, save the alarm values in preferences until the user adds the alarm
 //replace the number of questions box with a toggle box for vibrate/sound in alarm activity
-//need to add a new alarm to the database when button pressed and alarmId == -1 in edit alarm activity
 //should go back to all alarms when done adding/editing alarm
 //
 //TODO: PASS TO STUDY
 //use the course and extra values in the database for the alarm going off
-
-
 
 
 public class Course

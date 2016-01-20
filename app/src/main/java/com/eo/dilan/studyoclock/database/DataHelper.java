@@ -21,11 +21,11 @@ public class DataHelper extends SQLiteOpenHelper
 
 	private static final String DATABASE_NAME = "study";
 
-	public List<Question> allQuestions;
+	public List< Question > allQuestions;
 
-	public List<Alarm> alarms;
+	public List< Alarm > alarms;
 
-    public List<Course> courses;
+	public List< Course > courses;
 
 	private int atQuestion = 0;
 
@@ -33,11 +33,11 @@ public class DataHelper extends SQLiteOpenHelper
 
 	private static DataHelper singleton;
 
-	public synchronized static DataHelper instance( Context context )
+	public synchronized static DataHelper instance(Context context)
 	{
 		if ( singleton == null )
 		{
-			singleton = new DataHelper( context );
+			singleton = new DataHelper(context);
 		}
 		return singleton;
 	}
@@ -56,74 +56,74 @@ public class DataHelper extends SQLiteOpenHelper
 		db = this.getWritableDatabase();
 		allQuestions = new Vector<>();
 		alarms = Alarm.getAlarms(db);
-        courses = Course.getAllCourses(db);
+		courses = Course.getAllCourses(db);
 	}
 
-    public Alarm getAlarm( long id )
-    {
-        for ( Alarm alarm : alarms )
-        {
-            if ( alarm.id == id )
-            {
-                return alarm;
-            }
-        }
-        return Alarm.debugAlarm();
-    }
-
-    public Course getCourse( Course lookFor )
-    {
-        if ( lookFor.id == -1 )
-        {
-            return new Course().withID( lookFor.id).withTitle( "None");
-        }
-        else if ( lookFor.id == 0 )
-        {
-            return new Course().withID( lookFor.id).withTitle( "Any");
-        }
-
-        for ( Course course : courses )
-        {
-            if ( lookFor.equals( course ) )
-            {
-                return course;
-            }
-        }
-        return new Course().withID( lookFor.id ).withTitle( "BAD" );
-    }
-
-	public ArrayList<Question> getAllQuestions()
+	public Alarm getAlarm(long id)
 	{
-		return Question.getAllQuestions( db );
+		for ( Alarm alarm : alarms )
+		{
+			if ( alarm.id == id )
+			{
+				return alarm;
+			}
+		}
+		return Alarm.debugAlarm();
 	}
 
-	public void saveQuestion(Question question )
+	public Course getCourse(Course lookFor)
+	{
+		if ( lookFor.id == -1 )
+		{
+			return new Course().withID(lookFor.id).withTitle("None");
+		} else if ( lookFor.id == 0 )
+		{
+			return new Course().withID(lookFor.id).withTitle("Any");
+		}
+
+		for ( Course course : courses )
+		{
+			if ( lookFor.equals(course) )
+			{
+				return course;
+			}
+		}
+		return new Course().withID(lookFor.id).withTitle("BAD");
+	}
+
+	public ArrayList< Question > getAllQuestions()
+	{
+		return Question.getAllQuestions(db);
+	}
+
+	public void saveQuestion(Question question)
 	{
 		updateQuestionNotAnswers(db, question);
 	}
 
-    private void createTables(SQLiteDatabase db)
-    {
-        db.execSQL(Question.sqlCreate());
-        db.execSQL(Answer.sqlCreate());
-        db.execSQL(Alarm.sqlCreate());
-        db.execSQL(Course.sqlCreate());
-    }
+	private void createTables(SQLiteDatabase db)
+	{
+		db.execSQL(Question.sqlCreate());
+		db.execSQL(Answer.sqlCreate());
+		db.execSQL(Alarm.sqlCreate());
+		db.execSQL(Course.sqlCreate());
+	}
 
 	public void onCreate(SQLiteDatabase db)
 	{
-        createTables(db);
+		createTables(db);
 		for ( Question quest : Question.getDebugs() )
 		{
 			addQuestion(db, quest);
 		}
 
-        for ( Course course : Course.getDebugList() )
-        {
-            if ( course != null ) {
-                addCourse(db,course);
-            }
-        }
+		for ( Course course : Course.getDebugList() )
+		{
+			if ( course != null )
+			{
+				addCourse(db, course);
+			}
+		}
 
 		addAlarm(db, Alarm.debugAlarm());
 
@@ -133,21 +133,20 @@ public class DataHelper extends SQLiteOpenHelper
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-        createTables(db);
-        if ( newVersion == 2 )
-        {
-            db.execSQL( Question.alterSQL() );
-        }
-        else
-        {
-            // Drop older table if existed
-            db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
-            db.execSQL("DROP TABLE IF EXISTS " + Answer.NAME);
-            db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME);
-            db.execSQL( "DROP TABLE IF EXISTS " + Course.NAME );
-            // Create tables again
-            onCreate(db);
-        }
+		createTables(db);
+		if ( newVersion == 2 )
+		{
+			db.execSQL(Question.alterSQL());
+		} else
+		{
+			// Drop older table if existed
+			db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + Answer.NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + Course.NAME);
+			// Create tables again
+			onCreate(db);
+		}
 	}
 
 	@Override
@@ -156,13 +155,13 @@ public class DataHelper extends SQLiteOpenHelper
 		// Drop older table if existed
 		db.execSQL("DROP TABLE IF EXISTS " + Question.NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + Answer.NAME);
-		db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME );
-        db.execSQL( "DROP TABLE IF EXISTS " + Course.NAME );
+		db.execSQL("DROP TABLE IF EXISTS " + Alarm.NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + Course.NAME);
 		// Create tables again
 		onCreate(db);
 	}
 
-	public Question getCurrentQuestionLoader(Cursor cursor, int limit )
+	public Question getCurrentQuestionLoader(Cursor cursor, int limit)
 	{
 		if ( allQuestions == null )
 		{
@@ -175,7 +174,7 @@ public class DataHelper extends SQLiteOpenHelper
 			if ( atQuestion >= allQuestions.size() )
 			{
 				atQuestion = 0;
-				Collections.shuffle( allQuestions );
+				Collections.shuffle(allQuestions);
 			}
 		}
 
@@ -183,7 +182,7 @@ public class DataHelper extends SQLiteOpenHelper
 		{
 			return null;
 		}
-		return allQuestions.get( atQuestion );
+		return allQuestions.get(atQuestion);
 	}
 
 	public Question getCurrentQuestion()
@@ -203,7 +202,7 @@ public class DataHelper extends SQLiteOpenHelper
 		{
 			return null;
 		}
-		return allQuestions.get( atQuestion );
+		return allQuestions.get(atQuestion);
 	}
 
 	public void incrementQuestion()
@@ -211,38 +210,38 @@ public class DataHelper extends SQLiteOpenHelper
 		atQuestion = atQuestion + 1;
 	}
 
-	public void addQuestion( SQLiteDatabase db, Question question )
+	public void addQuestion(SQLiteDatabase db, Question question)
 	{
 		question.withID(db.insert(Question.NAME, null, question.insertValues()));
 		addAnswers(db, question);
 	}
 
-    public void loadTitleForCourse( Course courseWithID )
-    {
-        int index = courses.indexOf( courseWithID );
-        if ( index != -1)
-        {
-            courseWithID.withTitle( courses.get( index ).title );
-        }
-    }
-
-    public void addCourse( SQLiteDatabase db, Course course )
-    {
-            course.withID(db.insert(Course.NAME, null, course.insertValues()));
-    }
-
-    public void addCourse( Course course )
-    {
-        addCourse( this.db, course );
-        courses.add( course );
-    }
-
-	public void addQuestion( Question question )
+	public void loadTitleForCourse(Course courseWithID)
 	{
-        addQuestion(db, question);
+		int index = courses.indexOf(courseWithID);
+		if ( index != -1 )
+		{
+			courseWithID.withTitle(courses.get(index).title);
+		}
 	}
 
-	public void addAnswers(SQLiteDatabase db,Question question )
+	public void addCourse(SQLiteDatabase db, Course course)
+	{
+		course.withID(db.insert(Course.NAME, null, course.insertValues()));
+	}
+
+	public void addCourse(Course course)
+	{
+		addCourse(this.db, course);
+		courses.add(course);
+	}
+
+	public void addQuestion(Question question)
+	{
+		addQuestion(db, question);
+	}
+
+	public void addAnswers(SQLiteDatabase db, Question question)
 	{
 		for ( Answer answer : question.answers )
 		{
@@ -250,9 +249,22 @@ public class DataHelper extends SQLiteOpenHelper
 		}
 	}
 
-	public void addAlarm( SQLiteDatabase db , Alarm alarm )
+	public void addAlarm(SQLiteDatabase db, Alarm alarm)
 	{
 		alarm.withID(db.insert(Alarm.NAME, null, alarm.insertValues()));
+	}
+
+	public void addAlarm(Alarm alarm)
+	{
+		addAlarm( this.db, alarm );
+		if ( alarms != null )
+		{
+			alarms.add( alarm );
+		}
+		else
+		{
+			Log.d( "Error" , "Trying to add alarm with alarms array null");
+		}
 	}
 
 	public void addAnswer( SQLiteDatabase db,Answer answer)

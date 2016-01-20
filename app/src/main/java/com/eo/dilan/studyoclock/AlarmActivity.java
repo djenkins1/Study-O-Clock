@@ -51,7 +51,7 @@ public class AlarmActivity extends AppCompatActivity
 			return;
 		}
 		cancelAlarm(v);
-		TimePicker tpick = (TimePicker)findViewById(R.id.timePicker1);
+		TimePicker tpick = ( TimePicker ) findViewById(R.id.timePicker1);
 		EditText text = ( EditText ) findViewById(R.id.numQuestions);
 		int hour = tpick.getCurrentHour();
 		int min = tpick.getCurrentMinute();
@@ -64,15 +64,14 @@ public class AlarmActivity extends AppCompatActivity
 
 		try
 		{
-			Integer.parseInt( numText );
-		}
-		catch( Exception e )
+			Integer.parseInt(numText);
+		} catch ( Exception e )
 		{
 			Toast.makeText(getApplicationContext(), "Number correct must be a number", Toast.LENGTH_LONG).show();
 			return;
 		}
 
-		int num = Integer.parseInt( numText );
+		int num = Integer.parseInt(numText);
 		if ( num <= 0 )
 		{
 			Toast.makeText(getApplicationContext(), "Number correct must be positive", Toast.LENGTH_LONG).show();
@@ -86,11 +85,23 @@ public class AlarmActivity extends AppCompatActivity
 		}
 
 
-		boolean isOn = ((Switch ) findViewById(R.id.switch1)).isChecked();
-		Logger.print(this.getApplicationContext(),"Hour", hour + "");
+		boolean isOn = (( Switch ) findViewById(R.id.switch1)).isChecked();
+		Logger.print(this.getApplicationContext(), "Hour", hour + "");
 		Logger.print(this.getApplicationContext(), "Min", min + "");
 		Logger.print(this.getApplicationContext(), "To Ask", num + "");
-        db.updateAlarm( db.getAlarm(alarmId).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+
+		if ( alarmId != -1 )
+		{
+			Log.d( "Alarm update" , alarmId + " was updated" );
+			db.updateAlarm( db.getAlarm(alarmId).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+		}
+		else
+		{
+			Alarm alarm = new Alarm();
+			db.addAlarm(alarm.withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
+			Log.d("Alarm create", alarm.id + " was created");
+		}
+
         //db.updateAlarm(db.alarms.get(0).withHour(hour).withMinute(min).withOn((isOn ? 1 : 0)).withCorrect(num));
 		if ( isOn )
 		{
@@ -138,7 +149,7 @@ public class AlarmActivity extends AppCompatActivity
 		@Override
 		protected void onPostExecute(Void param)
 		{
-            updateList( db.getAlarm( alarmId ) );
+            updateList(db.getAlarm(alarmId));
 		}
 	}
 
