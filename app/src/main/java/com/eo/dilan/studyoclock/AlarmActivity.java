@@ -110,7 +110,7 @@ public class AlarmActivity extends AppCompatActivity
 
 		if ( isOn )
 		{
-			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min);
+			AlarmReceiver.addAlarm(this.getApplicationContext(), hour, min, (int)alarmId );
 		}
 
 		Intent intent;

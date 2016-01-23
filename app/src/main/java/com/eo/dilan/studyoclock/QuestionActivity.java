@@ -23,12 +23,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eo.dilan.studyoclock.database.Alarm;
 import com.eo.dilan.studyoclock.database.Answer;
 import com.eo.dilan.studyoclock.database.DataHelper;
 import com.eo.dilan.studyoclock.database.Logger;
 import com.eo.dilan.studyoclock.database.PreferenceKeys;
 import com.eo.dilan.studyoclock.database.Question;
 import com.eo.dilan.studyoclock.subject.StudySubject;
+import com.eo.dilan.studyoclock.subject.Subject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,6 +64,8 @@ public class QuestionActivity extends AppCompatActivity
 
     private int totalIntent;
 
+	private long alarmId = -1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -77,11 +81,14 @@ public class QuestionActivity extends AppCompatActivity
 		{
             if ( intent.getExtras().getString( "alarm" ) != null ) {
                 shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
+				alarmId = intent.getExtras().getInt( PreferenceKeys.ALARM_KEY , -1 );
+				Log.d( "TRIBUTE" , alarmId + "" );
                 isAlarm = true;
             }
             else if ( intent.getExtras().getString( PreferenceKeys.COURSE_INTENT ) != null
                     && intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) != null
-                    && intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ) != null )
+                    && intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ) != null
+					)
             {
                 extra = StudySubject.getSubject(this, intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT));
                 course = StudySubject.getCourseSubject(Long.parseLong(intent.getExtras().getString(PreferenceKeys.COURSE_INTENT)));
@@ -403,27 +410,34 @@ public class QuestionActivity extends AppCompatActivity
         vibrator.vibrate(pattern, 0);
     }
 
+	private void loadCursor()
+	{
+		/*
+		long id = shared.getLong(PreferenceKeys.QUESTION, -1);
+		int rem = shared.getInt(PreferenceKeys.TOTAL, -1);
+		if ( id != -1 && rem != -1 )
+		{
+			db.setToQuestion(id);
+			cursor = db.loadQuestions( id , 4 );
+		}
+		else
+		*/
+		if ( course != null )
+		{
+			cursor =  db.getCursorOfQuestionSubjects( course, extra );
+			cursor = db.loadQuestions(cursor, 5);
+		}
+		else
+		{
+			cursor = db.loadQuestions( -1 , 5 );
+		}
+	}
+
 	private class LongOperation extends AsyncTask<Void, Void, Void>
 	{
 		protected Void doInBackground(Void... params)
 		{
 			db = DataHelper.instance(me.getApplicationContext() );
-			long id = shared.getLong(PreferenceKeys.QUESTION, -1);
-			int rem = shared.getInt(PreferenceKeys.TOTAL, -1);
-			if ( id != -1 && rem != -1 )
-			{
-				db.setToQuestion(id);
-				cursor = db.loadQuestions( id , 4 );
-			}
-            else if ( course != null )
-            {
-                cursor =  db.getCursorOfQuestionSubjects( course, extra );
-                cursor = db.loadQuestions(cursor, 5);
-            }
-			else
-			{
-				cursor = db.loadQuestions( -1 , 5 );
-			}
 			return null;
 		}
 
@@ -437,16 +451,22 @@ public class QuestionActivity extends AppCompatActivity
 				totalNeeded = rem;
 			}
 
+			Alarm alarm = db.getAlarm( alarmId );
             if ( isAlarm )
 			{
-				totalNeeded = db.alarms.get(0).correct;
-                if ( db.alarms.get( 0 ).sound != -1 )
+				totalNeeded = alarm.correct;
+				extra = StudySubject.getSubject( Subject.getSubject(alarm.extra) );
+				course = StudySubject.getCourseSubject( alarm.course );
+				Log.d( "EXTRA" , ( extra != null ? extra.toString() : "NULL" ) );
+				Log.d( "COURSE" , ( course != null ? course.toString() : "NULL" ) );
+				Log.d( "TOTAL" , totalNeeded + "");
+				if ( alarm.sound != -1 )
                 {
                     startSounds();
                 }
                 else
                 {
-                    Log.d( "VIBRATING" , " BLANK ");
+                    Log.d( "VIBRATING" , "BLANK ");
                     startVibrate();
                 }
 			}
@@ -457,17 +477,31 @@ public class QuestionActivity extends AppCompatActivity
 
 			if ( shared.getBoolean(PreferenceKeys.ALARM_REPEAT, true) )
 			{
-				db.alarms.get(0).setForTomorrow(me.getApplicationContext(), 0);
+				alarm.setForTomorrow(me.getApplicationContext(), 0);
 			}
 			else
 			{
-				db.updateAlarm( db.alarms.get( 0 ).withOn( 0 ) );
+				db.updateAlarm( alarm.withOn(0) );
 			}
 
-			updateQuestion(db.getCurrentQuestionLoader(cursor, 5));
+			new CursorOperation().execute();
+
+		}
+	}
+
+	private class CursorOperation extends AsyncTask<Void, Void, Void>
+	{
+		protected Void doInBackground(Void... params)
+		{
+			loadCursor();
+			return null;
 		}
 
-
+		@Override
+		protected void onPostExecute(Void param)
+		{
+			updateQuestion(db.getCurrentQuestionLoader(cursor, 5));
+		}
 	}
 
 }

@@ -143,8 +143,8 @@
       <file leaf-file-name="Course.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Course.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.61714286">
+              <caret line="12" column="88" selection-start-line="12" selection-start-column="88" selection-end-line="12" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -1738,7 +1738,6 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Answer.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/spinner_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/PreferenceKeys.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/CourseSubject.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/NewSubject.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/NoCourseSubject.java" />
@@ -1749,18 +1748,15 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/WrongSubject.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/RightSubject.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_study.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/prompt_view.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_question.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AddQuestionActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/QuestionActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_all_questions.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/header_question.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Question.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/footer_alarm.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/header_alarm.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_viewer_alarm.xml" />
@@ -1773,6 +1769,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/SubjectActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Alarm.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/PreferenceKeys.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmReceiver.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/QuestionActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Course.java" />
       </list>
     </option>
@@ -1819,6 +1819,10 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1933,10 +1937,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2147,11 +2147,10 @@
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291239" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4050633" sideWeight="0.49041533" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.403481" sideWeight="0.49041533" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -2172,6 +2171,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291239" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -2195,38 +2195,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AllQuestionsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="245" column="5" selection-start-line="245" selection-start-column="5" selection-end-line="245" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/DataHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="325" column="49" selection-start-line="325" selection-start-column="49" selection-end-line="325" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="108" column="25" selection-start-line="108" selection-start-column="25" selection-end-line="108" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmArrayAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Course.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2455,13 +2423,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.1046154">
-          <caret line="49" column="26" selection-start-line="49" selection-start-column="26" selection-end-line="49" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../Android/Sdk/sources/android-23/android/widget/CompoundButton.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6348315">
@@ -2496,14 +2457,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48424068">
-          <caret line="156" column="0" selection-start-line="156" selection-start-column="0" selection-end-line="158" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_study.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2526,35 +2479,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/QuestionActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.051577">
-          <caret line="72" column="8" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/DataHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323782">
-          <caret line="61" column="17" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../Android/Sdk/sources/android-23/android/widget/ArrayAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3323782">
           <caret line="460" column="45" selection-start-line="460" selection-start-column="45" selection-end-line="460" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/Subject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.022922637">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2562,22 +2490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="131" column="13" selection-start-line="131" selection-start-column="13" selection-end-line="131" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Alarm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="35" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.8252149">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -2601,10 +2513,98 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Course.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <caret line="112" column="91" selection-start-line="112" selection-start-column="91" selection-end-line="112" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/PreferenceKeys.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="53" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Android/Sdk/sources/android-23/android/os/AsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3323782">
+          <caret line="549" column="53" selection-start-line="549" selection-start-column="53" selection-end-line="549" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/AlarmReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Android/Sdk/sources/android-23/android/database/sqlite/SQLiteDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48710603">
+          <caret line="1253" column="18" selection-start-line="1253" selection-start-column="18" selection-end-line="1253" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/Subject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="192" column="0" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/DataHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="455" column="36" selection-start-line="455" selection-start-column="36" selection-end-line="455" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Alarm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/subject/StudySubject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/QuestionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="467" column="17" selection-start-line="467" selection-start-column="17" selection-end-line="467" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/eo/dilan/studyoclock/database/Course.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61714286">
+          <caret line="12" column="88" selection-start-line="12" selection-start-column="88" selection-end-line="12" selection-end-column="88" />
           <folding />
         </state>
       </provider>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eo.dilan.studyoclock.database.DataHelper;
+import com.eo.dilan.studyoclock.database.PreferenceKeys;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -189,6 +190,7 @@ public class MainActivity extends AppCompatActivity
 				Intent appIntent = new Intent(MainActivity.this, QuestionActivity.class);
 				Bundle mBundle = new Bundle();
 				mBundle.putString("alarm", "yes" );
+				mBundle.putInt( PreferenceKeys.ALARM_KEY , intent.getExtras().getInt( PreferenceKeys.ALARM_KEY, -1) );
 				appIntent.putExtras(mBundle);
 				startActivity(appIntent);
 			}

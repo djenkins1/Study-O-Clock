@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
 import com.eo.dilan.studyoclock.database.Logger;
+import com.eo.dilan.studyoclock.database.PreferenceKeys;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -23,6 +24,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		Bundle mBundle = new Bundle();
 		mBundle.putString("alarm", "yes" );
+		mBundle.putInt(PreferenceKeys.ALARM_KEY ,intent.getExtras().getInt( PreferenceKeys.ALARM_KEY , -1 ) );
 		appIntent.putExtras(mBundle);
 		context.startActivity( appIntent );
 		WakeLocker.release();
@@ -33,18 +35,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
 		Intent intent = new Intent(me, AlarmReceiver.class);
 		PendingIntent sender = PendingIntent.getBroadcast(me, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		sender.cancel();
-	}
-
-	public static void cancelThisAlarm( Activity me, int hour, int minute )
-	{
-        //TODO: CHANGE USAGE
-		cancelThisAlarm(me, hour, minute, 0);
-	}
-
-	public static void addAlarm( Context me, int hour, int minute )
-	{
-		//TODO: CHANGE USAGE
-        addAlarm(me, hour, minute, 0);
 	}
 
 	public static boolean addAlarm( Context me, int hour, int minute, int id , boolean rollTomorrow )
@@ -69,6 +59,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver
         }
 
 		Intent intent = new Intent(me, AlarmReceiver.class);
+		intent.putExtra( PreferenceKeys.ALARM_KEY , id );
 		PendingIntent sender = PendingIntent.getBroadcast(me, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Logger.print(me.getApplicationContext(), "Time: ", later.getTimeInMillis() + "");

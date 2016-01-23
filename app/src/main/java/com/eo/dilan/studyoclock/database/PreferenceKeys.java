@@ -20,6 +20,8 @@ public class PreferenceKeys
 
     public static final String TOTAL_INTENT = "totalQuestions";
 
+	public static final String ALARM_KEY = "alarmID";
+
 
 	public static StringBuilder addNumberToEnd( StringBuilder str, long value )
 	{

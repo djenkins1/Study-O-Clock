@@ -10,17 +10,9 @@ import java.util.List;
 
 //TODO
 //(!!!)write the sql for all the subjects
+//Populate test questions so that all variations of course/extra have possible questions
 //---works for (any course and none extra)
 //---need to test for others
-//
-//TODO: ADD ALARM
-//(!!!)replace the number of questions box with a toggle box for vibrate/sound in alarm activity
-//(!!!)need to edit the specific options for the alarm from subject activity if alarm id was passed in intent
-//
-//
-//TODO: PASS TO STUDY
-//pass the alarm id along with the pending intent for turning alarm on
-//use the course and extra values in the database for the alarm going off
 
 
 
