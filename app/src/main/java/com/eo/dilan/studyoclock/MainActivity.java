@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -183,16 +184,20 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		protected void onPostExecute(Void param)
 		{
-			canRun = true;
 			Intent intent = getIntent();
 			if ( intent != null && intent.getExtras() != null && intent.getExtras().getString("alarm") != null && db != null && db.areThereQuestions() )
 			{
 				Intent appIntent = new Intent(MainActivity.this, QuestionActivity.class);
 				Bundle mBundle = new Bundle();
-				mBundle.putString("alarm", "yes" );
-				mBundle.putInt( PreferenceKeys.ALARM_KEY , intent.getExtras().getInt( PreferenceKeys.ALARM_KEY, -1) );
+				mBundle.putString("alarm", "yes");
+				int value = intent.getExtras().getInt(PreferenceKeys.ALARM_KEY, -1);
+				mBundle.putInt( PreferenceKeys.ALARM_KEY , value );
 				appIntent.putExtras(mBundle);
 				startActivity(appIntent);
+			}
+			else
+			{
+				canRun = true;
 			}
 
 		}

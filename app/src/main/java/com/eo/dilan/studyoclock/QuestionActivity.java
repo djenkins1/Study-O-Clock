@@ -79,10 +79,10 @@ public class QuestionActivity extends AppCompatActivity
 		questionsWrong = new StringBuilder( shared.getString( PreferenceKeys.Q_LIST , "" ) );
 		if ( intent != null && intent.getExtras() != null  )
 		{
-            if ( intent.getExtras().getString( "alarm" ) != null ) {
-                shared.edit().putBoolean(PreferenceKeys.ALARMING, true).commit();
+            if ( intent.getExtras().getString( "alarm" ) != null )
+			{
 				alarmId = intent.getExtras().getInt( PreferenceKeys.ALARM_KEY , -1 );
-				Log.d( "TRIBUTE" , alarmId + "" );
+                shared.edit().putBoolean(PreferenceKeys.ALARMING, true).putInt( PreferenceKeys.ALARM_KEY, (int)alarmId ).commit();
                 isAlarm = true;
             }
             else if ( intent.getExtras().getString( PreferenceKeys.COURSE_INTENT ) != null
@@ -93,10 +93,6 @@ public class QuestionActivity extends AppCompatActivity
                 extra = StudySubject.getSubject(this, intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT));
                 course = StudySubject.getCourseSubject(Long.parseLong(intent.getExtras().getString(PreferenceKeys.COURSE_INTENT)));
                 totalIntent = Integer.parseInt( intent.getExtras().getString( PreferenceKeys.TOTAL_INTENT ) );
-                //Log.d("Passed", intent.getExtras().getString(PreferenceKeys.EXTRA_INTENT ) );
-                //Log.d("Passed", intent.getExtras().getString(PreferenceKeys.COURSE_INTENT ));
-                //Log.d("Passed", intent.getExtras().getString(PreferenceKeys.TOTAL_INTENT ));
-                //Log.d( "Passed" , course.toString() );
             }
 		}
 		else
@@ -384,8 +380,7 @@ public class QuestionActivity extends AppCompatActivity
             player = new MediaPlayer();
             player.setDataSource(QuestionActivity.this, alert);
             final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
-            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+            if ( audioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL && audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
                 player.setAudioStreamType(AudioManager.STREAM_ALARM);
                 player.setLooping(true);
                 player.prepare();
@@ -466,7 +461,6 @@ public class QuestionActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Log.d( "VIBRATING" , "BLANK ");
                     startVibrate();
                 }
 			}

@@ -343,6 +343,7 @@ public class DataHelper extends SQLiteOpenHelper
 		if ( checkOpen() )
 		{
 			db.update(Alarm.NAME, alarm.insertValues(), "id = ?", new String[]{String.valueOf(alarm.id)});
+			reloadAlarms = true;
 		}
 	}
 

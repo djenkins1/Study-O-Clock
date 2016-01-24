@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.eo.dilan.studyoclock.database.Alarm;
 import com.eo.dilan.studyoclock.database.DataHelper;
@@ -30,7 +31,6 @@ public class RestartService extends Service
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 		shared = getSharedPreferences(PreferenceKeys.PREF_KEY, Context.MODE_PRIVATE);
-		Logger.print(this.getApplicationContext(), "Restart" , "Entered on start");
 		new LongOperation().execute();
 		return START_NOT_STICKY;
 	}
@@ -77,6 +77,8 @@ public class RestartService extends Service
 				Context con = getApplicationContext();
 				Intent mStartActivity = new Intent( con, MainActivity.class);
 				mStartActivity.putExtra( "alarm" , "yes");
+				int value = shared.getInt(PreferenceKeys.ALARM_KEY, -1);
+				mStartActivity.putExtra( PreferenceKeys.ALARM_KEY , value);
 				int mPendingIntentId = -1;
 				PendingIntent mPendingIntent = PendingIntent.getActivity(con, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
 				AlarmManager mgr = ( AlarmManager ) con.getSystemService(Context.ALARM_SERVICE);
