@@ -144,7 +144,7 @@ public class Alarm
 	}
 	public static String sqlSelectAll()
 	{
-		return "SELECT * FROM " + NAME;
+		return "SELECT * FROM " + NAME + " ORDER BY hour ASC,minute ASC";
 	}
 
 	public static ArrayList<Alarm> getAlarms( SQLiteDatabase db )

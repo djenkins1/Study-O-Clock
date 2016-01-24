@@ -31,11 +31,19 @@ public class DataHelper extends SQLiteOpenHelper
 
 	private static DataHelper singleton;
 
+	public static boolean reloadAlarms = false;
+
 	public synchronized static DataHelper instance(Context context)
 	{
 		if ( singleton == null )
 		{
 			singleton = new DataHelper(context);
+		}
+		else if ( reloadAlarms )
+		{
+			Log.d( "RELOAD" , "ALARM");
+			reloadAlarms = false;
+			singleton.alarms = Alarm.getAlarms( singleton.db );
 		}
 		return singleton;
 	}
@@ -258,6 +266,7 @@ public class DataHelper extends SQLiteOpenHelper
 		if ( alarms != null )
 		{
 			alarms.add( alarm );
+			reloadAlarms = true;
 		}
 		else
 		{
